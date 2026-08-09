@@ -138,6 +138,16 @@ await row.locator('.row__btn').click();
 ok((await row.locator('.row__body').count()) === 1, 'browse row should expand');
 if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-browse.png') });
 
+// ── back to eat: the map survives the round trip ────────────────────────
+await page.locator('.tab[data-mode="eat"]').click();
+await page.waitForSelector('#eat-groups .pick');
+ok((await page.locator('#pbg-map .leaflet-marker-pane, #pbg-map path').count()) > 0
+  || (await page.locator('#pbg-map .leaflet-container, #pbg-map.leaflet-container').count()) > 0,
+  'map should still be alive after leaving and returning to the Eat view');
+ok(/^\d+ locations?$/.test(await page.locator('#map-count').innerText()), 'map location count lost on return');
+await page.locator('.tab[data-mode="browse"]').click();
+await page.waitForSelector('#browse-groups .row');
+
 // ── methodology modal ───────────────────────────────────────────────────
 await page.locator('[data-act="method-open"]').click();
 await page.waitForSelector('.modal__panel');

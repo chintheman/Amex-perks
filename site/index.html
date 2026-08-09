@@ -392,7 +392,7 @@ const badgesHtml = (v) => `
   <div class="badges">
     <span class="badge badge--type" style="background:${v.typeColor}">${esc(v.typeLabel)}</span>
     ${v.e.grade ? `<span class="badge" style="background:${v.gradeColor}">${esc(v.e.grade)}</span>` : ''}
-    ${v.fit != null ? `<span class="badge badge--fit">Fit ${esc(v.fit)}/100</span>` : ''}
+    ${!v.showVenue && v.fit != null ? `<span class="badge badge--fit">Fit ${esc(v.fit)}/100</span>` : ''}
     ${v.showVenue && v.hasVenue ? `<span class="row__venue">${esc(v.venue)}</span>` : ''}
   </div>`;
 
@@ -619,9 +619,8 @@ function renderModal() {
             <span><b>${esc(t.label)}</b><span class="modal__typedesc">${esc(t.definition)}</span></span>
           </div>`).join('')}
         <div class="modal__bands">
-          ${d.tax.grade_bands.map((b, i) => {
-    const hi = i === 0 ? 100 : d.tax.grade_bands[i - 1].min - 0.1;
-    const range = i === d.tax.grade_bands.length - 1 ? `<${d.tax.grade_bands[i - 1].min}` : `${b.min}-${Math.round(hi)}`;
+          ${d.tax.grade_bands.map((b, i, all) => {
+    const range = i === all.length - 1 ? `<${all[i - 1].min}` : `${b.min}-${i === 0 ? 100 : all[i - 1].min - 1}`;
     return `<span class="modal__band" style="background:${core.vr(core.GRADE_VAR[b.grade] || '--muted')}">${esc(b.grade)} · ${esc(range)}</span>`;
   }).join('')}
         </div>
@@ -634,7 +633,10 @@ function renderModal() {
 
 // ─────────────────────────────────────────────────────────────────── map
 function ensureMap() {
-  if (state.mode !== 'eat' || map) return;
+  if (state.mode !== 'eat') return;
+  // The Eat view is hidden rather than torn down, so Leaflet keeps its
+  // instance — it just needs to re-measure after the container reappears.
+  if (map) { setTimeout(() => map?.invalidateSize(), 0); return; }
   const el = $('pbg-map');
   if (typeof L === 'undefined' || !el || !el.clientHeight) { setTimeout(ensureMap, 200); return; }
   map = core.createMap(el, state.theme === 'dark');
