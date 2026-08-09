@@ -1,0 +1,3927 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-08-08",
+  "next_refresh": "2026-08-22",
+  "refresh_days": 14,
+  "card": {
+    "name": "The Platinum Card® (American Express, Singapore)",
+    "annual_fee_sgd": 1744
+  },
+  "scoring": {
+    "weights": {
+      "value": 0.6,
+      "accessibility": 0.4
+    },
+    "formula": "composite = 60% x value_score + 40% x accessibility_score (each 0-100). No annual-fee-payback lens in individual scores — that math lives in the separate 'Minimum Path to Break Even' calculator below.",
+    "occasion_note": "Occasion Fit (Date Night, Business, Free Treat) is a separate ranking scoped to bookable Dining venues only — it blends value_score (50%) with venue-tier fit for the occasion (50%)."
+  },
+  "taxonomy": {
+    "categories": [
+      {
+        "key": "dining",
+        "label": "Dining"
+      },
+      {
+        "key": "lifestyle",
+        "label": "Lifestyle"
+      }
+    ],
+    "value_types": [
+      {
+        "key": "discount",
+        "label": "Discount",
+        "definition": "You spend money and get less than full price. Scored on discount depth vs. minimum spend to unlock."
+      },
+      {
+        "key": "free",
+        "label": "Free",
+        "definition": "Genuinely complimentary — may need enrollment or booking. Scored on estimated $ value vs. how much friction (enrollment/booking/caps) stands between you and it."
+      },
+      {
+        "key": "credit",
+        "label": "Credit",
+        "definition": "A pooled annual $ credit, may need a minimum spend to activate. Scored on $ value vs. spend required to activate."
+      },
+      {
+        "key": "access",
+        "label": "Access",
+        "definition": "An always-on entitlement (lounge, insurance, concierge, status, protections) that isn't 'redeemed' per use — shown as a feature card with no score, since forcing a number onto insurance coverage or lounge access is false precision."
+      }
+    ],
+    "sections": [
+      {
+        "key": "ldr",
+        "label": "Love Dining · Restaurants",
+        "chip": "Restaurants",
+        "desc": "Year-round 50% off food for two at standalone restaurants",
+        "default_subcategory": "Love Dining · Restaurant"
+      },
+      {
+        "key": "ldh",
+        "label": "Love Dining · Hotels",
+        "chip": "Hotel dining",
+        "desc": "Up to 50% off at hotel restaurants and bars",
+        "default_subcategory": "Love Dining · Hotel Outlet"
+      },
+      {
+        "key": "promo",
+        "label": "Dining Promotions",
+        "chip": "Promotions",
+        "desc": "Limited-time offers — check validity dates",
+        "default_subcategory": "Dining Promotions"
+      },
+      {
+        "key": "progs",
+        "label": "Seasonal, Credits & Programs",
+        "chip": "Credits & programs",
+        "desc": "Statement credits, seasonal offers, special programs"
+      },
+      {
+        "key": "life",
+        "label": "Lifestyle & Travel",
+        "chip": "Lifestyle & travel",
+        "desc": "Hotels, lounges, spa, golf, shopping, insurance"
+      }
+    ],
+    "tier_groups": [
+      {
+        "key": "fine",
+        "label": "Fine dining",
+        "desc": "Tasting menus & top-tier tables"
+      },
+      {
+        "key": "upscale",
+        "label": "Upscale restaurants",
+        "desc": "Polished dining & hotel flagships"
+      },
+      {
+        "key": "casual",
+        "label": "Casual & everyday",
+        "desc": "Mid-range spots & cafés"
+      },
+      {
+        "key": "buffet",
+        "label": "Buffets",
+        "desc": "Hotel spreads, incl. premium lines"
+      },
+      {
+        "key": "hightea",
+        "label": "High tea",
+        "desc": "Afternoon tea sets"
+      },
+      {
+        "key": "bar",
+        "label": "Bars & drinks",
+        "desc": "Cocktail bars & bar bites"
+      },
+      {
+        "key": "other",
+        "label": "Credits & extras",
+        "desc": "Dining credits and everything else"
+      }
+    ],
+    "tiers": {
+      "ultra": {
+        "label": "Top-tier splurge",
+        "group": "fine"
+      },
+      "fine": {
+        "label": "Fine dining",
+        "group": "fine"
+      },
+      "upscale": {
+        "label": "Upscale",
+        "group": "upscale"
+      },
+      "mid": {
+        "label": "Mid-range",
+        "group": "casual"
+      },
+      "casual": {
+        "label": "Casual",
+        "group": "casual"
+      },
+      "cafe": {
+        "label": "Café",
+        "group": "casual"
+      },
+      "buffet": {
+        "label": "Buffet",
+        "group": "buffet"
+      },
+      "buffet_premium": {
+        "label": "Premium buffet",
+        "group": "buffet"
+      },
+      "high_tea": {
+        "label": "Afternoon tea",
+        "group": "hightea"
+      },
+      "bar": {
+        "label": "Bar",
+        "group": "bar"
+      },
+      "credit": {
+        "label": "Credit",
+        "group": "other"
+      }
+    },
+    "occasions": [
+      {
+        "key": "date_night",
+        "label": "Date Night",
+        "desc": "Romantic, 2-for-1 sweet spot — best discounts almost everywhere are for pairs."
+      },
+      {
+        "key": "business",
+        "label": "Business Dinner",
+        "desc": "Polished, quiet fine-dining suited to entertaining a client — not bargain-hunting."
+      },
+      {
+        "key": "free_treat",
+        "label": "Free Treat",
+        "desc": "Zero minimum spend — a genuinely complimentary dining experience or credit."
+      }
+    ],
+    "grade_bands": [
+      {
+        "grade": "A+",
+        "min": 90
+      },
+      {
+        "grade": "A",
+        "min": 80
+      },
+      {
+        "grade": "B+",
+        "min": 70
+      },
+      {
+        "grade": "B",
+        "min": 60
+      },
+      {
+        "grade": "C",
+        "min": 45
+      },
+      {
+        "grade": "D",
+        "min": 0
+      }
+    ]
+  },
+  "caveats": [
+    "Average bill-per-pax figures are ESTIMATES based on cuisine/venue tier, used only to make deals comparable — Amex and most restaurants do not publish menu prices.",
+    "Annual-use caps for the Minimum Path to Break Even are realistic assumptions, not guarantees — your actual usage will vary.",
+    "Scores reflect the BEST-CASE published discount tier (typically dining as a pair).",
+    "Promos, restaurant rosters, and T&Cs change frequently and are refreshed roughly every two weeks — always reconfirm blackout dates and current terms directly with Amex or the venue before relying on it."
+  ],
+  "payback_path": {
+    "steps": [
+      {
+        "ref": "global-dining-credit",
+        "uses": 1
+      },
+      {
+        "ref": "platinum-wine-credit",
+        "uses": 1
+      },
+      {
+        "ref": "airline-credit",
+        "uses": 1
+      },
+      {
+        "ref": "complimentary-hotel-stay-credit-fhr-hotel-collection",
+        "uses": 2
+      },
+      {
+        "ref": "complimentary-annual-hotel-night",
+        "uses": 1
+      },
+      {
+        "ref": "table-for-two-platinum-edition",
+        "uses": 3,
+        "split": true
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "15-stamford-restaurant",
+      "name": "15 Stamford Restaurant",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Land/Sea/Grilled categories only.",
+      "venue": {
+        "group": "The Capitol Kempinski",
+        "cuisine": "Western",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The Capitol Kempinski",
+          "lat": 1.2939,
+          "lng": 103.8508,
+          "address": "15 Stamford Rd, S178906"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "1864",
+      "name": "1864",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "Sofitel Singapore City Centre",
+        "cuisine": "Tapas",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Sofitel Singapore City Centre",
+          "lat": 1.2766,
+          "lng": 103.8455,
+          "address": "9 Wallich Street, S078885"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "a-summer-to-savour-afternoon-tea-for-2",
+      "name": "A Summer to Savour — Afternoon Tea for 2",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Seasonal",
+      "value_type": "free",
+      "details": "Spend S$180++ (weekday) → free Afternoon Tea for 2 (worth ~S$96++); spend S$250++ (weekend) → free Afternoon Tea for 2 (worth ~S$116++), at Crossroads Café & Lobby Lounge, Singapore Marriott Tang Plaza.",
+      "venue": {
+        "cuisine": "Afternoon Tea",
+        "tier": "high_tea",
+        "tier_group": "hightea",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 48
+      },
+      "scores": {
+        "value": 16,
+        "accessibility": 45
+      },
+      "occasion_fit": {
+        "date_night": 40.5,
+        "business": 30.5,
+        "free_treat": 16
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "≥1 day advance",
+        "condition": "Min Spend Required",
+        "third_party_barred": false,
+        "expires": "2026-10-31"
+      },
+      "locations": [
+        {
+          "name": "Singapore Marriott Tang Plaza",
+          "lat": 1.3048,
+          "lng": 103.8318,
+          "address": "320 Orchard Rd, S238865"
+        }
+      ],
+      "source": "https://www.americanexpress.com/en-sg/benefits/love-dining/offers/index.html"
+    },
+    {
+      "id": "adeva-spa",
+      "name": "Adeva Spa",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Spa & Wellness",
+      "value_type": "discount",
+      "details": "15% off all à la carte services at Paragon, valid through 31 Dec 2026.",
+      "venue": {
+        "cuisine": "Spa",
+        "tier": "mid",
+        "tier_group": "casual",
+        "pax": 1
+      },
+      "economics": {
+        "min_spend_sgd": 65,
+        "gross_value_sgd": 9.75,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 89.2
+      },
+      "terms": {
+        "annual_cap": 6
+      },
+      "locations": [
+        {
+          "name": "Adeva Spa",
+          "lat": 1.3013,
+          "lng": 103.8356,
+          "address": "290 Orchard Rd, Paragon, S238859"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/lifestyle/spa/index0.html"
+    },
+    {
+      "id": "airline-credit",
+      "name": "Airline Credit",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Statement Credit",
+      "value_type": "credit",
+      "details": "S$100 every 6 months (S$200/yr cap), min. S$300 single transaction, on SIA/Scoot flights departing Singapore, booked in-app/online in SGD. Excludes 3rd-party travel agencies & instalments. Principal cardmember only. Valid through 31 Dec 2026.",
+      "venue": {
+        "cuisine": "SIA / Scoot flights",
+        "tier": "credit",
+        "tier_group": "other"
+      },
+      "economics": {
+        "min_spend_sgd": 600,
+        "gross_value_sgd": 200,
+        "min_spend_to_activate": 600
+      },
+      "scores": {
+        "value": 50,
+        "accessibility": 0
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Min S$300 single transaction per half-year",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "akira-back",
+      "name": "Akira Back",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Signature Rolls/Mains only, excl. A5 ribeye/caviar/lobster. ≥2 days advance, no 3rd-party booking.",
+      "venue": {
+        "group": "JW Marriott South Beach",
+        "cuisine": "Modern Japanese",
+        "tier": "ultra",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 300,
+        "gross_value_sgd": 105,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 50
+      },
+      "occasion_fit": {
+        "date_night": 82.5,
+        "business": 80
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "JW Marriott South Beach",
+          "lat": 1.2967,
+          "lng": 103.8577,
+          "address": "30 Beach Rd, S189763"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "anti-dote",
+      "name": "ANTI:DOTE",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "20% off High Tea Set specifically.",
+      "venue": {
+        "group": "Fairmont Singapore",
+        "cuisine": "Afternoon Tea / Tapas",
+        "tier": "high_tea",
+        "tier_group": "hightea"
+      },
+      "economics": {
+        "min_spend_sgd": 120,
+        "gross_value_sgd": 42,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 80
+      },
+      "occasion_fit": {
+        "date_night": 67.5,
+        "business": 57.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Fairmont Singapore",
+          "lat": 1.2934,
+          "lng": 103.852,
+          "address": "80 Bras Basah Rd, S189560"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "asian-market-cafe",
+      "name": "Asian Market Café",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "No blackout dates.",
+      "venue": {
+        "group": "Fairmont Singapore",
+        "cuisine": "International Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Fairmont Singapore",
+          "lat": 1.2934,
+          "lng": 103.852,
+          "address": "80 Bras Basah Rd, S189560"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "baba-chews",
+      "name": "Baba Chews",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte food & beverage.",
+      "venue": {
+        "cuisine": "Bar & Eatery",
+        "tier": "mid",
+        "tier_group": "casual",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 19.5,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 40,
+        "business": 32.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Baba Chews",
+          "lat": 1.3053,
+          "lng": 103.9036,
+          "address": "86 East Coast Rd, Katong Square, S428788"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "bacha-coffee",
+      "name": "Bacha Coffee",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Weekday only, ≤48h advance booking. Excl. beverages, bakery, desserts, set menus.",
+      "venue": {
+        "cuisine": "Café / Dessert",
+        "tier": "cafe",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 45,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 72.5,
+        "business": 60
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Bacha Coffee",
+          "lat": 1.3039,
+          "lng": 103.8318,
+          "address": "2 Orchard Turn, #01-15/16 ION Orchard, S238801"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "barossa-bar-and-grill",
+      "name": "Barossa Bar & Grill",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Easter, Valentine's, Mother's/Father's eve, F1 weekend.",
+      "venue": {
+        "cuisine": "Western Grill",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Barossa Bar & Grill",
+          "lat": 1.2647,
+          "lng": 103.8226,
+          "address": "1 HarbourFront Walk, VivoCity, S098585"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "basilico-conrad-sg-orchard",
+      "name": "Basilico (Conrad SG Orchard)",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte.",
+      "venue": {
+        "cuisine": "Italian",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 27,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 55
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Basilico (Conrad SG Orchard)",
+          "lat": 1.3057,
+          "lng": 103.8256,
+          "address": "1 Cuscaden Rd, S249715"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "beach-road-kitchen",
+      "name": "Beach Road Kitchen",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "JW Marriott South Beach",
+        "cuisine": "International Buffet",
+        "tier": "buffet_premium",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 196,
+        "gross_value_sgd": 68.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 67.3
+      },
+      "occasion_fit": {
+        "date_night": 47.5,
+        "business": 42.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "JW Marriott South Beach",
+          "lat": 1.2967,
+          "lng": 103.8577,
+          "address": "30 Beach Rd, S189763"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "beast-and-butterflies-35-off",
+      "name": "Beast & Butterflies — 35% Off",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Seasonal",
+      "value_type": "discount",
+      "details": "35% off total food bill, à la carte, up to 10 diners, at M Social Hotel Singapore.",
+      "venue": {
+        "cuisine": "International",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Advance reservation required",
+        "third_party_barred": false,
+        "expires": "2026-08-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/love-dining/offers/index.html"
+    },
+    {
+      "id": "bicester-collection-shopping",
+      "name": "Bicester Collection Shopping",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Shopping",
+      "value_type": "discount",
+      "details": "10% additional savings, personal shopping service, and reserved parking at Bicester Collection luxury outlet villages (UK/Europe — not Singapore-based, excluded from the map).",
+      "venue": {
+        "cuisine": "Luxury Outlets",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 1
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 9,
+        "discount_pct": 10
+      },
+      "scores": {
+        "value": 20,
+        "accessibility": 85
+      },
+      "terms": {
+        "annual_cap": 2
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/retail-and-lifestyle/"
+    },
+    {
+      "id": "broth-and-beyond",
+      "name": "Broth & Beyond",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "≥1 day advance. Excl. broths & desserts. 15-day CNY blackout.",
+      "venue": {
+        "cuisine": "Asian Hotpot",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Broth & Beyond",
+          "lat": 1.2966,
+          "lng": 103.8534,
+          "address": "30 Victoria St, CHIJMES, S187996"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "cafe-2000-the-buffet-restaurant",
+      "name": "Café 2000 / The Buffet Restaurant",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "M Hotel Singapore",
+        "cuisine": "Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "M Hotel Singapore",
+          "lat": 1.2745,
+          "lng": 103.846,
+          "address": "81 Anson Rd, S079908"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "capitol-bistro-bar-patisserie",
+      "name": "Capitol Bistro. Bar. Patisserie",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "⚠ Closing 10 Aug 2026 — remove after that date.",
+      "venue": {
+        "group": "The Capitol Kempinski",
+        "cuisine": "European",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The Capitol Kempinski",
+          "lat": 1.2939,
+          "lng": 103.8508,
+          "address": "15 Stamford Rd, S178906"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "chifa",
+      "name": "CHIFA!",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Mains/Whole Fish/Wok/Noodles only, quote 'AmexLD'.",
+      "venue": {
+        "group": "Resorts World Sentosa",
+        "cuisine": "Peruvian-Chinese",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Resorts World Sentosa",
+          "lat": 1.254,
+          "lng": 103.82,
+          "address": "8 Sentosa Gateway, S098269"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "chillax-welcome-drink-privilege",
+      "name": "Chillax — Welcome Drink Privilege",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Special Program",
+      "value_type": "free",
+      "details": "1-for-1 or complimentary welcome drink at Bar Intermezzo, The Dead Poets Society @ Chūan, The Bar at 15 Stamford (1-for-1); Botanico, The Riverhouse, Wildseed Bar, Monti, NOMI Dining Bar (complimentary with purchase).",
+      "venue": {
+        "cuisine": "Bars",
+        "tier": "bar",
+        "tier_group": "bar",
+        "pax": 1
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 24
+      },
+      "scores": {
+        "value": 8,
+        "accessibility": 100
+      },
+      "occasion_fit": {
+        "date_night": 31.5,
+        "business": 16.5,
+        "free_treat": 8
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Not specified",
+        "condition": "Free & Instant",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/chillax/"
+    },
+    {
+      "id": "clove",
+      "name": "CLOVE",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "PH/Valentine's/Mother's/Father's/F1 blackout.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "International Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "complimentary-annual-hotel-night",
+      "name": "Complimentary Annual Hotel Night",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Stay",
+      "value_type": "free",
+      "details": "One free night at 70+ curated properties across Asia-Pacific, Europe, Middle East & Australia, incl. Pan Pacific Orchard, JW Marriott South Beach, W Sentosa Cove, The Fullerton, St. Regis. Book ≥7 working days ahead; max 2 adults; min. 1-night gap between redemptions; no hotel loyalty points earned.",
+      "venue": {
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 400
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 65
+      },
+      "occasion_fit": {
+        "free_treat": 100
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "≥7 working days advance",
+        "condition": "Booking Required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/content/dam/amex/en-sg/benefits/the-platinum-card/platstay.pdf"
+    },
+    {
+      "id": "complimentary-hotel-stay-credit-fhr-hotel-collection",
+      "name": "Complimentary Hotel Stay Credit (FHR / Hotel Collection)",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Stay",
+      "value_type": "free",
+      "details": "Daily breakfast for 2 + min. US$100 (~S$135) property credit usable on dining/spa, at 1,600+ FHR properties worldwide (booked via Amex Travel). Value estimated for 2 stays/year, breakfast ~S$45/pax + prorated credit. Travel-linked, not a standalone visit.",
+      "venue": {
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 145
+      },
+      "scores": {
+        "value": 48.3,
+        "accessibility": 65
+      },
+      "occasion_fit": {
+        "free_treat": 48.3
+      },
+      "terms": {
+        "annual_cap": 2,
+        "advance": "Book stay via Amex Travel",
+        "condition": "Booking Required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
+      "id": "crossroads-cafe-and-lobby-lounge",
+      "name": "Crossroads Café & Lobby Lounge",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Excl. Steak Frites, Lobster Laksa/Roll.",
+      "venue": {
+        "group": "Singapore Marriott Tang Plaza",
+        "cuisine": "Asian-Western Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Singapore Marriott Tang Plaza",
+          "lat": 1.3048,
+          "lng": 103.8318,
+          "address": "320 Orchard Rd, S238865"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "cultivate-cafe",
+      "name": "Cultivate Café",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Advance reservation required.",
+      "venue": {
+        "cuisine": "Contemporary",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Cultivate Café",
+          "lat": 1.2794,
+          "lng": 103.8438,
+          "address": "2 Cook Street, Maxwell Reserve, S078857"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "ellenborough-market-cafe-blue-potato-crossroads-bar",
+      "name": "Ellenborough Market Café / Blue Potato / Crossroads Bar",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "No 3rd-party bookings.",
+      "venue": {
+        "group": "Paradox Singapore",
+        "cuisine": "Buffet / Western / Bar",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 42.9,
+        "discount_pct": 33
+      },
+      "scores": {
+        "value": 66,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 58,
+        "business": 50.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Paradox Singapore",
+          "lat": 1.2896,
+          "lng": 103.8447,
+          "address": "20 Merchant Rd, S058281"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "escape-restaurant",
+      "name": "Escape Restaurant",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Super Lobster Laksa, Wagyu striploin, premium items.",
+      "venue": {
+        "cuisine": "Contemporary",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Escape Restaurant",
+          "lat": 1.3123,
+          "lng": 103.854,
+          "address": "1 Farrer Park Station Rd, One Farrer Hotel, S217562"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "estate-hilton-sg-orchard",
+      "name": "Estate (Hilton SG Orchard)",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off buffet.",
+      "venue": {
+        "cuisine": "International Buffet",
+        "tier": "buffet_premium",
+        "tier_group": "buffet",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 196,
+        "gross_value_sgd": 29.4,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 67.3
+      },
+      "occasion_fit": {
+        "date_night": 27.5,
+        "business": 22.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Estate (Hilton SG Orchard)",
+          "lat": 1.3048,
+          "lng": 103.8318,
+          "address": "333 Orchard Rd, S238867"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "fine-hotels-resorts-the-hotel-collection",
+      "name": "Fine Hotels + Resorts / The Hotel Collection",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Booking Program",
+      "value_type": "access",
+      "summary": "1,600+ FHR properties (no min. nights) or 1,000+ Hotel Collection properties (min. 2 consecutive nights) via Amex Travel, with room upgrades and elite status add-ons.",
+      "details": "Both include: room upgrade (subject to availability), 12pm check-in, late check-out, max 3 rooms/stay. Elite status add-ons at no cost: Marriott Bonvoy Gold, Hilton Honors Gold, Radisson Rewards Premium, Pan Pacific DISCOVERY Platinum (entry requirement waived through 31 Dec 2026). See the 'Complimentary Hotel Stay Credit' card for the breakfast/property-credit component, scored separately.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
+      "id": "food-capital-riverside-terrace-sansara",
+      "name": "Food Capital / Riverside Terrace / SanSara",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "Grand Copthorne Waterfront",
+        "cuisine": "Buffet / Western / Multi",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Grand Copthorne Waterfront",
+          "lat": 1.2888,
+          "lng": 103.833,
+          "address": "392 Havelock Rd, S169663"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "global-dining-credit",
+      "name": "Global Dining Credit",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Statement Credit",
+      "value_type": "credit",
+      "details": "S$200/year statement credit, no minimum spend, usable in one or multiple transactions at 2,000+ restaurants across ~10 countries (Japan, HK, Australia, UK, US, etc.). Dine-in only; excludes gift cards, vouchers, takeaway/delivery. Enrolment required.",
+      "venue": {
+        "cuisine": "2,000+ restaurants, 10 countries",
+        "tier": "credit",
+        "tier_group": "other"
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 200,
+        "min_spend_to_activate": 0
+      },
+      "scores": {
+        "value": 50,
+        "accessibility": 100
+      },
+      "occasion_fit": {
+        "free_treat": 66.7
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Enrolment required, once per cardyear",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "global-lounge-collection",
+      "name": "Global Lounge Collection",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Airport Lounge Access",
+      "value_type": "access",
+      "summary": "1,550+ lounges / 500+ airports incl. Centurion Lounges, Amex International Lounges, Delta Sky Club, Plaza Premium, Escape, Lufthansa Lounges, and Priority Pass.",
+      "details": "Principal cardmember: unlimited visits, 1 guest/visit. Supplementary cardmember: capped to 4 Priority Pass visits/yr (+1 guest each) or 8 solo visits/yr since Feb 2025 — US$35 excess fee beyond that. Centurion Lounges (select cities: US, LHR, Haneda, HK, Sydney, Melbourne) cut guest allowance 2→1 from 8 Jul 2026, guest must share the same confirmed flight.",
+      "source": "https://www.americanexpress.com/en-sg/travel/lounges/the-platinum-card"
+    },
+    {
+      "id": "grand-hyatt-singapore",
+      "name": "Grand Hyatt Singapore",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off select outlets.",
+      "venue": {
+        "cuisine": "Multi-outlet",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 27,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 55
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Grand Hyatt Singapore",
+          "lat": 1.3068,
+          "lng": 103.8323,
+          "address": "10 Scotts Rd, S228211"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "gupshup",
+      "name": "Gupshup",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "≥24h advance, no 3rd-party bookings.",
+      "venue": {
+        "cuisine": "Indian",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Gupshup",
+          "lat": 1.3095,
+          "lng": 103.852,
+          "address": "301 Serangoon Road, S218224"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "harry-s",
+      "name": "Harry's",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Changi Airport outlets & all outlets during F1.",
+      "venue": {
+        "cuisine": "Western / Bar Dining",
+        "tier": "casual",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 110,
+        "gross_value_sgd": 55,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 81.7
+      },
+      "occasion_fit": {
+        "date_night": 65,
+        "business": 57.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Harry's",
+          "lat": 1.287,
+          "lng": 103.85,
+          "address": "28 Boat Quay, S049842"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "hotel-indigo-singapore-katong-garden",
+      "name": "Hotel Indigo Singapore Katong (Garden)",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte.",
+      "venue": {
+        "cuisine": "Café / Garden Dining",
+        "tier": "mid",
+        "tier_group": "casual",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 19.5,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 40,
+        "business": 32.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Hotel Indigo Singapore Katong",
+          "lat": 1.3053,
+          "lng": 103.9036,
+          "address": "86 East Coast Rd, S428788"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "jing-hotpot-and-grill-buffet",
+      "name": "JING Hotpot & Grill Buffet",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Phone booking required. Kids ≤5 free, 6–12 child rate.",
+      "venue": {
+        "cuisine": "Chinese Hotpot Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 88,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "JING Hotpot & Grill Buffet",
+          "lat": 1.3131,
+          "lng": 103.8977,
+          "address": "11 Tanjong Katong Rd, KINEX, S437157"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "jumbo-seafood",
+      "name": "JUMBO Seafood",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "20% off weekday lunch only.",
+      "venue": {
+        "cuisine": "Seafood",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 36,
+        "discount_pct": 20
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 62.5,
+        "business": 60
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "JUMBO Seafood",
+          "lat": 1.301,
+          "lng": 103.913,
+          "address": "Blk 1206 East Coast Pkwy, East Coast Seafood Centre, S449883"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "krisflyer-hotel-elite-status-and-membership-rewards",
+      "name": "KrisFlyer / Hotel Elite Status & Membership Rewards",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "2 Membership Rewards points per S$1.60 spent, up to 20 points/S$1.60 at 10Xcelerator partners (capped S$16,000 spend/yr).",
+      "details": "Auto-enrolled in the Frequent Traveller Option. Points transfer to airline/hotel partners (KrisFlyer, Hilton Honors, Marriott Bonvoy, etc.) or redeem via Pay with Points. Points forfeited 30 days after enrollment cancellation or on account termination.",
+      "source": "https://www.americanexpress.com/en-sg/campaigns/the-platinum-card/"
+    },
+    {
+      "id": "l-angelus",
+      "name": "L'Angélus",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. starters & 'To Share' items.",
+      "venue": {
+        "cuisine": "French",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "L'Angélus",
+          "lat": 1.2814,
+          "lng": 103.8459,
+          "address": "85 Club Street, S069453"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "lawry-s-the-prime-rib",
+      "name": "Lawry's The Prime Rib",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Blackout: Valentine's, Easter, Mother's/Father's, F1, Thanksgiving, Christmas 11–31 Dec.",
+      "venue": {
+        "cuisine": "Western Roast",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 120,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 100,
+        "business": 100
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Lawry's The Prime Rib",
+          "lat": 1.3018,
+          "lng": 103.8358,
+          "address": "333A Orchard Rd, Mandarin Gallery, S238897"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "les-bouchons",
+      "name": "Les Bouchons",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "3 outlets (Ann Siang / Robertson Quay / Rochester). Blackout: Valentine's, Mother's/Father's, F1, Christmas 11–31 Dec.",
+      "venue": {
+        "cuisine": "French Bistro / Steak-Frites",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Les Bouchons",
+          "lat": 1.281,
+          "lng": 103.8464,
+          "address": "7 Ann Siang Road, S069689"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "lobby-lounge-bar-at-15-stamford",
+      "name": "Lobby Lounge / Bar at 15 Stamford",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "The Capitol Kempinski",
+        "cuisine": "Asian / Bar Snacks",
+        "tier": "bar",
+        "tier_group": "bar"
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 31.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 62.5,
+        "business": 47.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The Capitol Kempinski",
+          "lat": 1.2939,
+          "lng": 103.8508,
+          "address": "15 Stamford Rd, S178906"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "madison-s",
+      "name": "Madison's",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "+15% off afternoon tea. Mon L&D 50% off up to 4 adults.",
+      "venue": {
+        "group": "Pullman Singapore Hill Street",
+        "cuisine": "Western",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Pullman Singapore Hill Street",
+          "lat": 1.2925,
+          "lng": 103.8493,
+          "address": "1 Hill Street, S179949"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "mimi",
+      "name": "Mimi",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "20% off food bill.",
+      "venue": {
+        "cuisine": "Asian Fusion",
+        "tier": "mid",
+        "tier_group": "casual",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 26,
+        "discount_pct": 20
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 45,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Mimi",
+          "lat": 1.2903,
+          "lng": 103.8467,
+          "address": "3A River Valley Rd, Clarke Quay, S179020"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "moga",
+      "name": "MOGA",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Adults-only from 6pm; dinner only Mon–Sat.",
+      "venue": {
+        "group": "Pullman Singapore Hill Street",
+        "cuisine": "Japanese Izakaya",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Pullman Singapore Hill Street",
+          "lat": 1.2925,
+          "lng": 103.8493,
+          "address": "1 Hill Street, S179949"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "mondrian-singapore-duxton",
+      "name": "Mondrian Singapore Duxton",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte.",
+      "venue": {
+        "cuisine": "Contemporary",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 27,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 55
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Mondrian Singapore Duxton",
+          "lat": 1.2789,
+          "lng": 103.8425,
+          "address": "16A Duxton Hill, S089970"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "mosella",
+      "name": "Mosella",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "Pan Pacific Orchard",
+        "cuisine": "Modern Mediterranean",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Pan Pacific Orchard",
+          "lat": 1.3057,
+          "lng": 103.8297,
+          "address": "10 Claymore Rd, S229540"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "napoleon-food-and-wine-bar",
+      "name": "Napoleon Food & Wine Bar",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "No 3rd-party bookings. Excl. Ibérico charcuterie, foie gras, caviar.",
+      "venue": {
+        "cuisine": "Contemporary / Wine Bar",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Napoleon Food & Wine Bar",
+          "lat": 1.2807,
+          "lng": 103.8484,
+          "address": "206 Telok Ayer Street, S068641"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "nox-dine-in-the-dark",
+      "name": "NOX – Dine in the Dark",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "Complimentary welcome drink with set menu purchase (treated here as ~10% equivalent value).",
+      "venue": {
+        "cuisine": "Experiential Dining",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 18,
+        "discount_pct": 10
+      },
+      "scores": {
+        "value": 20,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 52.5,
+        "business": 50
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "NOX – Dine in the Dark",
+          "lat": 1.281,
+          "lng": 103.8464,
+          "address": "83 Club Street, S069451"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "orchard-cafe-bar-intermezzo-hua-ting",
+      "name": "Orchard Café / Bar Intermezzo / Hua Ting",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Hua Ting Sun–Thu only, excl. premium items. 31-day CNY blackout.",
+      "venue": {
+        "group": "Orchard Hotel Singapore",
+        "cuisine": "Buffet / Western / Cantonese",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Orchard Hotel Singapore",
+          "lat": 1.304,
+          "lng": 103.828,
+          "address": "442 Orchard Rd, S238879"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "oscar-s-conrad-centennial",
+      "name": "Oscar's (Conrad Centennial)",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "Up to 25% off buffet.",
+      "venue": {
+        "cuisine": "International Buffet",
+        "tier": "buffet_premium",
+        "tier_group": "buffet",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 196,
+        "gross_value_sgd": 49,
+        "discount_pct": 25
+      },
+      "scores": {
+        "value": 50,
+        "accessibility": 67.3
+      },
+      "occasion_fit": {
+        "date_night": 37.5,
+        "business": 32.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Oscar's (Conrad Centennial)",
+          "lat": 1.2934,
+          "lng": 103.8592,
+          "address": "2 Temasek Blvd, S038982"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "oud-restaurant",
+      "name": "Oud Restaurant",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "⚠ Ineligible from 1 Sep 2026. Excl. Wagyu striploin, Argentinian ribeye.",
+      "venue": {
+        "cuisine": "Middle Eastern (Muslim-friendly)",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Oud Restaurant",
+          "lat": 1.3025,
+          "lng": 103.8596,
+          "address": "48 Kandahar Street, S198899"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "peach-garden",
+      "name": "Peach Garden",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "32-day CNY blackout.",
+      "venue": {
+        "cuisine": "Chinese",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Peach Garden",
+          "lat": 1.284,
+          "lng": 103.851,
+          "address": "65 Chulia Street, OCBC Centre, S049513"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "peony-jade",
+      "name": "Peony Jade",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte at Amara Singapore outlet.",
+      "venue": {
+        "cuisine": "Cantonese",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 27,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 55
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Peony Jade",
+          "lat": 1.276,
+          "lng": 103.8434,
+          "address": "165 Tanjong Pagar Rd, Amara Singapore, S088539"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "platinum-wine-credit",
+      "name": "Platinum Wine Credit",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Statement Credit",
+      "value_type": "credit",
+      "details": "S$400/year (2× S$200 half-yearly), requires min. S$300 single transaction per half via the Platinum Wine Website (Vivino-powered). For home dining/wine pairing, not restaurant use.",
+      "venue": {
+        "cuisine": "Wine / home dining pairing",
+        "tier": "credit",
+        "tier_group": "other"
+      },
+      "economics": {
+        "min_spend_sgd": 600,
+        "gross_value_sgd": 400,
+        "min_spend_to_activate": 600
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 0
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Single min-S$300 transaction per half-year",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "prego",
+      "name": "Prego",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "PH/Valentine's/Mother's/Father's/F1 blackout. Mondays: 50% off, up to 5 adults.",
+      "venue": {
+        "group": "Fairmont Singapore",
+        "cuisine": "Italian",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Fairmont Singapore",
+          "lat": 1.2934,
+          "lng": 103.852,
+          "address": "80 Bras Basah Rd, S189560"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "princess-terrace-tien-court-connections",
+      "name": "Princess Terrace / Tien Court / Connections",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "venue": {
+        "group": "Copthorne King's Hotel",
+        "cuisine": "Buffet / Chinese / Western",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Copthorne King's Hotel",
+          "lat": 1.2884,
+          "lng": 103.834,
+          "address": "403 Havelock Rd, S169632"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "purchase-protection-refund-protection-and-extended-warra",
+      "name": "Purchase Protection, Refund Protection & Extended Warranty",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Insurance & Protection",
+      "value_type": "access",
+      "summary": "S$10,000/incident (S$50,000 aggregate) theft/damage cover within 90 days of purchase; S$1,000/item refund protection; extended warranty up to S$10,000 per appliance.",
+      "details": "10% deductible on Purchase Protection claims; claims under S$150 excluded across all three. Jewelry, antiques, mobile phones, and consumables excluded from Refund Protection.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/nac-insurance/"
+    },
+    {
+      "id": "racines",
+      "name": "Racines",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Signatures/Main Courses categories only.",
+      "venue": {
+        "group": "Sofitel Singapore City Centre",
+        "cuisine": "French / Local",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Sofitel Singapore City Centre",
+          "lat": 1.2766,
+          "lng": 103.8455,
+          "address": "9 Wallich Street, S078885"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "regional-golf-programme",
+      "name": "Regional Golf Programme",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Golf",
+      "value_type": "discount",
+      "details": "Complimentary green fees (treated as ~50% value vs. a paying pair) at 5 SG clubs incl. Sentosa Golf Club, Orchid Country Club, Sembawang Country Club, Warren Golf & Country Club — must be accompanied by a paying companion. Weekday standard; weekend at select clubs. ≥4 working days advance (weekday), ≥7 days (weekend). Valid through 31 Dec 2026.",
+      "venue": {
+        "cuisine": "Golf",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "terms": {
+        "annual_cap": 6
+      },
+      "locations": [
+        {
+          "name": "Sentosa Golf Club",
+          "lat": 1.2487,
+          "lng": 103.8225,
+          "address": "27 Bukit Manis Rd, S099892"
+        },
+        {
+          "name": "Orchid Country Club",
+          "lat": 1.4234,
+          "lng": 103.7965,
+          "address": "1 Orchid Club Rd, S769162"
+        },
+        {
+          "name": "Sembawang Country Club",
+          "lat": 1.4184,
+          "lng": 103.8195,
+          "address": "249 Sembawang Rd, S758352"
+        },
+        {
+          "name": "Warren Golf & Country Club",
+          "lat": 1.3844,
+          "lng": 103.7025,
+          "address": "81 Choa Chu Kang Way, S688263"
+        }
+      ],
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "rooftop-88",
+      "name": "Rooftop 88",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% off à la carte.",
+      "venue": {
+        "cuisine": "Rooftop Bar",
+        "tier": "bar",
+        "tier_group": "bar",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 13.5,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 27.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Rooftop 88",
+          "lat": 1.3053,
+          "lng": 103.9036,
+          "address": "86 East Coast Rd, Hotel Indigo Katong, S428788"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "santi-s-pizza-and-produce",
+      "name": "Santi's Pizza & Produce",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "From The Oven / Sourdough Pizza / Pasta categories only.",
+      "venue": {
+        "cuisine": "Italian",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Santi's Pizza & Produce",
+          "lat": 1.2807,
+          "lng": 103.848,
+          "address": "138 Telok Ayer Street, S068603"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "sarai-fine-thai",
+      "name": "Sarai Fine Thai",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Curries/Meat/Seafood/Veg categories.",
+      "venue": {
+        "cuisine": "Thai",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Sarai Fine Thai",
+          "lat": 1.3072,
+          "lng": 103.8231,
+          "address": "163 Tanglin Rd, Tanglin Mall, S247933"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "sen-of-japan",
+      "name": "Sen of Japan",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Wagyu A5, Nodoguro, omakase platter, caviar. NDP blackout dates.",
+      "venue": {
+        "cuisine": "Japanese",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 120,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 100,
+        "business": 100
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Sen of Japan",
+          "lat": 1.2834,
+          "lng": 103.8607,
+          "address": "2 Bayfront Ave, Marina Bay Sands, S018956"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "shin-minori",
+      "name": "Shin Minori",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "10% off, min S$100 spend.",
+      "venue": {
+        "cuisine": "Japanese",
+        "tier": "mid",
+        "tier_group": "casual",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 13,
+        "discount_pct": 10
+      },
+      "scores": {
+        "value": 20,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 35,
+        "business": 27.5
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Shin Minori",
+          "lat": 1.2953,
+          "lng": 103.841,
+          "address": "81 Clemenceau Ave, UE Square, S239917"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "shopping-and-lifestyle-club-status",
+      "name": "Shopping & Lifestyle Club Status",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Status & Membership",
+      "value_type": "access",
+      "summary": "Complimentary upgraded tiers at Comoclub (C5), Marina Bay Sands Sands LifeStyle Prestige, and Paragon Club Prestige — normally gated behind high annual spend thresholds.",
+      "details": "Comoclub C5: dining/travel/fashion/wellness access. MBS Sands LifeStyle Prestige: direct entry, bypassing the usual S$5,000/yr spend requirement. Paragon Club Prestige: bypasses the usual S$20,000/yr requirement.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "si-chuan-dou-hua",
+      "name": "Si Chuan Dou Hua",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "3 dishes min for 2+ pax, excl. appetiser/soup/dim sum/dessert. 15-day CNY blackout.",
+      "venue": {
+        "cuisine": "Chinese / Sichuan",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 120,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 100,
+        "business": 100
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Si Chuan Dou Hua",
+          "lat": 1.284,
+          "lng": 103.851,
+          "address": "80 Raffles Place, UOB Plaza 1, S048624"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "skai-bar",
+      "name": "SKAI Bar",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Flat 20% off, max 10 pax. No blackout.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "Cocktail Bar",
+        "tier": "bar",
+        "tier_group": "bar"
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 18,
+        "discount_pct": 20
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 47.5,
+        "business": 32.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "skai-restaurant",
+      "name": "SKAI Restaurant",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Excl. Premium Selection, Artisanal Beef, Set Meals. No blackout.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "Contemporary Grill",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "skirt",
+      "name": "SKIRT",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "≥48h advance, quote 'AmexLD'.",
+      "venue": {
+        "group": "W Singapore Sentosa Cove",
+        "cuisine": "Western Steak",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "W Singapore Sentosa Cove",
+          "lat": 1.2444,
+          "lng": 103.8296,
+          "address": "21 Ocean Way, S098374"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "soi-social",
+      "name": "Soi Social",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Curries/Charcoal Grill/Mains only.",
+      "venue": {
+        "group": "Resorts World Sentosa",
+        "cuisine": "Thai",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Resorts World Sentosa",
+          "lat": 1.254,
+          "lng": 103.82,
+          "address": "8 Sentosa Gateway, S098269"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "sophia",
+      "name": "Sophia",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Excl. set lunch, Spaghetti All'Astice, Bistecca Fiorentina.",
+      "venue": {
+        "group": "The St. Regis Singapore",
+        "cuisine": "Italian",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The St. Regis Singapore",
+          "lat": 1.3068,
+          "lng": 103.8258,
+          "address": "29 Tanglin Rd, S247911"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "spa-rael",
+      "name": "Spa Rael",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Spa & Wellness",
+      "value_type": "discount",
+      "details": "20% off all à la carte services at Goodwood Park Hotel, valid through 31 Dec 2026.",
+      "venue": {
+        "cuisine": "Spa",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 1
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 18,
+        "discount_pct": 20
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 85
+      },
+      "terms": {
+        "annual_cap": 6
+      },
+      "locations": [
+        {
+          "name": "Spa Rael",
+          "lat": 1.3068,
+          "lng": 103.8323,
+          "address": "22 Scotts Rd, Goodwood Park Hotel, S228221"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/lifestyle/spa/index0.html"
+    },
+    {
+      "id": "table-for-two-platinum-edition",
+      "name": "Table for Two – Platinum Edition",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Special Program",
+      "value_type": "free",
+      "details": "Complimentary set menu for 2, up to 6x/year (one per 2-month cycle, no rollover). ~10 rotating venues incl. 15 Stamford, HighHouse, VUE, Colony @ Ritz-Carlton, Osteria Mozza, TANOKE. Book via Amex Experiences App only; QR voucher scan at venue.",
+      "venue": {
+        "cuisine": "Rotating tasting/set menus",
+        "tier": "fine",
+        "tier_group": "fine",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 0,
+        "gross_value_sgd": 120
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 70,
+        "business": 70,
+        "free_treat": 40
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Book via app per 2-month cycle window",
+        "condition": "Enrollment/App Booking Required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/dining/table-for-two/"
+    },
+    {
+      "id": "tajimaya-yakiniku",
+      "name": "Tajimaya Yakiniku",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "≥1 day advance. Wagyu/Steaks/Sukiyaki categories.",
+      "venue": {
+        "cuisine": "Japanese BBQ",
+        "tier": "ultra",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 300,
+        "gross_value_sgd": 150,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 50
+      },
+      "occasion_fit": {
+        "date_night": 97.5,
+        "business": 95
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Tajimaya Yakiniku",
+          "lat": 1.2647,
+          "lng": 103.8226,
+          "address": "1 HarbourFront Walk, VivoCity, S098585"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "tanoke",
+      "name": "TANOKE",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Otoro Aburi Handroll, Wagyu Trio, premium items.",
+      "venue": {
+        "cuisine": "Japanese Grill",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "TANOKE",
+          "lat": 1.2965,
+          "lng": 103.8534,
+          "address": "7 Purvis Street, S188586"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "tapas-24-singapore",
+      "name": "Tapas,24 Singapore",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Meat/Skewers/Seafood/Paella categories.",
+      "venue": {
+        "cuisine": "Spanish",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Tapas,24 Singapore",
+          "lat": 1.2903,
+          "lng": 103.8467,
+          "address": "60 Robertson Quay, S238252"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "the-cliff",
+      "name": "The Cliff",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Fixed 4-course Love Dining set, S$98++/pax. Lunch & dinner. Blackout Mother's/Father's/F1.",
+      "venue": {
+        "cuisine": "Western Fine Dining",
+        "tier": "fine",
+        "tier_group": "fine",
+        "pax": 2,
+        "fixed_set": true,
+        "set_price_sgd": 98
+      },
+      "economics": {
+        "min_spend_sgd": 196,
+        "gross_value_sgd": 188,
+        "discount_pct": 49
+      },
+      "scores": {
+        "value": 97.9,
+        "accessibility": 67.3
+      },
+      "occasion_fit": {
+        "date_night": 99,
+        "business": 99
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The Cliff",
+          "lat": 1.2494,
+          "lng": 103.8303,
+          "address": "2 Bukit Manis Rd, Sofitel Sentosa Resort, S099891"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "the-eight",
+      "name": "The Eight",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Same blackout as Prego.",
+      "venue": {
+        "group": "Fairmont Singapore",
+        "cuisine": "Western",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Fairmont Singapore",
+          "lat": 1.2934,
+          "lng": 103.852,
+          "address": "80 Bras Basah Rd, S189560"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-kitchen-table",
+      "name": "the kitchen table",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Sun Brunch 15% food only. Kids 1–5 free at buffet.",
+      "venue": {
+        "group": "W Singapore Sentosa Cove",
+        "cuisine": "Grill / Seafood",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "W Singapore Sentosa Cove",
+          "lat": 1.2444,
+          "lng": 103.8296,
+          "address": "21 Ocean Way, S098374"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-platinum-concierge-and-global-assist",
+      "name": "The Platinum Concierge & Global Assist",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Concierge & Assistance",
+      "value_type": "access",
+      "summary": "24/7 lifestyle concierge and global assistance hotline — 1800 392 1177 (SG) / +65 6392 1177 (intl).",
+      "details": "Used for Tower Club bookings, general lifestyle arrangements, emergency card replacement (within 1 business day, virtually anywhere), and global assistance services.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "the-singapore-edition",
+      "name": "The Singapore EDITION",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "Up to 15% off select outlets.",
+      "venue": {
+        "cuisine": "Contemporary",
+        "tier": "fine",
+        "tier_group": "fine",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 36,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 65,
+        "business": 65
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "The Singapore EDITION",
+          "lat": 1.3049,
+          "lng": 103.8253,
+          "address": "38 Cuscaden Rd, S249731"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "the-stamford-brasserie",
+      "name": "The Stamford Brasserie",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Standard tier except 20% flat on blackout dates.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "Bistro",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 45.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 60,
+        "business": 52.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-tea-room-st-regis-bar",
+      "name": "The Tea Room / St. Regis Bar",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Min 2 food items per diner (bar).",
+      "venue": {
+        "group": "The St. Regis Singapore",
+        "cuisine": "High Tea / Bar",
+        "tier": "high_tea",
+        "tier_group": "hightea"
+      },
+      "economics": {
+        "min_spend_sgd": 120,
+        "gross_value_sgd": 42,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 80
+      },
+      "occasion_fit": {
+        "date_night": 67.5,
+        "business": 57.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The St. Regis Singapore",
+          "lat": 1.3068,
+          "lng": 103.8258,
+          "address": "29 Tanglin Rd, S247911"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-ultimate-spa",
+      "name": "The Ultimate Spa",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Spa & Wellness",
+      "value_type": "discount",
+      "details": "25% off all à la carte spa services, valid through 31 Dec 2026. Members must be 21+.",
+      "venue": {
+        "cuisine": "Spa",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 1
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 22.5,
+        "discount_pct": 25
+      },
+      "scores": {
+        "value": 50,
+        "accessibility": 85
+      },
+      "terms": {
+        "annual_cap": 6
+      },
+      "locations": [
+        {
+          "name": "The Ultimate Spa",
+          "lat": 1.3007,
+          "lng": 103.8386,
+          "address": "111 Somerset Rd, TripleOne Somerset, S238164"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/lifestyle/spa/index0.html"
+    },
+    {
+      "id": "tower-club-singapore-access",
+      "name": "Tower Club Singapore Access",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Private Club Access",
+      "value_type": "access",
+      "summary": "Complimentary access to Atlantic Dining, Ba Xian Dining, Straits Bar & Fitness Centre at this private members' club — no joining fee for Platinum cardmembers.",
+      "details": "Daily caps: 8 members/day (dining), 5 members/day (fitness). 10% surcharge + 10% service charge on all spend. Book via Platinum Concierge (1800 392 1177), ≥1 working day advance for F&B.",
+      "locations": [
+        {
+          "name": "Tower Club Singapore",
+          "lat": 1.2836,
+          "lng": 103.8514,
+          "address": "9 Raffles Place, Republic Plaza, S048619"
+        }
+      ],
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "town-restaurant",
+      "name": "Town Restaurant",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Lunch Mon–Fri, dinner Wed–Sat only. Easter/F1/Thanksgiving blackout.",
+      "venue": {
+        "group": "The Fullerton Hotel",
+        "cuisine": "International Buffet",
+        "tier": "buffet_premium",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 196,
+        "gross_value_sgd": 68.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 67.3
+      },
+      "occasion_fit": {
+        "date_night": 47.5,
+        "business": 42.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The Fullerton Hotel",
+          "lat": 1.2864,
+          "lng": 103.8523,
+          "address": "1 Fullerton Square, S049178"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "travel-insurance",
+      "name": "Travel Insurance",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Insurance & Protection",
+      "value_type": "access",
+      "summary": "Trip cancellation/interruption up to S$10,000, flight delay up to S$400/person, baggage loss up to S$12,500/person/trip aggregate, accidental death up to S$1,000,000 on public transport.",
+      "details": "Automatically applies from the moment travel is booked on the Platinum Card, extending to immediate family and Supplementary Members. Key exclusions: pre-existing conditions, high-risk sports, claims under S$150. Full T&Cs and claims via the insurer's portal.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/travel-insurance/"
+    },
+    {
+      "id": "twg-tea",
+      "name": "TWG Tea",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Not hotel-managed — book direct, quote 'AMEX Love Dining'.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "All-day Dining",
+        "tier": "cafe",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 31.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 45
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "vineyard-at-hortpark",
+      "name": "Vineyard at HortPark",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Excl. Iberian pork, Lumina lamb, whole chicken, charcuterie board.",
+      "venue": {
+        "cuisine": "Western",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 90,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 92.5,
+        "business": 90
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Vineyard at HortPark",
+          "lat": 1.2814,
+          "lng": 103.8032,
+          "address": "33 Hyderabad Rd, HortPark, S119579"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "wan-hao-chinese-restaurant",
+      "name": "Wan Hao Chinese Restaurant",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Live Fish/Seafood/Meat/Veg/Rice/Noodle categories.",
+      "venue": {
+        "group": "Singapore Marriott Tang Plaza",
+        "cuisine": "Cantonese",
+        "tier": "upscale",
+        "tier_group": "upscale"
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 63,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 77.5,
+        "business": 75
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Singapore Marriott Tang Plaza",
+          "lat": 1.3048,
+          "lng": 103.8318,
+          "address": "320 Orchard Rd, S238865"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "winnie-the-pooh-high-tea-20-off",
+      "name": "Winnie the Pooh High Tea — 20% Off",
+      "category": "dining",
+      "section": "progs",
+      "subcategory": "Seasonal",
+      "value_type": "discount",
+      "details": "20% off themed high tea at SKAI (L70, Swissôtel The Stamford). Adults only; reserve before 10am same day.",
+      "venue": {
+        "group": "Swissôtel The Stamford",
+        "cuisine": "Themed High Tea",
+        "tier": "high_tea",
+        "tier_group": "hightea",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 120,
+        "gross_value_sgd": 24,
+        "discount_pct": 20
+      },
+      "scores": {
+        "value": 40,
+        "accessibility": 80
+      },
+      "occasion_fit": {
+        "date_night": 52.5,
+        "business": 42.5
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Same-day before 10am",
+        "third_party_barred": false,
+        "expires": "2026-08-30"
+      },
+      "locations": [
+        {
+          "name": "Swissôtel The Stamford",
+          "lat": 1.2934,
+          "lng": 103.8524,
+          "address": "2 Stamford Rd, S178882"
+        }
+      ],
+      "source": "https://www.americanexpress.com/en-sg/benefits/love-dining/offers/index.html"
+    },
+    {
+      "id": "woobar-wet-deck",
+      "name": "WOOBAR / WET Deck",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Beverages excluded from discount base.",
+      "venue": {
+        "group": "W Singapore Sentosa Cove",
+        "cuisine": "Bar / Lounge",
+        "tier": "bar",
+        "tier_group": "bar"
+      },
+      "economics": {
+        "min_spend_sgd": 90,
+        "gross_value_sgd": 31.5,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 85
+      },
+      "occasion_fit": {
+        "date_night": 62.5,
+        "business": 47.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "W Singapore Sentosa Cove",
+          "lat": 1.2444,
+          "lng": 103.8296,
+          "address": "21 Ocean Way, S098374"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "wooloomooloo-steakhouse",
+      "name": "Wooloomooloo Steakhouse",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "Fixed 'Amex Exclusive' 4-course set, S$168++/pax. Alt: voucher path needs min S$250 à la carte spend, Sun–Thu only.",
+      "venue": {
+        "cuisine": "Western Steakhouse",
+        "tier": "fine",
+        "tier_group": "fine",
+        "pax": 2,
+        "fixed_set": true,
+        "set_price_sgd": 168
+      },
+      "economics": {
+        "min_spend_sgd": 336,
+        "gross_value_sgd": 48,
+        "discount_pct": 12.5
+      },
+      "scores": {
+        "value": 25,
+        "accessibility": 44
+      },
+      "occasion_fit": {
+        "date_night": 62.5,
+        "business": 62.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Wooloomooloo Steakhouse",
+          "lat": 1.284,
+          "lng": 103.851,
+          "address": "80 Raffles Place, UOB Plaza 1, S048624"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "xin-cuisine-chinese-restaurant",
+      "name": "Xin Cuisine Chinese Restaurant",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "No 3rd-party bookings. 15-day CNY + Valentine's/Mother's/Father's eve blackout.",
+      "venue": {
+        "cuisine": "Chinese",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 120,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 100,
+        "business": 100
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Xin Cuisine Chinese Restaurant",
+          "lat": 1.2802,
+          "lng": 103.8394,
+          "address": "317 Outram Rd, Holiday Inn Atrium, S169075"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "yan-ting",
+      "name": "Yan Ting",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "details": "Min 2 dishes. Excl. weekend dim sum brunch.",
+      "venue": {
+        "group": "The St. Regis Singapore",
+        "cuisine": "Cantonese Fine Dining",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "The St. Regis Singapore",
+          "lat": 1.3068,
+          "lng": 103.8258,
+          "address": "29 Tanglin Rd, S247911"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "yellow-pot",
+      "name": "Yellow Pot",
+      "category": "dining",
+      "section": "ldr",
+      "value_type": "discount",
+      "details": "≥24h advance, no 3rd-party bookings. 15-day CNY blackout.",
+      "venue": {
+        "cuisine": "Chinese / Claypot",
+        "tier": "mid",
+        "tier_group": "casual"
+      },
+      "economics": {
+        "min_spend_sgd": 130,
+        "gross_value_sgd": 65,
+        "discount_pct": 50
+      },
+      "scores": {
+        "value": 100,
+        "accessibility": 78.3
+      },
+      "occasion_fit": {
+        "date_night": 75,
+        "business": 67.5
+      },
+      "terms": {
+        "annual_cap": 12,
+        "advance": "Varies 0–2 days by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Yellow Pot",
+          "lat": 1.2789,
+          "lng": 103.8425,
+          "address": "83 Duxton Rd, Duxton Reserve, S089540"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    }
+  ]
+}

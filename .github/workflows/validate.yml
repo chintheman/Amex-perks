@@ -1,0 +1,30 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  data:
+    name: data + parity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      # No runtime dependencies — the gate and the parity test are plain node.
+      - run: node scripts/validate.mjs
+      - run: node scripts/test-parity.mjs
+      # Cross-check with a standards-compliant validator, not just our own.
+      - run: npx --yes ajv-cli@5 validate --spec=draft2020 -s schema/benefits-data.schema.json -d site/benefits-data.json
+
+  page:
+    name: page
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/test-page.mjs

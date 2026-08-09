@@ -1,0 +1,19 @@
+{
+  "name": "amex-perks",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Unofficial guide to American Express Platinum benefits in Singapore — a static page over a validated JSON data file.",
+  "scripts": {
+    "serve": "python3 -m http.server 8811 --directory site",
+    "schema": "node scripts/build-schema.mjs",
+    "migrate": "node scripts/migrate-v1-to-v2.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test:parity": "node scripts/test-parity.mjs",
+    "test:page": "node scripts/test-page.mjs",
+    "test": "npm run validate && npm run test:parity && npm run test:page"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amex Platinum Benefits Guide — Singapore</title>
+<meta name="description" content="An independent guide to every American Express Platinum benefit in Singapore: ranked dining picks, the minimum path to break even, and a searchable list of all benefits.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2300175A'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='16' font-weight='bold' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{
+  color-scheme:light;
+  --page:#F2F4F8; --card:#FFFFFF; --sunk:#E9EDF3;
+  --ink:#0B1220; --sec:#46536B; --muted:#75808F;
+  --line:rgba(11,18,32,0.1); --linestrong:rgba(11,18,32,0.22);
+  --blue:#006FCF; --navy:#00175A; --hero1:#000F33;
+  --link:#005EB0; --linkh:#003C74;
+  --cat-dining:#2a78d6; --cat-lifestyle:#eb6834;
+  --type-discount:#2a78d6; --type-free:#1baf7a; --type-credit:#4a3aa7; --type-access:#82878F;
+  --status-good:#12833B; --status-warning:#B27B00; --status-serious:#C2410C; --status-critical:#C0152F;
+  --sans:'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif;
+  --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --shadow:0 1px 2px rgba(11,18,32,0.06);
+  --wrap:1080px; --gut:clamp(14px,4vw,24px);
+}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0A0E17; --card:#121828; --sunk:#0D1320;
+  --ink:#F2F4F8; --sec:#B7C0CD; --muted:#828C9D;
+  --line:rgba(255,255,255,0.1); --linestrong:rgba(255,255,255,0.24);
+  --blue:#3E93E0; --navy:#0A2A6E; --hero1:#050B1D;
+  --link:#74B4EF; --linkh:#A3CDF5;
+  --cat-dining:#3987e5; --cat-lifestyle:#d95926;
+  --type-discount:#3987e5; --type-free:#199e70; --type-credit:#9085e9; --type-access:#8b8d8f;
+  --status-good:#2fbf3f; --status-warning:#eab73a; --status-serious:#f0895f; --status-critical:#e66767;
+  --shadow:0 1px 2px rgba(0,0,0,0.45);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;min-height:100vh;background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;}
+a{color:var(--link);} a:hover{color:var(--linkh);}
+input::placeholder{color:var(--muted);}
+button{font-family:var(--sans);cursor:pointer;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+[hidden]{display:none !important;}
+@keyframes pbgRiseA{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@keyframes pbgRiseB{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+}
+.leaflet-popup-content{font-family:var(--sans);font-size:12.5px;}
+.leaflet-popup-content b{font-size:13px;}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut);}
+.mono{font-family:var(--mono);}
+.riseA{animation:pbgRiseA .35s ease both;}
+.riseB{animation:pbgRiseB .35s ease both;}
+
+/* ── header ─────────────────────────────────────────────────────────── */
+.hdr{position:sticky;top:0;z-index:600;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.12);}
+.hdr__in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:11px;padding-bottom:11px;}
+.hdr__brand{display:flex;flex-direction:column;color:#fff;}
+.hdr__name{font-weight:800;font-size:14.5px;letter-spacing:-0.01em;line-height:1.2;}
+.hdr__sub{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+.hdr__nav{display:flex;gap:8px;align-items:center;}
+.tab{border:1px solid transparent;background:none;color:rgba(255,255,255,0.75);border-radius:6px;padding:7px 12px;font-size:12px;font-weight:700;white-space:nowrap;}
+.tab[aria-current="page"]{background:rgba(255,255,255,0.16);color:#fff;border-color:rgba(255,255,255,0.45);}
+.themebtn{border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);color:#fff;border-radius:6px;padding:7px 11px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+
+/* ── hero ───────────────────────────────────────────────────────────── */
+.hero{background:var(--hero1);color:#fff;border-bottom:4px solid var(--blue);}
+.hero__in{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(22px,4vw,40px);align-items:center;padding-top:clamp(30px,6vw,48px);padding-bottom:clamp(26px,5vw,40px);}
+.hero__eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#9CC6F2;}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin:12px 0 10px;color:#fff;text-wrap:balance;}
+.hero__lede{margin:0;font-size:15px;line-height:1.5;color:rgba(255,255,255,0.78);max-width:46ch;text-wrap:pretty;}
+.stats{display:flex;gap:22px;margin-top:20px;flex-wrap:wrap;list-style:none;padding:0;}
+.stats__val{display:block;font-family:var(--mono);font-weight:600;font-size:22px;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1;}
+.stats__lbl{display:block;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:600;margin-top:3px;}
+.fresh{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,0.72);}
+.fresh__dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,0.25);}
+.hero__art{display:flex;justify-content:center;}
+.cardshot{width:310px;max-width:100%;aspect-ratio:1.586;border-radius:16px;box-shadow:0 30px 70px -24px rgba(0,0,0,0.6);overflow:hidden;margin:0;background:linear-gradient(135deg,#233247,#0d1626);}
+.cardshot img{width:100%;height:100%;object-fit:cover;display:block;}
+.cardshot__ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;border:1px dashed rgba(255,255,255,0.28);border-radius:16px;font-size:12px;color:rgba(255,255,255,0.6);}
+
+/* ── task picker ────────────────────────────────────────────────────── */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;padding:22px 0 8px;}
+.mode{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:9px;padding:15px 17px;box-shadow:var(--shadow);color:var(--ink);transition:border-color .15s;}
+.mode__label{display:block;font-size:15px;font-weight:800;letter-spacing:-0.01em;}
+.mode__desc{display:block;font-size:12px;color:var(--sec);margin-top:3px;}
+.mode[aria-pressed="true"]{background:color-mix(in srgb,var(--blue) 8%,var(--card));border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 15%,transparent);}
+.mode[aria-pressed="true"] .mode__label{color:var(--blue);}
+.mode__tick{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:6px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;}
+
+/* ── shared bits ────────────────────────────────────────────────────── */
+.view{padding:20px 0 56px;}
+.chip{border:1px solid var(--linestrong);background:var(--sunk);color:var(--sec);border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;transition:background .15s;}
+.chip[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue);}
+.chip--sm{padding:7px 12px;font-size:12px;}
+.grouphead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px;padding-bottom:7px;border-bottom:2px solid var(--linestrong);}
+.grouphead__l{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;min-width:0;}
+.grouphead h3{margin:0;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:var(--ink);}
+.grouphead__desc{font-size:11.5px;color:var(--muted);}
+.grouphead__n{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;}
+.groups{display:flex;flex-direction:column;}
+.num{display:block;font-family:var(--mono);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;}
+.numlbl{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:3px;}
+.chev{color:var(--muted);font-size:10px;transition:transform .15s;}
+[aria-expanded="true"] .chev{transform:rotate(180deg);}
+.badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+.badge{font-size:10px;font-weight:800;padding:2px 8px;border-radius:5px;color:#fff;}
+.badge--type{text-transform:uppercase;letter-spacing:.05em;}
+.badge--fit{font-family:var(--mono);font-weight:700;background:var(--sunk);color:var(--blue);}
+.body{font-size:12.5px;color:var(--sec);margin:0;text-wrap:pretty;}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:11px;}
+.foot__meta{color:var(--muted);font-weight:600;}
+.foot a{text-decoration:none;font-weight:700;}
+.ghostbtn{border:1px solid var(--linestrong);background:var(--card);color:var(--blue);border-radius:6px;padding:8px 14px;font-size:12px;font-weight:700;}
+
+/* ── eat view ───────────────────────────────────────────────────────── */
+.occbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:16px;}
+.occbar__lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:8px;}
+.mapcard{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
+.mapcard__head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.mapcard__head h3{margin:0;font-size:13.5px;font-weight:800;color:var(--ink);}
+.mapcard__n{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+#pbg-map{height:clamp(280px,45vh,400px);width:100%;background:var(--sunk);}
+.viewhead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.viewhead h2{margin:0;font-size:clamp(18px,2.4vw,22px);font-weight:800;letter-spacing:-0.015em;color:var(--ink);}
+.viewhead__n{font-family:var(--mono);font-size:11px;color:var(--muted);}
+.groups--eat{gap:26px;}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:10px;}
+.pick{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--typecolor);border-radius:9px;box-shadow:var(--shadow);overflow:hidden;align-self:start;}
+.pick__btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;background:none;border:none;text-align:left;}
+.pick__l{min-width:0;display:flex;gap:9px;align-items:flex-start;}
+.pick__rank{flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:var(--blue);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.pick__name{display:block;font-size:14px;font-weight:800;color:var(--ink);line-height:1.3;}
+.pick__venue{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
+.pick__r{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+.pick__num{text-align:right;}
+.pick__num .num{font-size:16px;}
+.pick__body{padding:12px 15px 13px;border-top:1px solid var(--line);}
+.morebtn{margin-top:10px;}
+.browseall{display:flex;justify-content:center;margin-top:20px;}
+.browseall button{border:1px solid var(--linestrong);background:var(--card);color:var(--sec);border-radius:6px;padding:10px 18px;font-size:12.5px;font-weight:700;}
+
+/* ── payback view ───────────────────────────────────────────────────── */
+.pb__intro{max-width:70ch;margin-bottom:18px;}
+.pb__intro h2{font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.015em;margin:0 0 6px;color:var(--ink);}
+.pb__intro p{margin:0;font-size:14px;color:var(--sec);text-wrap:pretty;}
+.pb__panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,3vw,26px);box-shadow:var(--shadow);}
+.pb__top{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.pb__total{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1;}
+.pb__gloss{color:var(--sec);font-size:13px;max-width:46ch;}
+.pb__gloss b{color:var(--ink);}
+.pb__bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;margin:16px 0 4px;}
+.pb__fill{height:100%;background:var(--blue);border-radius:5px;transition:width .8s cubic-bezier(.2,.7,.2,1);}
+.pb__step{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);}
+.pb__n{width:30px;height:30px;border-radius:9px;background:var(--sunk);color:var(--sec);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;}
+.pb__step--clears .pb__n{background:var(--status-good);color:#fff;}
+.pb__title{font-size:13.5px;font-weight:700;color:var(--ink);}
+.pb__cond{font-size:12px;color:var(--muted);margin-top:2px;}
+.pb__vals{text-align:right;}
+.pb__plus{font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.pb__cum{font-family:var(--mono);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;}
+
+/* ── browse view ────────────────────────────────────────────────────── */
+.controls{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:var(--shadow);margin-bottom:16px;display:flex;flex-direction:column;gap:10px;}
+.controls__row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.controls input[type="search"]{flex:1 1 200px;padding:10px 14px;border-radius:6px;border:1px solid var(--linestrong);background:var(--sunk);color:var(--ink);font-family:var(--sans);font-size:14px;outline-color:var(--blue);}
+.controls select{padding:9px 12px;border-radius:6px;border:1px solid var(--linestrong);background:var(--sunk);color:var(--ink);font-family:var(--sans);font-size:13px;font-weight:600;}
+.controls__reset{border:1px solid var(--linestrong);background:var(--sunk);color:var(--sec);border-radius:6px;padding:9px 14px;font-size:12px;font-weight:700;}
+.resultcount{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;}
+.groups--browse{gap:22px;}
+.list{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;}
+.row{border-top:1px solid var(--line);border-left:3px solid var(--typecolor);}
+.row__btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 15px;background:none;border:none;text-align:left;}
+.row__l{flex:1;min-width:0;}
+.row__name{display:block;font-size:13.5px;font-weight:800;color:var(--ink);line-height:1.35;}
+.row__gist{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.row__r{display:flex;align-items:center;gap:12px;flex:0 0 auto;}
+.row__grade{font-family:var(--mono);font-size:10.5px;font-weight:700;}
+.row__num{text-align:right;min-width:54px;}
+.row__num .num{font-size:15px;}
+.row__body{padding:2px 15px 13px;}
+.row__venue{font-size:10.5px;color:var(--sec);font-weight:700;}
+.empty{padding:44px;text-align:center;color:var(--muted);font-size:14px;background:var(--card);border:1px dashed var(--linestrong);border-radius:10px;}
+
+/* ── footer ─────────────────────────────────────────────────────────── */
+.ftr{background:#0B1220;color:rgba(255,255,255,0.85);padding:40px 0 28px;}
+.ftr__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px;}
+.ftr h4{color:#fff;font-size:15px;font-weight:800;margin:0 0 10px;}
+.ftr h4.sm{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;}
+.ftr p{color:rgba(255,255,255,0.65);font-size:13px;max-width:48ch;margin:0 0 12px;text-wrap:pretty;}
+.ftr ul{list-style:none;padding:0;margin:0;font-size:12.5px;line-height:2.1;}
+.ftr a{color:#fff;}
+.ftr__methodbtn{border:1px solid rgba(255,255,255,0.35);background:none;color:#fff;border-radius:6px;padding:7px 13px;font-size:11.5px;font-weight:700;}
+.ftr__bottom{max-width:var(--wrap);margin:24px auto 0;padding:16px var(--gut) 0;font-size:12px;color:rgba(255,255,255,0.5);border-top:1px solid rgba(255,255,255,0.14);}
+
+/* ── methodology modal ──────────────────────────────────────────────── */
+.modal{position:fixed;inset:0;z-index:900;background:rgba(4,8,18,0.6);display:flex;align-items:center;justify-content:center;padding:18px;}
+.modal__panel{background:var(--card);color:var(--ink);border-radius:12px;max-width:560px;width:100%;max-height:82vh;overflow-y:auto;padding:clamp(20px,4vw,28px);box-shadow:0 30px 80px -20px rgba(0,0,0,0.5);}
+.modal__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.modal__head h3{margin:0;font-size:17px;font-weight:800;}
+.modal__x{border:1px solid var(--linestrong);background:var(--sunk);color:var(--sec);border-radius:6px;padding:5px 11px;font-size:12px;font-weight:800;}
+.modal__formula{font-family:var(--mono);font-size:12px;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:13px 15px;margin-bottom:16px;overflow-x:auto;white-space:pre;}
+.modal__type{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+.modal__sw{flex:0 0 auto;width:11px;height:11px;border-radius:4px;margin-top:5px;}
+.modal__type b{font-size:13px;}
+.modal__typedesc{display:block;font-size:12px;color:var(--sec);margin-top:1px;}
+.modal__bands{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;}
+.modal__band{border-radius:6px;padding:4px 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;}
+.modal__caveats{font-size:12px;color:var(--sec);padding-left:16px;margin:8px 0 0;display:flex;flex-direction:column;gap:5px;}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <span class="hdr__brand">
+      <span class="hdr__name">Amex Platinum Guide</span>
+      <span class="hdr__sub">Unofficial · Singapore</span>
+    </span>
+    <nav class="hdr__nav" aria-label="Views">
+      <button type="button" class="tab" data-act="mode" data-mode="eat" aria-current="page">Eat</button>
+      <button type="button" class="tab" data-act="mode" data-mode="payback">Payback</button>
+      <button type="button" class="tab" data-act="mode" data-mode="browse">Browse</button>
+      <button type="button" class="themebtn" data-act="theme" id="themebtn">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero__in">
+    <div>
+      <div class="hero__eyebrow">American Express Platinum Card · Singapore</div>
+      <h1>Where does your card actually pay off?</h1>
+      <p class="hero__lede">An independent guide to every Amex Platinum benefit in Singapore. Pick a task below — that's it.</p>
+      <ul class="stats" id="stats"></ul>
+      <div class="fresh"><span class="fresh__dot" aria-hidden="true"></span><span id="freshness">Loading…</span></div>
+    </div>
+    <div class="hero__art">
+      <figure class="cardshot">
+        <img src="./assets/amex-platinum-card.jpg" alt="The American Express Platinum Card"
+             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'cardshot__ph',textContent:'Photo of the Amex Platinum Card'}))">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<main class="wrap" id="main">
+  <div class="picker" id="picker"></div>
+
+  <section class="view" id="view-eat" hidden>
+    <div class="occbar" id="occbar"><span class="occbar__lbl">Occasion</span></div>
+    <div class="mapcard">
+      <div class="mapcard__head">
+        <h3 id="map-title">All dining venues</h3>
+        <span class="mapcard__n" id="map-count">0 locations</span>
+      </div>
+      <div id="pbg-map" role="img" aria-label="Map of dining venues in Singapore"></div>
+    </div>
+    <div class="viewhead">
+      <h2 id="eat-title">Top dining picks</h2>
+      <span class="viewhead__n" id="eat-count"></span>
+    </div>
+    <div class="groups groups--eat" id="eat-groups"></div>
+    <div class="browseall"><button type="button" data-act="mode" data-mode="browse" id="browseall"></button></div>
+  </section>
+
+  <section class="view" id="view-payback" hidden></section>
+
+  <section class="view" id="view-browse" hidden>
+    <div class="controls">
+      <div class="controls__row">
+        <input type="search" id="search" placeholder="Search benefits, venues, cuisines…" aria-label="Search benefits">
+        <select id="sort" aria-label="Sort results"></select>
+        <button type="button" class="controls__reset" data-act="reset">Reset</button>
+      </div>
+      <div class="controls__row" id="section-chips"></div>
+    </div>
+    <div class="resultcount" id="result-count" role="status"></div>
+    <div class="groups groups--browse" id="browse-groups"></div>
+    <div class="empty" id="no-results" hidden>No benefits match those filters.</div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap ftr__grid">
+    <div>
+      <h4>Amex Platinum Guide — Singapore</h4>
+      <p>Independent — not affiliated with or endorsed by American Express. Data refreshes every two weeks; reconfirm terms with Amex or the venue before relying on a benefit.</p>
+      <button type="button" class="ftr__methodbtn" data-act="method-open">How scoring works</button>
+    </div>
+    <div>
+      <h4 class="sm">Primary sources</h4>
+      <ul>
+        <li><a href="https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html" target="_blank" rel="noopener">Love Dining · Restaurants</a></li>
+        <li><a href="https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html" target="_blank" rel="noopener">Love Dining · Hotels</a></li>
+        <li><a href="https://www.americanexpress.com/sg/benefits/promotions/dining/" target="_blank" rel="noopener">Dining Promotions</a></li>
+        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/" target="_blank" rel="noopener">Travel &amp; Hotel Benefits</a></li>
+        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/" target="_blank" rel="noopener">Access &amp; Credits</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="sm">Update cadence</h4>
+      <ul class="mono" id="cadence"></ul>
+    </div>
+  </div>
+  <div class="ftr__bottom">Not official American Express material. Map tiles © OpenStreetMap contributors, © CARTO. Figures are estimates.</div>
+</footer>
+
+<div id="modal-root"></div>
+
+<script type="module">
+import * as core from './guide-core.js';
+
+// ─────────────────────────────────────────────────────────────── state
+const state = {
+  data: null,
+  mode: 'eat',
+  occasion: null,
+  q: '',
+  section: 'all',
+  sort: 'composite_desc',
+  expanded: new Set(),
+  eatMore: new Set(),
+  theme: 'light',
+  showMethod: false,
+};
+
+let map = null;
+let markers = [];
+let mapSig = null;
+let animFlip = false;
+let animSig = null;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+// ─────────────────────────────────────────────────────────────── theme
+function applyTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  $('themebtn').textContent = theme === 'dark' ? 'Light' : 'Dark';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('pbg-theme');
+  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+}
+
+// ────────────────────────────────────────────────────── entry view model
+function vm(e, rank) {
+  const isAccess = e.value_type === 'access';
+  const fit = state.occasion ? e.occasion_fit[state.occasion] : null;
+  let num;
+  let numLbl;
+  if (e.discount_pct != null) { num = `${e.discount_pct}%`; numLbl = 'off'; }
+  else if (isAccess) { num = '—'; numLbl = 'info'; }
+  else { num = core.fmtMoney(e.annual_value_sgd); numLbl = 'per year'; }
+  return {
+    e,
+    rank,
+    num,
+    numLbl,
+    open: state.expanded.has(e.id),
+    venue: e.venue_group || e.cuisine || e.subcategory || '',
+    hasVenue: !!(e.venue_group || e.cuisine),
+    typeColor: core.vr(core.TYPE_VAR[e.value_type]),
+    typeLabel: state.data.tax.valueTypeByKey[e.value_type].label,
+    gradeColor: core.vr(core.GRADE_VAR[e.grade] || '--muted'),
+    fit,
+    // v1 showed the short summary here for `access` rows and never rendered
+    // their richer `details`; v2 prefers details and falls back to summary.
+    body: e.details || e.summary || '',
+    foot: isAccess
+      ? 'Unscored'
+      : `Score ${e.composite_score}/100${e.min_spend_sgd ? ` · Min spend ${core.fmtMoney(e.min_spend_sgd)}` : ''}`,
+  };
+}
+
+const badgesHtml = (v) => `
+  <div class="badges">
+    <span class="badge badge--type" style="background:${v.typeColor}">${esc(v.typeLabel)}</span>
+    ${v.e.grade ? `<span class="badge" style="background:${v.gradeColor}">${esc(v.e.grade)}</span>` : ''}
+    ${v.fit != null ? `<span class="badge badge--fit">Fit ${esc(v.fit)}/100</span>` : ''}
+    ${v.showVenue && v.hasVenue ? `<span class="row__venue">${esc(v.venue)}</span>` : ''}
+  </div>`;
+
+const footHtml = (v) => `
+  <div class="foot">
+    <span class="foot__meta">${esc(v.foot)}</span>
+    <a href="${esc(v.e.source)}" target="_blank" rel="noopener">Source ↗</a>
+  </div>`;
+
+// ───────────────────────────────────────────────────────────── eat view
+function pickHtml(v) {
+  const { e } = v;
+  return `
+  <article class="pick" style="--typecolor:${v.typeColor}">
+    <button type="button" class="pick__btn" data-act="toggle" data-id="${esc(e.id)}"
+            aria-expanded="${v.open}" aria-controls="d-${esc(e.id)}">
+      <span class="pick__l">
+        ${v.rank != null ? `<span class="pick__rank">${v.rank}</span>` : ''}
+        <span style="min-width:0">
+          <span class="pick__name">${esc(e.name)}</span>
+          <span class="pick__venue">${esc(v.venue)}</span>
+        </span>
+      </span>
+      <span class="pick__r">
+        <span class="pick__num"><span class="num">${esc(v.num)}</span><span class="numlbl">${esc(v.numLbl)}</span></span>
+        <span class="chev" aria-hidden="true">▼</span>
+      </span>
+    </button>
+    ${v.open ? `<div class="pick__body" id="d-${esc(e.id)}">${badgesHtml(v)}<p class="body">${esc(v.body)}</p>${footHtml(v)}</div>` : ''}
+  </article>`;
+}
+
+function renderEat() {
+  const d = state.data;
+  const rows = core.eatRows(d, state.occasion);
+  const occ = state.occasion ? d.tax.occasions.find((o) => o.key === state.occasion) : null;
+
+  $('map-title').textContent = occ ? `Dining venues · ${occ.label}` : 'All dining venues';
+  $('eat-title').textContent = occ ? `Top picks for ${occ.label.toLowerCase()}` : 'Top dining picks';
+  $('eat-count').textContent = `${rows.length} benefits · top 3 per group`;
+  $('browseall').textContent = `Browse all ${d.entries.length} benefits →`;
+
+  const html = d.tax.tier_groups.map((g) => {
+    const inGroup = rows.filter((e) => e.tier_group === g.key);
+    if (!inGroup.length) return '';
+    const open = state.eatMore.has(g.key);
+    const shown = open ? inGroup : inGroup.slice(0, 3);
+    return `
+    <div>
+      <div class="grouphead">
+        <span class="grouphead__l"><h3>${esc(g.label)}</h3><span class="grouphead__desc">${esc(g.desc)}</span></span>
+        <span class="grouphead__n">${plural(inGroup.length, 'benefit')}</span>
+      </div>
+      <div class="cardgrid">
+        ${shown.map((e, i) => pickHtml(vm(e, state.occasion ? i + 1 : null))).join('')}
+      </div>
+      ${inGroup.length > 3 ? `<button type="button" class="ghostbtn morebtn" data-act="more" data-group="${esc(g.key)}">${open ? 'Show top 3 only' : `Show all ${inGroup.length}`}</button>` : ''}
+    </div>`;
+  }).join('');
+
+  setGroups($('eat-groups'), html);
+  syncMap(rows);
+}
+
+// ────────────────────────────────────────────────────────── payback view
+function renderPayback() {
+  const d = state.data;
+  const pb = core.paybackView(d);
+  const fee = core.fmtMoney(d.card.annual_fee_sgd);
+  $('view-payback').innerHTML = `
+    <div class="pb__intro">
+      <h2>Minimum path to break even</h2>
+      <p>The fewest benefits you'd need to use to clear the ${esc(fee)} annual fee.</p>
+    </div>
+    <div class="pb__panel">
+      <div class="pb__top">
+        <div class="pb__total">${esc(pb.total)}</div>
+        <div class="pb__gloss">reached after <b>${esc(pb.count)} benefits</b> — clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.</div>
+      </div>
+      <div class="pb__bar"><div class="pb__fill" style="width:${pb.pct}%"></div></div>
+      <div>
+        ${pb.steps.map((s) => `
+          <div class="pb__step${s.clearsHere ? ' pb__step--clears' : ''}">
+            <span class="pb__n">${esc(s.num)}</span>
+            <div>
+              <div class="pb__title">${esc(s.name)}${s.clearsHere ? ' — fee cleared here' : ''}</div>
+              <div class="pb__cond">${esc(s.condition)}</div>
+            </div>
+            <div class="pb__vals">
+              <div class="pb__plus">${esc(s.plus)}</div>
+              <div class="pb__cum">${esc(s.cum)}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────── browse view
+function rowHtml(v) {
+  const { e } = v;
+  return `
+  <div class="row" style="--typecolor:${v.typeColor}">
+    <button type="button" class="row__btn" data-act="toggle" data-id="${esc(e.id)}"
+            aria-expanded="${v.open}" aria-controls="b-${esc(e.id)}">
+      <span class="row__l">
+        <span class="row__name">${esc(e.name)}</span>
+        <span class="row__gist">${esc(e.gist)}</span>
+      </span>
+      <span class="row__r">
+        ${e.grade ? `<span class="row__grade" style="color:${v.gradeColor}">${esc(e.grade)}</span>` : ''}
+        <span class="row__num"><span class="num">${esc(v.num)}</span><span class="numlbl">${esc(v.numLbl)}</span></span>
+        <span class="chev" aria-hidden="true">▼</span>
+      </span>
+    </button>
+    ${v.open ? `<div class="row__body" id="b-${esc(e.id)}">${badgesHtml(v)}<p class="body">${esc(v.body)}</p>${footHtml(v)}</div>` : ''}
+  </div>`;
+}
+
+function renderBrowse() {
+  const d = state.data;
+  const rows = core.getFiltered(d.entries, { q: state.q, sort: state.sort });
+  let shown = 0;
+
+  const html = d.tax.sections
+    .filter((s) => state.section === 'all' || s.key === state.section)
+    .map((s) => {
+      const inSection = rows.filter((e) => e.section === s.key);
+      if (!inSection.length) return '';
+      shown += inSection.length;
+      return `
+      <div>
+        <div class="grouphead">
+          <span class="grouphead__l"><h3>${esc(s.label)}</h3><span class="grouphead__desc">${esc(s.desc)}</span></span>
+          <span class="grouphead__n">${plural(inSection.length, 'benefit')}</span>
+        </div>
+        <div class="list">${inSection.map((e) => rowHtml({ ...vm(e, null), showVenue: true })).join('')}</div>
+      </div>`;
+    }).join('');
+
+  setGroups($('browse-groups'), html);
+  $('result-count').textContent = `${shown} of ${d.entries.length} benefits`;
+  $('no-results').hidden = shown !== 0;
+}
+
+// Swap the two identical keyframes so the entrance animation replays on every
+// filter change — same trick the prototype used.
+function setGroups(el, html) {
+  el.innerHTML = html;
+  const sig = [state.mode, state.q, state.section, state.occasion, state.sort].join('|');
+  if (sig !== animSig) { animSig = sig; animFlip = !animFlip; }
+  el.className = `${el.className.replace(/ ?rise[AB]/g, '')} ${animFlip ? 'riseA' : 'riseB'}`;
+}
+
+// ──────────────────────────────────────────────────────────────── chrome
+function renderPicker() {
+  const d = state.data;
+  const modes = [
+    { key: 'eat', label: 'Find a place to eat', desc: 'Ranked dining picks, on a map' },
+    { key: 'payback', label: 'Is the fee worth it?', desc: `Break-even path for ${core.fmtMoney(d.card.annual_fee_sgd)}` },
+    { key: 'browse', label: 'Browse all benefits', desc: `Search & filter all ${d.entries.length}` },
+  ];
+  $('picker').innerHTML = modes.map((m) => `
+    <button type="button" class="mode" data-act="mode" data-mode="${m.key}" aria-pressed="${state.mode === m.key}">
+      <span class="mode__label">${esc(m.label)}</span>
+      <span class="mode__desc">${esc(m.desc)}</span>
+      ${state.mode === m.key ? '<span class="mode__tick" aria-hidden="true">✓</span>' : ''}
+    </button>`).join('');
+
+  for (const tab of document.querySelectorAll('.tab')) {
+    if (state.mode === tab.dataset.mode) tab.setAttribute('aria-current', 'page');
+    else tab.removeAttribute('aria-current');
+  }
+  $('view-eat').hidden = state.mode !== 'eat';
+  $('view-payback').hidden = state.mode !== 'payback';
+  $('view-browse').hidden = state.mode !== 'browse';
+}
+
+function renderChips() {
+  const d = state.data;
+  const chip = (label, active, act, val) =>
+    `<button type="button" class="chip${act === 'section' ? ' chip--sm' : ''}" data-act="${act}" data-val="${esc(val)}" aria-pressed="${active}">${esc(label)}</button>`;
+
+  $('occbar').innerHTML = '<span class="occbar__lbl">Occasion</span>'
+    + chip('Any', state.occasion === null, 'occ', '')
+    + d.tax.occasions.map((o) => chip(o.label, state.occasion === o.key, 'occ', o.key)).join('');
+
+  $('section-chips').innerHTML = chip('All', state.section === 'all', 'section', 'all')
+    + d.tax.sections.map((s) => chip(s.chip, state.section === s.key, 'section', s.key)).join('');
+}
+
+function renderStatic() {
+  const d = state.data;
+  $('stats').innerHTML = core.heroStats(d).slice(0, 3).map((s) => `
+    <li><span class="stats__val">${esc(s.val)}</span><span class="stats__lbl">${esc(s.lbl)}</span></li>`).join('');
+  $('freshness').textContent =
+    `Verified ${core.fmtDate(d.generated_at)} · Next refresh ${core.fmtDate(d.next_refresh)}`;
+  $('cadence').innerHTML = [
+    `Generated: ${core.fmtDate(d.generated_at)}`,
+    `Next refresh: ${core.fmtDate(d.next_refresh)}`,
+    `Cycle: every ${d.refresh_days ?? 14} days`,
+  ].map((t) => `<li>${esc(t)}</li>`).join('');
+  $('sort').innerHTML = core.SORTS.map((o) =>
+    `<option value="${esc(o.value)}">${esc(o.label)}</option>`).join('');
+  $('sort').value = state.sort;
+}
+
+// ───────────────────────────────────────────────────────────────── modal
+function renderModal() {
+  const root = $('modal-root');
+  if (!state.showMethod) { root.innerHTML = ''; return; }
+  const d = state.data;
+  root.innerHTML = `
+    <div class="modal" data-act="method-close">
+      <div class="modal__panel" role="dialog" aria-modal="true" aria-label="How the Value Score works" data-stop>
+        <div class="modal__head">
+          <h3>How the Value Score works</h3>
+          <button type="button" class="modal__x" data-act="method-close" aria-label="Close">✕</button>
+        </div>
+        <div class="modal__formula">score = ${d.scoring.weights.value} × value_score
+      + ${d.scoring.weights.accessibility} × accessibility_score</div>
+        ${d.tax.value_types.map((t) => `
+          <div class="modal__type">
+            <span class="modal__sw" style="background:${core.vr(core.TYPE_VAR[t.key])}"></span>
+            <span><b>${esc(t.label)}</b><span class="modal__typedesc">${esc(t.definition)}</span></span>
+          </div>`).join('')}
+        <div class="modal__bands">
+          ${d.tax.grade_bands.map((b, i) => {
+    const hi = i === 0 ? 100 : d.tax.grade_bands[i - 1].min - 0.1;
+    const range = i === d.tax.grade_bands.length - 1 ? `<${d.tax.grade_bands[i - 1].min}` : `${b.min}-${Math.round(hi)}`;
+    return `<span class="modal__band" style="background:${core.vr(core.GRADE_VAR[b.grade] || '--muted')}">${esc(b.grade)} · ${esc(range)}</span>`;
+  }).join('')}
+        </div>
+        <b style="font-size:12.5px">Caveats</b>
+        <ul class="modal__caveats">${(d.caveats || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  root.querySelector('.modal__x')?.focus();
+}
+
+// ─────────────────────────────────────────────────────────────────── map
+function ensureMap() {
+  if (state.mode !== 'eat' || map) return;
+  const el = $('pbg-map');
+  if (typeof L === 'undefined' || !el || !el.clientHeight) { setTimeout(ensureMap, 200); return; }
+  map = core.createMap(el, state.theme === 'dark');
+  mapSig = null;
+  if (map) syncMap(core.eatRows(state.data, state.occasion));
+}
+
+function syncMap(rows) {
+  if (!map) { ensureMap(); return; }
+  const sig = String(state.occasion);
+  if (sig === mapSig) return;
+  mapSig = sig;
+  const res = core.updateMarkers(map, rows, markers);
+  markers = res.markers;
+  $('map-count').textContent = plural(res.count, 'location');
+}
+
+// ────────────────────────────────────────────────────────────────── render
+function render() {
+  renderPicker();
+  renderChips();
+  if (state.mode === 'eat') { renderEat(); ensureMap(); }
+  else if (state.mode === 'payback') renderPayback();
+  else renderBrowse();
+  renderModal();
+}
+
+// ────────────────────────────────────────────────────────────────── events
+document.addEventListener('click', (ev) => {
+  const stop = ev.target.closest('[data-stop]');
+  const el = ev.target.closest('[data-act]');
+  if (!el) return;
+  const act = el.dataset.act;
+  if (act === 'method-close' && stop && !ev.target.closest('.modal__x')) return;
+
+  if (act === 'theme') {
+    const next = state.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('pbg-theme', next);
+    applyTheme(next);
+    if (map) {
+      core.setMapTiles(map, next === 'dark');
+      setTimeout(() => map?.invalidateSize(), 60);
+    }
+    return;
+  }
+  if (!state.data) return;
+
+  switch (act) {
+    case 'mode':
+      state.mode = el.dataset.mode;
+      state.showMethod = false;
+      window.scrollTo({ top: 0 });
+      break;
+    case 'occ':
+      state.occasion = el.dataset.val || null;
+      state.expanded.clear();
+      state.eatMore.clear();
+      break;
+    case 'section':
+      state.section = el.dataset.val;
+      break;
+    case 'toggle': {
+      const id = el.dataset.id;
+      if (state.expanded.has(id)) state.expanded.delete(id); else state.expanded.add(id);
+      break;
+    }
+    case 'more': {
+      const g = el.dataset.group;
+      if (state.eatMore.has(g)) state.eatMore.delete(g); else state.eatMore.add(g);
+      break;
+    }
+    case 'reset':
+      state.q = '';
+      state.section = 'all';
+      state.sort = 'composite_desc';
+      $('search').value = '';
+      $('sort').value = state.sort;
+      break;
+    case 'method-open': state.showMethod = true; break;
+    case 'method-close': state.showMethod = false; break;
+    default: return;
+  }
+  render();
+});
+
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape' && state.showMethod) { state.showMethod = false; render(); }
+});
+
+$('search').addEventListener('input', (ev) => { state.q = ev.target.value; renderBrowse(); });
+$('sort').addEventListener('change', (ev) => { state.sort = ev.target.value; renderBrowse(); });
+
+// ──────────────────────────────────────────────────────────────────── boot
+initTheme();
+try {
+  state.data = await core.loadData();
+  renderStatic();
+  render();
+} catch (err) {
+  console.error(err);
+  $('main').innerHTML = `<div class="empty" style="margin:32px 0">Could not load the benefits data. ${esc(err.message)}</div>`;
+}
+</script>
+</body>
+</html>

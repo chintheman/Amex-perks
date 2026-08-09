@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["/site/benefits-data.json"],
+      "url": "./schema/benefits-data.schema.json"
+    }
+  ]
+}
