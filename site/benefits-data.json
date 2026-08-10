@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-08",
-  "next_refresh": "2026-08-22",
+  "generated_at": "2026-08-11",
+  "next_refresh": "2026-08-25",
   "refresh_days": 14,
   "card": {
     "name": "The Platinum Card® (American Express, Singapore)",
@@ -246,6 +246,22 @@
     ]
   },
   "entries": [
+    {
+      "id": "10xcelerator-bonus-points",
+      "name": "10Xcelerator Bonus Points",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "10 Membership Rewards points per S$1.60 at partner merchants — annual enrolment required.",
+      "details": "Up to 10 bonus points per S$1.60 on the first S$16,000 of cumulative spend at participating Platinum 10Xcelerator partners in Singapore, when you enrol at go.amex/bonusmrenrolment-plat between 1 January and 31 December 2026. Spend beyond S$16,000 continues to earn a total of 10 points per S$1.60. Enrolment must be repeated each year.",
+      "terms": {
+        "advance": "Annual enrolment required",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
+    },
     {
       "id": "15-stamford-restaurant",
       "name": "15 Stamford Restaurant",
@@ -1071,6 +1087,22 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
     },
     {
+      "id": "comoclub-c5-tier",
+      "name": "Comoclub C5 Tier",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Private Club Access",
+      "value_type": "access",
+      "summary": "C5 membership tier for 12 months, bypassing the usual spending requirement.",
+      "details": "Curated experiences, limited-edition items and invitation-only events across the COMO Group and its partners. Enrol through the Amex Experiences App. Available until 31 December 2026.",
+      "terms": {
+        "advance": "Enrol via Amex Experiences App",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
       "id": "complimentary-annual-hotel-night",
       "name": "Complimentary Annual Hotel Night",
       "category": "lifestyle",
@@ -1334,14 +1366,25 @@
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
     },
     {
-      "id": "fine-hotels-resorts-the-hotel-collection",
-      "name": "Fine Hotels + Resorts / The Hotel Collection",
+      "id": "extended-warranty-protection",
+      "name": "Extended Warranty Protection",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Insurance & Protection",
+      "value_type": "access",
+      "summary": "Up to S$10,000 on appliances that fail during the extended warranty period.",
+      "details": "Covers appliances bought on the Platinum Card that stop working because of unforeseen electrical or mechanical problems, once the manufacturer warranty has run out.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/"
+    },
+    {
+      "id": "fine-hotels-resorts",
+      "name": "Fine Hotels + Resorts",
       "category": "lifestyle",
       "section": "life",
       "subcategory": "Hotel Booking Program",
       "value_type": "access",
-      "summary": "Room upgrade, daily breakfast for two, and a US$100 property credit at 1,600+ FHR hotels.",
-      "details": "Both include: room upgrade (subject to availability), 12pm check-in, late check-out, max 3 rooms/stay. Elite status add-ons at no cost: Marriott Bonvoy Gold, Hilton Honors Gold, Radisson Rewards Premium, Pan Pacific DISCOVERY Platinum (entry requirement waived through 31 Dec 2026). See the 'Complimentary Hotel Stay Credit' card for the breakfast/property-credit component, scored separately.",
+      "summary": "Benefits averaging S$800 per stay at 1,600+ properties, with no minimum-night requirement.",
+      "details": "Every stay includes 12 PM check-in when available, a room upgrade when available, daily breakfast for two, a US$100 property credit, complimentary Wi-Fi and a guaranteed 4 PM late check-out. Booked through American Express Travel. Some room categories are not eligible for upgrade and the credit varies by property.",
       "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
     },
     {
@@ -1383,6 +1426,33 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "foreign-currency-bonus-points",
+      "name": "Foreign Currency Bonus Points",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "Up to 7 points per S$1.60 on your first S$15,000 of foreign-currency spend.",
+      "details": "Equivalent to about 2.19 miles per S$1 spent, on any currency other than Singapore dollars, from 23 February 2026 to 22 February 2027. Enrolment is required at go.amex/bonusmrfx-plat — unenrolled spend earns the base rate only.",
+      "terms": {
+        "advance": "Enrolment required",
+        "third_party_barred": false,
+        "expires": "2027-02-22"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
+    },
+    {
+      "id": "fraud-protection-guarantee",
+      "name": "Fraud Protection Guarantee",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Insurance & Protection",
+      "value_type": "access",
+      "summary": "Account monitoring, online protection and fraud alerts, with no liability for fraudulent charges.",
+      "details": "Always on, nothing to enrol in. Covers account monitoring, online safety protection and fraud alerts across all spend on the card.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/"
     },
     {
       "id": "global-dining-credit",
@@ -1549,6 +1619,36 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
     },
     {
+      "id": "hertz-gold-plus-rewards-five-star",
+      "name": "Hertz Gold Plus Rewards Five Star",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Car Rental",
+      "value_type": "access",
+      "summary": "Complimentary Hertz Five Star status — discounts, upgrades and priority service.",
+      "details": "Enrol in the programme and book directly with Hertz, quoting your Gold Plus Rewards Five Star membership number. Benefits do not apply to bookings made through third parties.",
+      "terms": {
+        "advance": "Enrolment required, book direct",
+        "third_party_barred": true
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
+      "id": "hilton-honors-gold-status",
+      "name": "Hilton Honors Gold Status",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Status",
+      "value_type": "access",
+      "summary": "Complimentary Hilton Honors Gold at 6,600+ properties worldwide.",
+      "details": "Space-available room upgrades and an 80% bonus on all base points earned. A Hilton Honors membership number is required before enrolling, and the name and email must match your American Express account exactly.",
+      "terms": {
+        "advance": "Enrolment required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
       "id": "hotel-indigo-singapore-katong-garden",
       "name": "Hotel Indigo Singapore Katong (Garden)",
       "category": "dining",
@@ -1588,6 +1688,21 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "international-airline-program",
+      "name": "International Airline Program",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Air Travel",
+      "value_type": "access",
+      "summary": "Exclusive premium-cabin savings with Singapore Airlines, Qatar, Etihad and Emirates.",
+      "details": "Booked through American Express Travel Online, for solo travel or up to 8 tickets, across a variety of premium cabins. Available to both Basic and Supplementary Card Members.",
+      "terms": {
+        "advance": "Book via Amex Travel Online",
+        "third_party_barred": true
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
     },
     {
       "id": "jing-hotpot-and-grill-buffet",
@@ -1669,17 +1784,6 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
-    },
-    {
-      "id": "krisflyer-hotel-elite-status-and-membership-rewards",
-      "name": "KrisFlyer / Hotel Elite Status & Membership Rewards",
-      "category": "lifestyle",
-      "section": "life",
-      "subcategory": "Rewards Program",
-      "value_type": "access",
-      "summary": "2 Membership Rewards points per S$1.60 spent, up to 20 points/S$1.60 at 10Xcelerator partners (capped S$16,000 spend/yr).",
-      "details": "Auto-enrolled in the Frequent Traveller Option. Points transfer to airline/hotel partners (KrisFlyer, Hilton Honors, Marriott Bonvoy, etc.) or redeem via Pay with Points. Points forfeited 30 days after enrollment cancellation or on account termination.",
-      "source": "https://www.americanexpress.com/en-sg/campaigns/the-platinum-card/"
     },
     {
       "id": "l-angelus",
@@ -1881,6 +1985,47 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "marriott-bonvoy-gold-elite-status",
+      "name": "Marriott Bonvoy Gold Elite Status",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Status",
+      "value_type": "access",
+      "summary": "Complimentary Marriott Bonvoy Gold Elite without the usual night requirement.",
+      "details": "Room upgrade at check-in when available and a 25% points bonus over base-level members, across Marriott Bonvoy properties. Enrolment in Marriott Bonvoy is required first. Gold Elite amenities cannot be combined with Fine Hotels + Resorts benefits on the same stay.",
+      "terms": {
+        "advance": "Enrolment required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
+      "id": "member-invites",
+      "name": "Member Invites",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "Three invites that unlock the highest available offer for friends, and earn you points.",
+      "details": "Each invite gives the recipient the best offer currently available on their card of choice, and pays you referral points when they are approved. Three per year.",
+      "terms": {
+        "annual_cap": 3,
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
+    },
+    {
+      "id": "membership-rewards-base-earn",
+      "name": "Membership Rewards — Base Earn",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "2 Membership Rewards points for every S$1.60 spent, and the points never expire.",
+      "details": "The standing earn rate on all eligible spend. Exclusions apply. Points do not expire while the account is open, which is what makes the bonus programmes below worth enrolling in rather than banking on.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
     },
     {
       "id": "mimi",
@@ -2249,6 +2394,79 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
     },
     {
+      "id": "pan-pacific-discovery-platinum-status",
+      "name": "Pan Pacific DISCOVERY Platinum Status",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Status",
+      "value_type": "access",
+      "summary": "DISCOVERY Platinum without the usual 10 qualifying nights or US$5,000 spend.",
+      "details": "Request through the Amex Experiences App. After validation — normally within two weeks — you receive an email invitation to complete the upgrade. Available until 31 December 2026.",
+      "terms": {
+        "advance": "Request via Amex Experiences App",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
+      "id": "pan-pacific-hotels-group",
+      "name": "Pan Pacific Hotels Group",
+      "category": "dining",
+      "section": "promo",
+      "value_type": "discount",
+      "details": "15% savings on dining across participating Pan Pacific and PARKROYAL restaurants in Singapore.",
+      "venue": {
+        "cuisine": "Multi-outlet",
+        "tier": "upscale",
+        "tier_group": "upscale",
+        "pax": 2
+      },
+      "economics": {
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 27,
+        "discount_pct": 15
+      },
+      "scores": {
+        "value": 30,
+        "accessibility": 70
+      },
+      "occasion_fit": {
+        "date_night": 57.5,
+        "business": 55
+      },
+      "terms": {
+        "annual_cap": 6,
+        "advance": "Varies by outlet",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Pan Pacific Singapore",
+          "lat": 1.2929,
+          "lng": 103.8583,
+          "address": "7 Raffles Blvd, Marina Square, S039595"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "paragon-club-prestige-tier",
+      "name": "Paragon Club Prestige Tier",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Private Club Access",
+      "value_type": "access",
+      "summary": "Prestige tier without the usual S$25,000 calendar-year spend.",
+      "details": "Sign up as a new Paragon Club member with your unique promo code for a complimentary upgrade to Prestige, valid for six months. Available until 31 December 2026.",
+      "terms": {
+        "advance": "Enrolment required, promo code",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
       "id": "peach-garden",
       "name": "Peach Garden",
       "category": "dining",
@@ -2330,13 +2548,29 @@
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
     },
     {
+      "id": "platinum-private-spaces",
+      "name": "Platinum Private Spaces",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Special Program",
+      "value_type": "access",
+      "summary": "Exclusive spaces and events through 2026, announced in the Amex Experiences App.",
+      "details": "Environments crafted for comfort, connection and events, released through the year rather than as a standing entitlement. Availability is announced in the Amex Experiences App, so it needs checking rather than booking.",
+      "terms": {
+        "advance": "Watch the Amex Experiences App",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
       "id": "platinum-wine-credit",
       "name": "Platinum Wine Credit",
       "category": "lifestyle",
       "section": "life",
       "subcategory": "Statement Credit",
       "value_type": "credit",
-      "details": "S$400/year (2× S$200 half-yearly), requires min. S$300 single transaction per half via the Platinum Wine Website (Vivino-powered). For home dining/wine pairing, not restaurant use.",
+      "details": "S$400 per calendar year, as two S$200 credits — one from January to June and another from July to December — each requiring a minimum S$300 single transaction on the Platinum Wine Website, powered by Vivino. A further S$50 comes off your bill when you spend S$600 or more.",
       "venue": {
         "cuisine": "Wine / home dining pairing",
         "tier": "credit",
@@ -2440,15 +2674,15 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
     },
     {
-      "id": "purchase-protection-refund-protection-and-extended-warra",
-      "name": "Purchase Protection, Refund Protection & Extended Warranty",
+      "id": "purchase-protection",
+      "name": "Purchase Protection",
       "category": "lifestyle",
       "section": "life",
       "subcategory": "Insurance & Protection",
       "value_type": "access",
-      "summary": "Theft/damage cover to S$10,000 per incident, refund protection, and +1 year of warranty.",
-      "details": "10% deductible on Purchase Protection claims; claims under S$150 excluded across all three. Jewelry, antiques, mobile phones, and consumables excluded from Refund Protection.",
-      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/nac-insurance/"
+      "summary": "Up to S$10,000 to replace or repair items stolen or damaged within 90 days of purchase.",
+      "details": "Applies to items bought on the Platinum Card. Cover runs for 90 days from the date of purchase.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/"
     },
     {
       "id": "racines",
@@ -2492,13 +2726,29 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
     },
     {
+      "id": "radisson-rewards-premium-status",
+      "name": "Radisson Rewards Premium Status",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Status",
+      "value_type": "access",
+      "summary": "Straight to Radisson Rewards Premium — early check-in, late check-out, 27 points per dollar.",
+      "details": "Includes a members-only rate of up to 15% off. Enrolment in Radisson Rewards is required before the upgrade can be applied.",
+      "terms": {
+        "advance": "Enrolment required",
+        "third_party_barred": false
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
+    },
+    {
       "id": "regional-golf-programme",
       "name": "Regional Golf Programme",
       "category": "lifestyle",
       "section": "life",
       "subcategory": "Golf",
       "value_type": "discount",
-      "details": "Complimentary green fees (treated as ~50% value vs. a paying pair) at 5 SG clubs incl. Sentosa Golf Club, Orchid Country Club, Sembawang Country Club, Warren Golf & Country Club — must be accompanied by a paying companion. Weekday standard; weekend at select clubs. ≥4 working days advance (weekday), ≥7 days (weekend). Valid through 31 Dec 2026.",
+      "summary": "Complimentary green fees at over 50 local and regional golf clubs when you bring a paying companion.",
+      "details": "Complimentary green fees (treated as ~50% value versus a paying pair) at over 50 local and regional golf clubs, including Sentosa Golf Club, Orchid Country Club, Sembawang Country Club and Warren Golf & Country Club in Singapore — you must be accompanied by at least one paying companion. Weekday standard, weekend at select clubs. Bookings go through The Platinum Concierge on 1800 392 1177. Valid through 31 December 2026. The map shows the Singapore clubs only; the programme is regional.",
       "venue": {
         "cuisine": "Golf",
         "tier": "upscale",
@@ -2515,7 +2765,8 @@
         "accessibility": 70
       },
       "terms": {
-        "annual_cap": 6
+        "annual_cap": 6,
+        "advance": "Book via The Platinum Concierge"
       },
       "locations": [
         {
@@ -2544,6 +2795,17 @@
         }
       ],
       "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
+    },
+    {
+      "id": "return-guarantee",
+      "name": "Return Guarantee",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Insurance & Protection",
+      "value_type": "access",
+      "summary": "Up to S$1,000 per item when a retailer will not take an eligible purchase back.",
+      "details": "Applies to eligible items bought on the Platinum Card from a retailer in your country of residence, within 90 days of purchase.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/"
     },
     {
       "id": "rooftop-88",
@@ -2585,6 +2847,23 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
+      "id": "sands-lifestyle-prestige-membership",
+      "name": "Marina Bay Sands — Sands LifeStyle Prestige",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Private Club Access",
+      "value_type": "access",
+      "summary": "Prestige tier without the usual S$5,000 calendar-year spend.",
+      "details": "Prestige status for three months, extended by a further nine months when you spend at least S$1,500 on eligible transactions within that first three-month period. Enrolment is required. Available until 31 December 2026.",
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Enrolment required",
+        "third_party_barred": false,
+        "expires": "2026-12-31"
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
     },
     {
       "id": "santi-s-pizza-and-produce",
@@ -2707,6 +2986,38 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
     },
     {
+      "id": "sheraton-towers-singapore-weddings",
+      "name": "Sheraton Towers Singapore — Weddings",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Weddings",
+      "value_type": "discount",
+      "details": "True Love Weddings: 5% off new wedding packages at Sheraton Towers Singapore. The minimum spend below is an estimate for a typical banquet of around 20 tables — Amex and the hotel do not publish package prices.",
+      "economics": {
+        "min_spend_sgd": 30000,
+        "gross_value_sgd": 1500,
+        "discount_pct": 5
+      },
+      "scores": {
+        "value": 10,
+        "accessibility": 20
+      },
+      "terms": {
+        "annual_cap": 1,
+        "advance": "Advance booking, new packages only",
+        "third_party_barred": false
+      },
+      "locations": [
+        {
+          "name": "Sheraton Towers Singapore",
+          "lat": 1.3117,
+          "lng": 103.8399,
+          "address": "39 Scotts Rd, S228230"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
+    },
+    {
       "id": "shin-minori",
       "name": "Shin Minori",
       "category": "dining",
@@ -2748,17 +3059,6 @@
       "source": "https://www.americanexpress.com/sg/benefits/promotions/dining/"
     },
     {
-      "id": "shopping-and-lifestyle-club-status",
-      "name": "Shopping & Lifestyle Club Status",
-      "category": "lifestyle",
-      "section": "life",
-      "subcategory": "Status & Membership",
-      "value_type": "access",
-      "summary": "Complimentary upgraded status at Comoclub, Marina Bay Sands Sands LifeStyle, and Tower Club.",
-      "details": "Comoclub C5: dining/travel/fashion/wellness access. MBS Sands LifeStyle Prestige: direct entry, bypassing the usual S$5,000/yr spend requirement. Paragon Club Prestige: bypasses the usual S$20,000/yr requirement.",
-      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
-    },
-    {
       "id": "si-chuan-dou-hua",
       "name": "Si Chuan Dou Hua",
       "category": "dining",
@@ -2797,6 +3097,17 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
+    },
+    {
+      "id": "singapore-airlines-scoot-bonus-points",
+      "name": "Singapore Airlines / Scoot Bonus Points",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Rewards Program",
+      "value_type": "access",
+      "summary": "5 Membership Rewards points per S$1.60 booked directly with SIA or Scoot.",
+      "details": "Applies to purchases made directly with Singapore Airlines and Scoot. Excludes KrisShop, onboard purchases and KrisShop.com. Stacks with the Airline Credit, which covers the same booking channel.",
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
     },
     {
       "id": "skai-bar",
@@ -3277,6 +3588,21 @@
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-hotel-collection",
+      "name": "The Hotel Collection",
+      "category": "lifestyle",
+      "section": "life",
+      "subcategory": "Hotel Booking Program",
+      "value_type": "access",
+      "summary": "Signature perks at 1,000+ upscale hotels, on stays of two consecutive nights or more.",
+      "details": "Room upgrade on arrival when available and a property credit, at over 1,000 curated upscale hotels. Booked through American Express Travel. Distinct from Fine Hotels + Resorts, which has no minimum-night requirement and a broader benefit set.",
+      "terms": {
+        "advance": "Book via Amex Travel, min. 2 consecutive nights",
+        "third_party_barred": true
+      },
+      "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/"
     },
     {
       "id": "the-kitchen-table",

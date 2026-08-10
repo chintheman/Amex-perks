@@ -117,7 +117,7 @@ ok((await page.locator('#browse-groups .grouphead').count()) === data.taxonomy.s
   'every section should have a heading');
 
 await page.locator('#search').fill('buffet');
-await page.waitForFunction(() => document.getElementById('result-count').textContent.split(' ')[0] !== '98');
+await page.waitForFunction((total) => document.getElementById('result-count').textContent.split(' ')[0] !== String(total), data.entries.length);
 const filtered = Number((await page.locator('#result-count').innerText()).split(' ')[0]);
 ok(filtered > 0 && filtered < data.entries.length, `search should narrow the list, got ${filtered}`);
 await page.locator('#search').fill('zzzznope');

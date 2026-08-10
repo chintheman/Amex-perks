@@ -9,6 +9,7 @@
     "schema": "node scripts/build-schema.mjs",
     "migrate": "node scripts/migrate-v1-to-v2.mjs",
     "validate": "node scripts/validate.mjs",
+    "sources": "node scripts/fetch-sources.mjs",
     "test:parity": "node scripts/test-parity.mjs",
     "test:page": "node scripts/test-page.mjs",
     "test": "npm run validate && npm run test:parity && npm run test:page"

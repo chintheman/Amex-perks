@@ -110,3 +110,24 @@ npm run test:parity   # asserts the page renders v1 and v2 identically
 
 The migration **aborts** rather than writing a lossy file if any value it wants
 to drop turns out not to be exactly re-derivable.
+
+---
+
+## Checking Amex for drift
+
+Before editing anything, pull the source pages and diff them:
+
+```bash
+npm run sources         # renders all 11 Amex SG pages to data/sources/
+git diff data/sources/  # exactly what Amex changed since the last refresh
+```
+
+`data/sources/` is committed for this reason — the reconciliation becomes a diff
+rather than a re-read. A page that fails is usually Akamai bot-blocking; re-run
+just that one (`npm run sources -- travel`) before assuming the page is gone.
+
+The 11 August 2026 pass found 15 benefits missing from the file, three bundled
+entries that needed splitting, and one factual error (Regional Golf listed 5
+clubs; Amex says over 50). Applied by
+`scripts/apply-2026-08-11-sources.mjs`, kept in the repo as a record of what
+changed and why.
