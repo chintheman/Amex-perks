@@ -85,3 +85,25 @@ export const CATEGORY_KEYS = CATEGORIES.map((c) => c.key);
 export const OCCASION_KEYS = OCCASIONS.map((o) => o.key);
 export const TIER_KEYS = Object.keys(TIERS);
 export const GRADE_KEYS = GRADE_BANDS.map((b) => b.grade);
+
+// ── added 2026-08-11 for the scenario-first redesign ──────────────────────
+
+// What a row IS. 76 of the rows are restaurants where a benefit applies, not
+// benefits in their own right; conflating the two is what made the old list
+// feel bottomless.
+export const KINDS = [
+  { key: 'benefit', label: 'Benefit', desc: 'Something the card gives you' },
+  { key: 'venue', label: 'Venue', desc: 'A place where one of those benefits applies' },
+];
+
+// What you have to DO about it — the axis the browse view groups by, because
+// it maps to the only three states that matter: act once, act each time, or
+// never think about it again.
+export const EFFORTS = [
+  { key: 'claim', label: 'Claim', desc: 'Needs enrolling in or registering — once, then it is yours' },
+  { key: 'book', label: 'Book', desc: 'Reserve or book each time you use it' },
+  { key: 'have', label: 'Have', desc: 'Already active. Nothing to do' },
+];
+
+export const KIND_KEYS = KINDS.map((k) => k.key);
+export const EFFORT_KEYS = EFFORTS.map((e) => e.key);

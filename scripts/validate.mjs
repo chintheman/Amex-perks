@@ -16,7 +16,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   CATEGORY_KEYS, VALUE_TYPE_KEYS, SECTION_KEYS, TIER_GROUP_KEYS, TIER_KEYS,
-  OCCASION_KEYS, GRADE_KEYS, SECTIONS, TIERS,
+  OCCASION_KEYS, GRADE_KEYS, SECTIONS, TIERS, KIND_KEYS, EFFORT_KEYS, KINDS, EFFORTS,
 } from './taxonomy.mjs';
 import { compositeScore, gradeFor, summaryOf, SUMMARY_MAX } from '../site/guide-core.js';
 
@@ -30,8 +30,9 @@ const warn = (where, msg) => warnings.push(`${where}: ${msg}`);
 const check = (cond, where, msg) => { if (!cond) fail(where, msg); };
 
 const ENTRY_KEY_ORDER = [
-  'id', 'name', 'category', 'section', 'subcategory', 'value_type', 'summary',
-  'details', 'venue', 'economics', 'scores', 'occasion_fit', 'terms', 'locations', 'source',
+  'id', 'name', 'kind', 'parent', 'category', 'section', 'subcategory', 'value_type',
+  'effort', 'summary', 'details', 'venue', 'economics', 'scores', 'occasion_fit', 'terms',
+  'locations', 'source',
 ];
 // Nothing outside these lists may appear — a stray key is almost always a
 // typo that the page would silently ignore.
@@ -96,6 +97,16 @@ check(sameSet(keysOf(tax.sections), SECTION_KEYS), 'taxonomy.sections', `expecte
 check(sameSet(keysOf(tax.tier_groups), TIER_GROUP_KEYS), 'taxonomy.tier_groups', `expected ${TIER_GROUP_KEYS.join(', ')}`);
 check(sameSet(keysOf(tax.occasions), OCCASION_KEYS), 'taxonomy.occasions', `expected ${OCCASION_KEYS.join(', ')}`);
 check(sameSet(Object.keys(tax.tiers || {}), TIER_KEYS), 'taxonomy.tiers', `expected ${TIER_KEYS.join(', ')}`);
+check(sameSet(keysOf(tax.kinds), KIND_KEYS), 'taxonomy.kinds', `expected ${KIND_KEYS.join(', ')}`);
+check(sameSet(keysOf(tax.efforts), EFFORT_KEYS), 'taxonomy.efforts', `expected ${EFFORT_KEYS.join(', ')}`);
+for (const list of [[tax.kinds, KINDS, 'kinds'], [tax.efforts, EFFORTS, 'efforts']]) {
+  const [inFile, canonical, name] = list;
+  for (const item of inFile || []) {
+    const want = canonical.find((c) => c.key === item.key);
+    check(want && item.label === want.label && item.desc === want.desc,
+      `taxonomy.${name}.${item.key}`, 'label or desc disagrees with scripts/taxonomy.mjs');
+  }
+}
 
 for (const [tier, def] of Object.entries(tax.tiers || {})) {
   check(TIER_GROUP_KEYS.includes(def.group), `taxonomy.tiers.${tier}`, `group "${def.group}" is not a tier group`);
@@ -144,6 +155,12 @@ entries.forEach((e, i) => {
   (e.locations || []).forEach((loc, j) => {
     for (const k of Object.keys(loc)) check(LOCATION_KEYS.includes(k), at, `unknown field "locations[${j}].${k}"`);
   });
+
+  // structure: what this row is, and what you have to do about it
+  check(KIND_KEYS.includes(e.kind), at, `unknown kind "${e.kind}"`);
+  check(EFFORT_KEYS.includes(e.effort), at, `unknown effort "${e.effort}"`);
+  if (e.kind === 'venue') check(e.parent != null, at, 'a venue must name the benefit it spends');
+  if (e.kind === 'benefit') check(e.parent == null, at, 'a benefit cannot have a parent');
 
   // taxonomy membership
   check(CATEGORY_KEYS.includes(e.category), at, `unknown category "${e.category}"`);
@@ -242,8 +259,72 @@ entries.forEach((e, i) => {
 
 check(outOfOrder === 0, 'entries', `${outOfOrder} entries are not sorted by id — sort them so refresh diffs stay readable`);
 
-// ───────────────────────────────────────────────────────────── payback path
+// ──────────────────────────────────────────────────────── parents & scenarios
 const byId = new Map(entries.map((e) => [e.id, e]));
+
+for (const e of entries) {
+  if (e.parent == null) continue;
+  const at = `entries ${e.id}`;
+  const p = byId.get(e.parent);
+  if (!p) { fail(at, `parent "${e.parent}" does not match any entry id`); continue; }
+  check(p.kind === 'benefit', at, `parent "${e.parent}" is itself a venue — venues cannot nest`);
+  check(p.id !== e.id, at, 'an entry cannot be its own parent');
+}
+for (const p of entries.filter((e) => e.kind === 'benefit')) {
+  const kids = entries.filter((e) => e.parent === p.id).length;
+  if (p.section !== 'life' && p.value_type === 'access' && kids === 0) {
+    warn(`entries ${p.id}`, 'is an unscored benefit with no venues under it — nothing will open from its card');
+  }
+}
+
+// A scenario is the front door. One that matches nothing is worse than no
+// scenario at all, so an empty result is an error, not a warning.
+const scenarios = Array.isArray(data.scenarios) ? data.scenarios : [];
+check(scenarios.length > 0, 'scenarios', 'the home page needs at least one scenario');
+const seenScenarios = new Set();
+scenarios.forEach((s, i) => {
+  const at = `scenarios[${i}] ${s.key || '(no key)'}`;
+  check(/^[a-z0-9][a-z0-9-]*$/.test(s.key || ''), at, 'key must be a lowercase slug');
+  check(!seenScenarios.has(s.key), at, `duplicate key "${s.key}"`);
+  seenScenarios.add(s.key);
+  check(hasWords(s.label), at, 'label is required');
+  check(hasWords(s.blurb), at, 'blurb explains why these results, and is required');
+  check(!!s.filter || !!s.view, at, 'needs either a filter or a view to route to');
+  if (s.view) { check(['payback'].includes(s.view), at, `unknown view "${s.view}"`); return; }
+
+  const f = s.filter;
+  for (const k of Object.keys(f)) {
+    check(['kind', 'section', 'sections', 'value_type', 'value_types', 'effort', 'tier_groups',
+      'occasion', 'min_occasion_fit', 'max_min_spend', 'has_expiry', 'subcategories'].includes(k),
+    at, `unknown filter "${k}"`);
+  }
+  if (f.kind) check(KIND_KEYS.includes(f.kind), at, `unknown kind "${f.kind}"`);
+  if (f.effort) check(EFFORT_KEYS.includes(f.effort), at, `unknown effort "${f.effort}"`);
+  if (f.occasion) check(OCCASION_KEYS.includes(f.occasion), at, `unknown occasion "${f.occasion}"`);
+  for (const g of f.tier_groups || []) check(TIER_GROUP_KEYS.includes(g), at, `unknown tier_group "${g}"`);
+
+  const hits = entries.filter((e) => {
+    if (f.kind && e.kind !== f.kind) return false;
+    if (f.effort && e.effort !== f.effort) return false;
+    if (f.section && e.section !== f.section) return false;
+    if (f.sections && !f.sections.includes(e.section)) return false;
+    if (f.value_type && e.value_type !== f.value_type) return false;
+    if (f.value_types && !f.value_types.includes(e.value_type)) return false;
+    if (f.tier_groups && !f.tier_groups.includes(e.venue?.tier_group)) return false;
+    if (f.subcategories && !f.subcategories.includes(e.subcategory)) return false;
+    if (f.has_expiry && !e.terms?.expires) return false;
+    if (f.occasion && e.occasion_fit?.[f.occasion] == null) return false;
+    if (f.min_occasion_fit != null && !(e.occasion_fit?.[f.occasion] >= f.min_occasion_fit)) return false;
+    if (f.max_min_spend != null && !(e.economics?.min_spend_sgd <= f.max_min_spend)) return false;
+    return true;
+  }).length;
+
+  check(hits > 0, at, 'matches nothing — a dead scenario is worse than no scenario');
+  if (hits > 30) warn(at, `matches ${hits} entries — that is the overwhelm this was meant to solve`);
+  else if (hits < 3) warn(at, `matches only ${hits} — thin enough to look broken`);
+});
+
+// ───────────────────────────────────────────────────────────── payback path
 const steps = data.payback_path?.steps || [];
 check(steps.length > 0, 'payback_path', 'at least one step is required');
 let total = 0;

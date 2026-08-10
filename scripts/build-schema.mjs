@@ -12,7 +12,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   CATEGORY_KEYS, VALUE_TYPE_KEYS, SECTION_KEYS, TIER_GROUP_KEYS, TIER_KEYS,
-  OCCASION_KEYS, GRADE_KEYS,
+  OCCASION_KEYS, GRADE_KEYS, KIND_KEYS, EFFORT_KEYS,
 } from './taxonomy.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -38,7 +38,7 @@ const schema = {
     + '(composite score, grade, annual value, net price, one-line summary) are NOT stored — '
     + 'guide-core.js computes them at load. Absent means absent: null is never a legal value.',
   type: 'object',
-  required: ['schema_version', 'generated_at', 'card', 'scoring', 'taxonomy', 'payback_path', 'entries'],
+  required: ['schema_version', 'generated_at', 'card', 'scoring', 'taxonomy', 'payback_path', 'scenarios', 'entries'],
   additionalProperties: false,
   properties: {
     schema_version: { const: 2 },
@@ -68,7 +68,7 @@ const schema = {
     },
     taxonomy: {
       type: 'object',
-      required: ['categories', 'value_types', 'sections', 'tier_groups', 'tiers', 'occasions', 'grade_bands'],
+      required: ['categories', 'value_types', 'sections', 'tier_groups', 'tiers', 'occasions', 'grade_bands', 'kinds', 'efforts'],
       additionalProperties: false,
       properties: {
         categories: { type: 'array', minItems: 1, items: keyed() },
@@ -86,6 +86,8 @@ const schema = {
           },
         },
         occasions: { type: 'array', minItems: 1, items: keyed({ desc: TEXT }) },
+        kinds: { type: 'array', minItems: 1, items: keyed({ desc: TEXT }) },
+        efforts: { type: 'array', minItems: 1, items: keyed({ desc: TEXT }) },
         grade_bands: {
           type: 'array',
           minItems: 1,
@@ -121,16 +123,20 @@ const schema = {
         },
       },
     },
+    scenarios: { type: 'array', minItems: 1, items: { $ref: '#/$defs/scenario' } },
     entries: { type: 'array', minItems: 1, items: { $ref: '#/$defs/entry' } },
   },
   $defs: {
     entry: {
       type: 'object',
-      required: ['id', 'name', 'category', 'section', 'value_type', 'source'],
+      required: ['id', 'name', 'kind', 'category', 'section', 'value_type', 'effort', 'source'],
       additionalProperties: false,
       properties: {
         id: { type: 'string', pattern: '^[a-z0-9][a-z0-9-]*$' },
         name: TEXT,
+        kind: { enum: KIND_KEYS },
+        parent: { type: 'string', pattern: '^[a-z0-9][a-z0-9-]*$' },
+        effort: { enum: EFFORT_KEYS },
         category: { enum: CATEGORY_KEYS },
         section: { enum: SECTION_KEYS },
         subcategory: TEXT,
@@ -147,6 +153,12 @@ const schema = {
       },
       allOf: [
         {
+          // A venue spends a benefit, so it must name one. A benefit is top-level.
+          if: { properties: { kind: { const: 'venue' } }, required: ['kind'] },
+          then: { required: ['parent'] },
+          else: { properties: { parent: false } },
+        },
+        {
           // Lifestyle lives in its own section and nowhere else.
           if: { properties: { category: { const: 'lifestyle' } }, required: ['category'] },
           then: { properties: { section: { const: 'life' } } },
@@ -162,6 +174,39 @@ const schema = {
           else: { required: ['scores', 'economics'] },
         },
       ],
+    },
+    scenario: {
+      type: 'object',
+      required: ['key', 'label', 'blurb'],
+      additionalProperties: false,
+      properties: {
+        key: { type: 'string', pattern: '^[a-z0-9][a-z0-9-]*$' },
+        label: TEXT,
+        blurb: TEXT,
+        sort: { type: 'string' },
+        view: { enum: ['payback'] },
+        filter: {
+          type: 'object',
+          minProperties: 1,
+          additionalProperties: false,
+          properties: {
+            kind: { enum: KIND_KEYS },
+            effort: { enum: EFFORT_KEYS },
+            section: { enum: SECTION_KEYS },
+            sections: { type: 'array', items: { enum: SECTION_KEYS } },
+            value_type: { enum: VALUE_TYPE_KEYS },
+            value_types: { type: 'array', items: { enum: VALUE_TYPE_KEYS } },
+            tier_groups: { type: 'array', items: { enum: TIER_GROUP_KEYS } },
+            subcategories: { type: 'array', items: TEXT },
+            occasion: { enum: OCCASION_KEYS },
+            min_occasion_fit: SCORE,
+            max_min_spend: MONEY,
+            has_expiry: { const: true },
+          },
+        },
+      },
+      // Either it filters the list, or it routes to a purpose-built view.
+      oneOf: [{ required: ['filter'] }, { required: ['view'] }],
     },
     venue: {
       type: 'object',
