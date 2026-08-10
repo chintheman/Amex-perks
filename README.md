@@ -1,8 +1,13 @@
 # Amex Platinum Guide — Singapore
 
 An unofficial, independent guide to every American Express Platinum benefit in
-Singapore. A static page with three task views — find a place to eat, is the fee
-worth it, browse everything — over a single JSON file.
+Singapore. A static page over a single JSON file.
+
+You land on **eight scenarios** — date night, enrol and forget, ending soon,
+flying somewhere — because most people do not know what they are looking for.
+Underneath, the 121 rows are split into the **42 benefits** your card actually
+gives you and the **79 places** to spend them, grouped by what you have to do:
+**claim** it once, **book** it each time, or you already **have** it.
 
 Not affiliated with or endorsed by American Express.
 

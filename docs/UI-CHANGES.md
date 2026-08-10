@@ -1,4 +1,45 @@
-# UI-side changes for v2
+# UI-side changes
+
+## Part 2 — the scenario-first rebuild (11 Aug 2026)
+
+The page no longer opens on a task picker over a flat list of everything. It
+opens on **eight scenarios**, and the full list is grouped by **what you have to
+do about it**.
+
+### Views
+
+| Was | Is |
+| --- | --- |
+| Eat / Payback / Browse — three peers | Home / Places to eat / Payback, with Home as the front door |
+| Browse: 5 Amex sections, 98 flat rows | Home: 8 scenario tiles, then 42 benefits under Claim / Book / Have |
+| Restaurants and insurance policies in one list | 42 benefits on Home; the 79 venues live behind the benefit that spends them |
+| Break-even was tab 2 | The claimable figure is in the hero on every view; the calculator is a scenario |
+
+### New in `guide-core.js`
+
+* `runScenario(data, scenario)` — the filter engine. Every predicate maps to one
+  key in `scenarios[].filter`; unknown keys fail validation rather than silently
+  matching everything.
+* `feeProgress(data)` — the hero figure.
+* `hydrate()` now attaches `children`, `childCount` and `bestDiscount` to every
+  entry, and exposes `data.benefits` / `data.venues`.
+
+### Things that bit, and are now covered by tests
+
+* **Two `#pbg-map` elements.** The results view mounts its own map container
+  while the places view has a static one, so `getElementById` handed the wrong
+  node to Leaflet. Each view now owns a distinctly-named container, and the page
+  test fails on any duplicate id in any view.
+* **`_leaflet_pos` on a dead map.** `fitBounds` animates by default; switching
+  view mid-animation destroyed the map while frames were still queued, and
+  Leaflet threw reading a pane it no longer had. Fixed by fitting without
+  animation, tearing the instance down before its container is removed, and
+  tokenising the mount retry so a queued attempt from a previous render cannot
+  build a map in a container that has since been hidden.
+
+---
+
+## Part 1 — moving to the v2 schema
 
 The adaptation layer is `site/guide-core.js`. It is still a module of pure
 helpers; `hydrate()` is the only new concept. Everything the view code reads is

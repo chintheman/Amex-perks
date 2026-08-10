@@ -100,6 +100,9 @@ function flatten(e, tax, weights) {
   return {
     id: e.id,
     name: e.name,
+    kind: e.kind,
+    parent: e.parent || null,
+    effort: e.effort,
     category: e.category,
     section: e.section,
     subcategory: e.subcategory || tax.sectionByKey[e.section]?.default_subcategory || null,
@@ -156,7 +159,21 @@ export function hydrate(raw) {
     f.search = [f.name, f.venue_group, f.cuisine, f.subcategory].filter(Boolean).join(' ').toLowerCase();
     return f;
   });
-  return { ...raw, tax, entries, byId: new Map(entries.map((e) => [e.id, e])) };
+  const byId = new Map(entries.map((e) => [e.id, e]));
+  // Each parent carries its venues, so a benefit card can say "26 restaurants,
+  // up to 50% off" without the page counting anything itself.
+  const children = new Map();
+  for (const e of entries) {
+    if (!e.parent) continue;
+    if (!children.has(e.parent)) children.set(e.parent, []);
+    children.get(e.parent).push(e);
+  }
+  for (const e of entries) {
+    e.children = children.get(e.id) || [];
+    e.childCount = e.children.length;
+    e.bestDiscount = e.children.reduce((m, c) => Math.max(m, c.discount_pct ?? 0), e.discount_pct ?? 0) || null;
+  }
+  return { ...raw, tax, entries, byId, benefits: entries.filter((e) => e.kind === 'benefit'), venues: entries.filter((e) => e.kind === 'venue') };
 }
 
 export async function loadData(url = './benefits-data.json') {
@@ -212,6 +229,55 @@ export function eatRows(data, occasion) {
     ? rows.filter((e) => e.occasion_fit[occasion] != null)
         .sort((a, b) => b.occasion_fit[occasion] - a.occasion_fit[occasion])
     : rows.slice().sort((a, b) => nz(b.composite_score) - nz(a.composite_score));
+}
+
+// ─────────────────────────────────────────────────────────────── scenarios
+// A scenario is a saved filter plus a sentence. Every predicate here maps to
+// one key in `scenarios[].filter`; the validator rejects any other key, and
+// rejects a filter that matches nothing.
+const PREDICATES = {
+  kind: (e, v) => e.kind === v,
+  effort: (e, v) => e.effort === v,
+  section: (e, v) => e.section === v,
+  sections: (e, v) => v.includes(e.section),
+  value_type: (e, v) => e.value_type === v,
+  value_types: (e, v) => v.includes(e.value_type),
+  tier_groups: (e, v) => v.includes(e.tier_group),
+  subcategories: (e, v) => v.includes(e.subcategory),
+  has_expiry: (e) => !!e.expires,
+  occasion: (e, v) => e.occasion_fit[v] != null,
+  min_occasion_fit: (e, v, f) => e.occasion_fit[f.occasion] >= v,
+  max_min_spend: (e, v) => e.min_spend_sgd != null && e.min_spend_sgd <= v,
+};
+
+const SCENARIO_SORTS = {
+  occasion_desc: (f) => (a, b) => nz(b.occasion_fit[f.occasion]) - nz(a.occasion_fit[f.occasion]),
+  value_desc: () => (a, b) => nz(b.annual_value_sgd) - nz(a.annual_value_sgd),
+  expiry_asc: () => (a, b) => String(a.expires || '9999').localeCompare(String(b.expires || '9999')),
+  name_asc: () => (a, b) => a.name.localeCompare(b.name),
+  composite_desc: () => (a, b) => nz(b.composite_score) - nz(a.composite_score),
+};
+
+export function runScenario(data, scenario) {
+  if (!scenario?.filter) return [];
+  const f = scenario.filter;
+  const rows = data.entries.filter((e) =>
+    Object.entries(f).every(([k, v]) => PREDICATES[k]?.(e, v, f) ?? true));
+  const sorter = (SCENARIO_SORTS[scenario.sort] || SCENARIO_SORTS.composite_desc)(f);
+  return rows.sort(sorter);
+}
+
+// ─────────────────────────────────────────────────── fee progress
+// The one number the whole product exists to answer, so the header carries it.
+export function feeProgress(data) {
+  const pb = paybackView(data);
+  return {
+    claimed: pb.totalSgd,
+    fee: data.card.annual_fee_sgd,
+    pct: Math.min(100, (pb.totalSgd / data.card.annual_fee_sgd) * 100),
+    cleared: pb.clearedFee,
+    text: `${fmtMoney(pb.totalSgd)} claimable of the ${fmtMoney(data.card.annual_fee_sgd)} fee`,
+  };
 }
 
 // One-line gist for a collapsed row. v2 stores a real `summary`, so this no
@@ -334,6 +400,9 @@ export function updateMarkers(map, rows, markers) {
       bounds.push([loc.lat, loc.lng]);
     });
   });
-  if (bounds.length) map.fitBounds(bounds, { padding: [24, 24], maxZoom: 14 });
+  // `animate: false` matters: an in-flight zoom animation keeps firing frames
+  // after the view changes and the map is destroyed, and Leaflet throws
+  // reading `_leaflet_pos` off the pane it no longer has.
+  if (bounds.length) map.fitBounds(bounds, { padding: [24, 24], maxZoom: 14, animate: false });
   return { markers: out, count: out.length };
 }

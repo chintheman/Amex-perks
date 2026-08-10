@@ -6,8 +6,10 @@
 //   npm run test:page              (npx playwright install chromium once)
 //   node scripts/test-page.mjs --screenshots
 //
-// Any console error or failed request fails the run — a silent JS error in a
-// static page is exactly the kind of thing a refresh can introduce.
+// Any console error, failed request or duplicate element id fails the run — a
+// silent JS error in a static page is exactly the kind of thing a refresh can
+// introduce, and a duplicate id is how the two maps once stole each other's
+// container.
 
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -21,7 +23,8 @@ const SHOTS = process.argv.includes('--screenshots');
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg' };
 
 const server = createServer(async (req, res) => {
-  const path = join(SITE, decodeURIComponent(req.url.split('?')[0]) === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0]));
+  const rel = decodeURIComponent(req.url.split('?')[0]);
+  const path = join(SITE, rel === '/' ? 'index.html' : rel);
   try {
     const body = await readFile(path);
     res.writeHead(200, { 'content-type': TYPES[extname(path)] || 'application/octet-stream' });
@@ -37,118 +40,151 @@ const failures = [];
 const ok = (cond, msg) => { if (!cond) failures.push(msg); };
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1200, height: 1000 } });
+const page = await browser.newPage({ viewport: { width: 1280, height: 1100 } });
 
-// Map tiles and the optional hero photo may legitimately be absent offline;
-// anything else that 404s or throws is a real failure.
+// Map tiles and fonts may legitimately be absent offline; anything else that
+// 404s or throws is a real failure.
 const OPTIONAL = /basemaps\.cartocdn|fonts\.(googleapis|gstatic)/;
 const consoleErrors = [];
 page.on('console', (m) => {
-  // Resource 404s are reported separately below, with the URL attached.
   if (m.type() === 'error' && !m.text().startsWith('Failed to load resource')) consoleErrors.push(m.text());
 });
-page.on('pageerror', (e) => consoleErrors.push(String(e)));
+page.on('pageerror', (e) => consoleErrors.push((e.stack || String(e)).split('\n').slice(0, 5).join('\n      ')));
 page.on('requestfailed', (r) => { if (!OPTIONAL.test(r.url())) consoleErrors.push(`request failed: ${r.url()}`); });
-page.on('response', (r) => {
-  if (r.status() >= 400 && !OPTIONAL.test(r.url())) consoleErrors.push(`HTTP ${r.status()} ${r.url()}`);
+page.on('response', (r) => { if (r.status() >= 400 && !OPTIONAL.test(r.url())) consoleErrors.push(`HTTP ${r.status()} ${r.url()}`); });
+
+const dupeIds = () => page.evaluate(() => {
+  const seen = {};
+  for (const el of document.querySelectorAll('[id]')) seen[el.id] = (seen[el.id] || 0) + 1;
+  return Object.entries(seen).filter(([, n]) => n > 1).map(([id, n]) => `${id}×${n}`);
 });
 
 const data = JSON.parse(await readFile(join(SITE, 'benefits-data.json'), 'utf8'));
-await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+const benefits = data.entries.filter((e) => e.kind === 'benefit');
+const venues = data.entries.filter((e) => e.kind === 'venue');
+const filtered = data.scenarios.filter((s) => !s.view);
 
-// ── chrome ──────────────────────────────────────────────────────────────
+await page.goto(`${base}/index.html`, { waitUntil: 'domcontentloaded' });
+await page.waitForSelector('.scen');
+
+// ── header + hero ───────────────────────────────────────────────────────
 ok((await page.locator('#stats li').count()) === 3, 'hero should show 3 stats');
-ok((await page.locator('#stats li').first().innerText()).includes(String(data.entries.length)),
-  'first hero stat should be the entry count');
+ok((await page.locator('#stats li').first().innerText()).includes(String(benefits.length)),
+  'first hero stat should be the benefit count');
 ok(/Verified .+ · Next refresh /.test(await page.locator('#freshness').innerText()), 'freshness line missing');
 ok(await page.locator('.cardshot img').evaluate((i) => i.complete && i.naturalWidth > 0),
   'hero card art failed to load — the placeholder fallback took over');
-ok((await page.locator('.mode').count()) === 3, 'task picker should offer 3 modes');
-ok(await page.locator('.mode[aria-pressed="true"] .mode__label').innerText() === 'Find a place to eat',
-  'Eat should be the default mode');
+// The break-even figure is the reason the product exists, so it is in the hero.
+ok(/^S\$[\d,]+ claimable$/.test(await page.locator('#fee-big').innerText()),
+  `fee headline wrong: ${await page.locator('#fee-big').innerText()}`);
+ok((await page.locator('#fee-note').innerText()).includes('S$1,744'), 'fee note should name the annual fee');
+ok(Number((await page.locator('#fee-fill').evaluate((el) => el.style.width)).replace('%', '')) > 0,
+  'fee progress bar never filled');
 
-// ── eat view ────────────────────────────────────────────────────────────
-await page.waitForSelector('#eat-groups .pick');
-const groupCount = await page.locator('#eat-groups .grouphead').count();
-ok(groupCount >= 5, `expected several tier groups, got ${groupCount}`);
-const firstGroupCards = await page.locator('#eat-groups > div').first().locator('.pick').count();
-ok(firstGroupCards <= 3, `groups should collapse to 3 cards, got ${firstGroupCards}`);
+// ── home: scenarios ─────────────────────────────────────────────────────
+ok((await page.locator('.scen').count()) === data.scenarios.length,
+  `expected ${data.scenarios.length} scenario tiles`);
+const tileCounts = await page.locator('.scen__n').allInnerTexts();
+ok(tileCounts.filter((t) => /^\d+ options?/.test(t)).length === filtered.length,
+  'every filtering scenario should show how many options it leads to');
+ok(!tileCounts.some((t) => /^0 options/.test(t)), 'a scenario leading nowhere must never ship');
 
-const firstPick = page.locator('#eat-groups .pick').first();
-ok((await firstPick.locator('.pick__body').count()) === 0, 'cards should start collapsed');
-await firstPick.locator('.pick__btn').click();
-ok((await firstPick.locator('.pick__body').count()) === 1, 'clicking a card should expand it');
-ok((await firstPick.locator('.badge--type').innerText()).length > 0, 'expanded card missing its type badge');
-ok((await firstPick.locator('.foot a').getAttribute('href')).startsWith('https://'), 'expanded card missing source link');
-await firstPick.locator('.pick__btn').click();
-ok((await firstPick.locator('.pick__body').count()) === 0, 'clicking again should collapse');
+// ── home: benefits grouped by effort ────────────────────────────────────
+ok((await page.locator('.effhead').count()) === data.taxonomy.efforts.length,
+  'every effort group should have a heading');
+ok((await page.locator('#ben-count').innerText()) === `${benefits.length} benefits · ${venues.length} places to use them`,
+  `benefit count line wrong: ${await page.locator('#ben-count').innerText()}`);
 
-const more = page.locator('#eat-groups .morebtn').first();
-const beforeMore = await page.locator('#eat-groups > div').first().locator('.pick').count();
-await more.click();
-ok((await page.locator('#eat-groups > div').first().locator('.pick').count()) > beforeMore, '"Show all" did not expand the group');
-await page.locator('#eat-groups .morebtn').first().click();
+const firstBen = page.locator('.ben').first();
+ok((await firstBen.locator('.ben__body').count()) === 0, 'benefit cards should start collapsed');
+await firstBen.locator('.ben__btn').click();
+ok((await firstBen.locator('.ben__body').count()) === 1, 'clicking a benefit should expand it');
+ok((await firstBen.locator('.foot a').getAttribute('href')).startsWith('https://'), 'expanded benefit missing its Amex source');
+await firstBen.locator('.ben__btn').click();
+
+const moreBtn = page.locator('[data-act="more-effort"]').first();
+if (await moreBtn.count()) {
+  const before = await page.locator('.ben').count();
+  await moreBtn.click();
+  ok((await page.locator('.ben').count()) > before, '"Show all" did not expand the effort group');
+  await page.locator('[data-act="more-effort"]').first().click();
+}
+ok((await dupeIds()).length === 0, `duplicate element ids on home: ${(await dupeIds()).join(', ')}`);
+if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-home.png') });
+
+// ── a scenario, end to end ──────────────────────────────────────────────
+await page.locator('.scen').first().click();
+await page.waitForSelector('#view-results:not([hidden])');
+const scenario = filtered[0];
+ok((await page.locator('#res-title').innerText()) === scenario.label, 'results title should name the scenario');
+ok((await page.locator('#res-blurb').innerText()) === scenario.blurb, 'results should explain why these results');
+const resultCount = Number((await page.locator('#res-count').innerText()).split(' ')[0]);
+ok(resultCount > 0, 'scenario returned nothing');
+ok((await page.locator('#res-list .pick, #res-list .ben').count()) === resultCount, 'result count disagrees with cards rendered');
+// This scenario ranks by occasion fit, so the cards carry positions.
+ok((await page.locator('#res-list .pick__rank').count()) > 0, 'a ranked scenario should number its results');
+await page.waitForSelector('#results-map path.leaflet-interactive');
+ok((await page.locator('#results-map path.leaflet-interactive').count()) > 0, 'results map has no markers');
+ok((await dupeIds()).length === 0, `duplicate element ids in results: ${(await dupeIds()).join(', ')}`);
+if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-scenario.png') });
+
+await page.locator('.backbtn').first().click();
+await page.waitForSelector('#view-home:not([hidden])');
+
+// ── drilling from a parent benefit into its venues ──────────────────────
+const parent = benefits.find((b) => data.entries.some((e) => e.parent === b.id));
+const childCount = data.entries.filter((e) => e.parent === parent.id).length;
+await page.locator('.tab[data-view="home"]').click();
+await page.evaluate((id) => {
+  const btn = [...document.querySelectorAll('.ben__btn')].find((b) => b.dataset.id === id);
+  if (btn) btn.click();
+}, parent.id);
+const openBtn = page.locator(`[data-act="parent"][data-id="${parent.id}"]`);
+if (await openBtn.count()) {
+  await openBtn.click();
+  await page.waitForSelector('#view-results:not([hidden])');
+  ok((await page.locator('#res-title').innerText()) === parent.name, 'drill-down should be titled after the parent benefit');
+  ok(Number((await page.locator('#res-count').innerText()).split(' ')[0]) === childCount,
+    `parent should list all ${childCount} of its venues`);
+  await page.locator('.tab[data-view="home"]').click();
+} else {
+  failures.push(`no drill-down button rendered for parent benefit ${parent.id}`);
+}
+
+// ── places view ─────────────────────────────────────────────────────────
+await page.locator('.tab[data-view="places"]').click();
+await page.waitForSelector('#places-groups .grouphead');
+const diningVenues = venues.filter((e) => e.category === 'dining').length;
+ok((await page.locator('#places-count').innerText()) === `${diningVenues} venues`,
+  `places should list every dining venue, got "${await page.locator('#places-count').innerText()}"`);
+await page.waitForSelector('#places-map path.leaflet-interactive');
+ok((await page.locator('#places-map path.leaflet-interactive').count()) > 0, 'places map has no markers');
+ok((await dupeIds()).length === 0, `duplicate element ids in places: ${(await dupeIds()).join(', ')}`);
 
 await page.locator('.chip[data-act="occ"][data-val="date_night"]').click();
-ok((await page.locator('#eat-title').innerText()).toLowerCase().includes('date night'), 'occasion chip did not retitle the list');
-ok((await page.locator('#eat-groups .pick__rank').count()) > 0, 'occasion mode should rank picks');
-ok((await page.locator('#map-title').innerText()).includes('Date Night'), 'map title did not follow the occasion');
-if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-eat.png'), fullPage: false });
+ok((await page.locator('#map-title').innerText()).includes('Date Night'), 'occasion chip did not retitle the map');
+ok((await page.locator('.pick__rank').count()) > 0, 'occasion mode should rank venues');
 await page.locator('.chip[data-act="occ"][data-val=""]').click();
 
-// ── payback view ────────────────────────────────────────────────────────
-await page.locator('.tab[data-mode="payback"]').click();
+await page.locator('#search').fill('buffet');
+await page.waitForFunction((total) => document.getElementById('places-count').textContent.split(' ')[0] !== String(total), diningVenues);
+const searched = Number((await page.locator('#places-count').innerText()).split(' ')[0]);
+ok(searched > 0 && searched < diningVenues, `search should narrow the list, got ${searched}`);
+await page.locator('#search').fill('zzzznope');
+await page.waitForSelector('#places-empty:not([hidden])');
+ok(await page.locator('#places-empty').isVisible(), 'empty state should appear when nothing matches');
+await page.locator('#search').fill('');
+if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-places.png') });
+
+// ── payback ─────────────────────────────────────────────────────────────
+await page.locator('.tab[data-view="payback"]').click();
 await page.waitForSelector('.pb__step');
-const steps = await page.locator('.pb__step').count();
-ok(steps === 8, `expected 8 break-even rows, got ${steps}`);
+ok((await page.locator('.pb__step').count()) === 8, `expected 8 break-even rows, got ${await page.locator('.pb__step').count()}`);
 ok((await page.locator('.pb__total').innerText()) === 'S$1,850', `break-even total wrong: ${await page.locator('.pb__total').innerText()}`);
 ok((await page.locator('.pb__step--clears').count()) === 1, 'exactly one row should be marked as clearing the fee');
-ok((await page.locator('.pb__gloss').innerText()).includes('S$1,744'), 'gloss should name the annual fee');
 const conditions = await page.locator('.pb__cond').allInnerTexts();
 ok(conditions.every((c) => c.trim().length > 0), 'every break-even row needs a condition line');
 if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-payback.png') });
-
-// ── browse view ─────────────────────────────────────────────────────────
-await page.locator('.tab[data-mode="browse"]').click();
-await page.waitForSelector('#browse-groups .row');
-ok((await page.locator('#result-count').innerText()) === `${data.entries.length} of ${data.entries.length} benefits`,
-  `unfiltered browse should list every entry, got "${await page.locator('#result-count').innerText()}"`);
-ok((await page.locator('#browse-groups .grouphead').count()) === data.taxonomy.sections.length,
-  'every section should have a heading');
-
-await page.locator('#search').fill('buffet');
-await page.waitForFunction((total) => document.getElementById('result-count').textContent.split(' ')[0] !== String(total), data.entries.length);
-const filtered = Number((await page.locator('#result-count').innerText()).split(' ')[0]);
-ok(filtered > 0 && filtered < data.entries.length, `search should narrow the list, got ${filtered}`);
-await page.locator('#search').fill('zzzznope');
-await page.waitForSelector('#no-results:not([hidden])');
-ok(await page.locator('#no-results').isVisible(), 'empty state should appear when nothing matches');
-
-await page.locator('[data-act="reset"]').click();
-ok((await page.locator('#result-count').innerText()) === `${data.entries.length} of ${data.entries.length} benefits`, 'reset did not clear the search');
-
-await page.locator('.chip[data-act="section"][data-val="ldr"]').click();
-ok((await page.locator('#browse-groups .grouphead').count()) === 1, 'section chip should show one section');
-
-await page.selectOption('#sort', 'name_asc');
-const names = await page.locator('#browse-groups .row__name').allInnerTexts();
-ok(names.join('|') === [...names].sort((a, b) => a.localeCompare(b)).join('|'), 'A→Z sort did not sort');
-await page.locator('[data-act="reset"]').click();
-
-const row = page.locator('#browse-groups .row').first();
-await row.locator('.row__btn').click();
-ok((await row.locator('.row__body').count()) === 1, 'browse row should expand');
-if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-browse.png') });
-
-// ── back to eat: the map survives the round trip ────────────────────────
-await page.locator('.tab[data-mode="eat"]').click();
-await page.waitForSelector('#eat-groups .pick');
-ok((await page.locator('#pbg-map .leaflet-marker-pane, #pbg-map path').count()) > 0
-  || (await page.locator('#pbg-map .leaflet-container, #pbg-map.leaflet-container').count()) > 0,
-  'map should still be alive after leaving and returning to the Eat view');
-ok(/^\d+ locations?$/.test(await page.locator('#map-count').innerText()), 'map location count lost on return');
-await page.locator('.tab[data-mode="browse"]').click();
-await page.waitForSelector('#browse-groups .row');
 
 // ── methodology modal ───────────────────────────────────────────────────
 await page.locator('[data-act="method-open"]').click();
@@ -163,7 +199,8 @@ ok((await page.locator('.modal__panel').count()) === 0, 'Escape should close the
 const themeBefore = await page.getAttribute('html', 'data-theme');
 await page.locator('#themebtn').click();
 ok((await page.getAttribute('html', 'data-theme')) !== themeBefore, 'theme toggle did nothing');
-await page.reload({ waitUntil: 'networkidle' });
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.waitForSelector('.scen');
 ok((await page.getAttribute('html', 'data-theme')) !== themeBefore, 'theme choice should survive a reload');
 await page.locator('#themebtn').click();
 
@@ -177,4 +214,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log('✓ page: header, hero, all three views, modal and theme render correctly');
+console.log('✓ page: hero, scenarios, benefits by effort, drill-down, places, payback, modal and theme all render correctly');
