@@ -18,7 +18,7 @@ import { chromium } from 'playwright';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = join(ROOT, 'site');
 const SHOTS = process.argv.includes('--screenshots');
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.jpg': 'image/jpeg' };
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg' };
 
 const server = createServer(async (req, res) => {
   const path = join(SITE, decodeURIComponent(req.url.split('?')[0]) === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0]));
@@ -41,7 +41,7 @@ const page = await browser.newPage({ viewport: { width: 1200, height: 1000 } });
 
 // Map tiles and the optional hero photo may legitimately be absent offline;
 // anything else that 404s or throws is a real failure.
-const OPTIONAL = /basemaps\.cartocdn|assets\/amex-platinum-card|fonts\.(googleapis|gstatic)/;
+const OPTIONAL = /basemaps\.cartocdn|fonts\.(googleapis|gstatic)/;
 const consoleErrors = [];
 page.on('console', (m) => {
   // Resource 404s are reported separately below, with the URL attached.
@@ -61,6 +61,8 @@ ok((await page.locator('#stats li').count()) === 3, 'hero should show 3 stats');
 ok((await page.locator('#stats li').first().innerText()).includes(String(data.entries.length)),
   'first hero stat should be the entry count');
 ok(/Verified .+ · Next refresh /.test(await page.locator('#freshness').innerText()), 'freshness line missing');
+ok(await page.locator('.cardshot img').evaluate((i) => i.complete && i.naturalWidth > 0),
+  'hero card art failed to load — the placeholder fallback took over');
 ok((await page.locator('.mode').count()) === 3, 'task picker should offer 3 modes');
 ok(await page.locator('.mode[aria-pressed="true"] .mode__label').innerText() === 'Find a place to eat',
   'Eat should be the default mode');

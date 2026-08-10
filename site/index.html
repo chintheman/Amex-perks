@@ -84,9 +84,11 @@ button{font-family:var(--sans);cursor:pointer;}
 .fresh{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,0.72);}
 .fresh__dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,0.25);}
 .hero__art{display:flex;justify-content:center;}
-.cardshot{width:310px;max-width:100%;aspect-ratio:1.586;border-radius:16px;box-shadow:0 30px 70px -24px rgba(0,0,0,0.6);overflow:hidden;margin:0;background:linear-gradient(135deg,#233247,#0d1626);}
-.cardshot img{width:100%;height:100%;object-fit:cover;display:block;}
-.cardshot__ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;border:1px dashed rgba(255,255,255,0.28);border-radius:16px;font-size:12px;color:rgba(255,255,255,0.6);}
+/* The card art is a transparent PNG with its own rounded corners, so the
+   shadow follows the artwork rather than a box behind it. */
+.cardshot{width:310px;max-width:100%;aspect-ratio:1.586;margin:0;}
+.cardshot img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 26px 48px rgba(0,0,0,0.55));}
+.cardshot__ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;border:1px dashed rgba(255,255,255,0.28);border-radius:16px;font-size:12px;color:rgba(255,255,255,0.6);background:linear-gradient(135deg,#233247,#0d1626);box-shadow:0 30px 70px -24px rgba(0,0,0,0.6);}
 
 /* ── task picker ────────────────────────────────────────────────────── */
 .picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;padding:22px 0 8px;}
@@ -246,7 +248,7 @@ button{font-family:var(--sans);cursor:pointer;}
     </div>
     <div class="hero__art">
       <figure class="cardshot">
-        <img src="./assets/amex-platinum-card.jpg" alt="The American Express Platinum Card"
+        <img src="./assets/amex-platinum-card.png" alt="The American Express Platinum Card"
              onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'cardshot__ph',textContent:'Photo of the Amex Platinum Card'}))">
       </figure>
     </div>

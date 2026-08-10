@@ -8,17 +8,30 @@
 // The only differences this tolerates are the two deliberate ones listed in
 // UI-CHANGES.md; both are printed so a regression cannot hide among them.
 
-import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { readFileSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hydrate, paybackView, fmtMoney } from '../site/guide-core.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(resolve(ROOT, p), 'utf8'));
 
+// Compare v1 against a FRESH migration, not against site/benefits-data.json —
+// the published file is edited on every refresh, and those edits are supposed
+// to change it. What must never change is what the migration produces from v1.
+const out = join(tmpdir(), `benefits-parity-${process.pid}.json`);
+const run = spawnSync(process.execPath, [resolve(ROOT, 'scripts/migrate-v1-to-v2.mjs'), 'data/benefits-data.v1.json', out], { encoding: 'utf8' });
+if (run.status !== 0) {
+  console.error(`✕ parity: the migration itself failed\n${run.stderr || run.stdout}`);
+  process.exit(1);
+}
+
 const v1 = read('data/benefits-data.v1.json');
 const idMap = read('data/id-map.v1-v2.json');
-const data = hydrate(read('site/benefits-data.json'));
+const data = hydrate(JSON.parse(readFileSync(out, 'utf8')));
+rmSync(out, { force: true });
 
 const failures = [];
 const expected = [];
