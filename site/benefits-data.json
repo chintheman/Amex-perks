@@ -12,8 +12,8 @@
       "value": 0.6,
       "accessibility": 0.4
     },
-    "formula": "composite = 60% x value_score + 40% x accessibility_score (each 0-100). No annual-fee-payback lens in individual scores — that math lives in the separate 'Minimum Path to Break Even' calculator below.",
-    "occasion_note": "Occasion Fit (Date Night, Business, Free Treat) is a separate ranking scoped to bookable Dining venues only — it blends value_score (50%) with venue-tier fit for the occasion (50%)."
+    "formula": "composite = 60% x value_score + 40% x accessibility_score (each 0-100). No annual-fee-payback lens in individual scores. That math lives in the separate 'Minimum Path to Break Even' calculator below.",
+    "occasion_note": "Occasion Fit (Date Night, Business, Free Treat) is a separate ranking scoped to bookable Dining venues only. It blends value_score (50%) with venue-tier fit for the occasion (50%)."
   },
   "taxonomy": {
     "categories": [
@@ -35,7 +35,7 @@
       {
         "key": "free",
         "label": "Free",
-        "definition": "Genuinely complimentary — may need enrollment or booking. Scored on estimated $ value vs. how much friction (enrollment/booking/caps) stands between you and it."
+        "definition": "Genuinely complimentary, though it may need enrolment or booking. Scored on estimated $ value vs. how much friction (enrollment/booking/caps) stands between you and it."
       },
       {
         "key": "credit",
@@ -45,7 +45,7 @@
       {
         "key": "access",
         "label": "Access",
-        "definition": "An always-on entitlement (lounge, insurance, concierge, status, protections) that isn't 'redeemed' per use — shown as a feature card with no score, since forcing a number onto insurance coverage or lounge access is false precision."
+        "definition": "An always-on entitlement (lounge, insurance, concierge, status, protections) that isn't 'redeemed' per use. Shown as a feature card with no score, since forcing a number onto insurance coverage or lounge access is false precision."
       }
     ],
     "sections": [
@@ -240,10 +240,10 @@
     ]
   },
   "caveats": [
-    "Average bill-per-pax figures are ESTIMATES based on cuisine/venue tier, used only to make deals comparable — Amex and most restaurants do not publish menu prices.",
-    "Annual-use caps for the Minimum Path to Break Even are realistic assumptions, not guarantees — your actual usage will vary.",
+    "Average bill-per-pax figures are ESTIMATES based on cuisine/venue tier, used only to make deals comparable. Amex and most restaurants do not publish menu prices.",
+    "Annual-use caps for the Minimum Path to Break Even are realistic assumptions, not guarantees. Your actual usage will vary.",
     "Scores reflect the BEST-CASE published discount tier (typically dining as a pair).",
-    "Promos, restaurant rosters, and T&Cs change frequently and are refreshed roughly every two weeks — always reconfirm blackout dates and current terms directly with Amex or the venue before relying on it."
+    "Promos, restaurant rosters, and T&Cs change frequently and are refreshed roughly every two weeks. Always reconfirm blackout dates and current terms directly with Amex or the venue before relying on it."
   ],
   "payback_path": {
     "steps": [
@@ -377,7 +377,7 @@
     },
     {
       "id": "a-summer-to-savour-afternoon-tea-for-2",
-      "name": "A Summer to Savour",
+      "name": "A Summer to Savour: Afternoon Tea for 2",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -842,7 +842,7 @@
     },
     {
       "id": "beast-and-butterflies-35-off",
-      "name": "Beast & Butterflies",
+      "name": "Beast & Butterflies: 35% Off",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -1091,7 +1091,7 @@
     },
     {
       "id": "chillax-welcome-drink-privilege",
-      "name": "Chillax by Platinum",
+      "name": "Chillax: Welcome Drink Privilege",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -2460,7 +2460,7 @@
     },
     {
       "id": "nox-dine-in-the-dark",
-      "name": "NOX Dine in the Dark",
+      "name": "NOX: Dine in the Dark",
       "kind": "venue",
       "parent": "dining-promotions",
       "category": "dining",
@@ -2494,7 +2494,7 @@
       },
       "locations": [
         {
-          "name": "NOX Dine in the Dark",
+          "name": "NOX: Dine in the Dark",
           "lat": 1.281,
           "lng": 103.8464,
           "address": "83 Club Street, S069451"
@@ -3144,7 +3144,7 @@
     },
     {
       "id": "sands-lifestyle-prestige-membership",
-      "name": "Marina Bay Sands Sands LifeStyle Prestige",
+      "name": "Sands LifeStyle Prestige Membership",
       "kind": "benefit",
       "category": "lifestyle",
       "section": "life",
@@ -3685,7 +3685,7 @@
     },
     {
       "id": "table-for-two-platinum-edition",
-      "name": "Table for Two by Platinum",
+      "name": "Table for Two: Platinum Edition",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -4395,7 +4395,7 @@
     },
     {
       "id": "winnie-the-pooh-high-tea-20-off",
-      "name": "Winnie the Pooh High Tea",
+      "name": "Winnie the Pooh High Tea: 20% Off",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",

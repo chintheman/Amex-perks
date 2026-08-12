@@ -18,7 +18,7 @@ import {
   CATEGORY_KEYS, VALUE_TYPE_KEYS, SECTION_KEYS, TIER_GROUP_KEYS, TIER_KEYS,
   OCCASION_KEYS, GRADE_KEYS, SECTIONS, TIERS, KIND_KEYS, EFFORT_KEYS, KINDS, EFFORTS,
 } from './taxonomy.mjs';
-import { compositeScore, gradeFor, summaryOf, SUMMARY_MAX } from '../site/guide-core.js';
+import { compositeScore, gradeFor, summaryOf, SUMMARY_MAX, hydrate, runScenario } from '../site/guide-core.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const FILE = resolve(ROOT, process.argv[2] || 'site/benefits-data.json');
@@ -47,7 +47,10 @@ const LOCATION_KEYS = ['name', 'lat', 'lng', 'address'];
 // House style: no em or en dashes in anything written for this guide. `details`
 // is exempt because it quotes Amex's own wording, and editing a source quote to
 // satisfy a style rule would be wrong.
-const DASH = /[\u2013\u2014]/;
+// An en dash between digits is a numeric range ("1–2 days"), which is correct
+// typography and not the joining-dash that reads as machine-written. Everything
+// else is rejected.
+const DASH = /(?<![0-9])[\u2013\u2014]|[\u2013\u2014](?![0-9])/;
 const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s));
 const hasWords = (s) => typeof s === 'string' && /[a-z0-9]/i.test(s);
 const inRange = (n, lo, hi) => typeof n === 'number' && Number.isFinite(n) && n >= lo && n <= hi;
@@ -55,14 +58,14 @@ const addDays = (iso, d) => new Date(new Date(`${iso}T00:00:00Z`).getTime() + d 
 
 // "Absent, never null" — walk everything once rather than trusting each check.
 function assertNoNulls(node, path) {
-  if (node === null) { fail(path, 'null is not a legal value — omit the key instead'); return; }
+  if (node === null) { fail(path, 'null is not a legal value, omit the key instead'); return; }
   if (Array.isArray(node)) { node.forEach((v, i) => assertNoNulls(v, `${path}[${i}]`)); return; }
   if (typeof node === 'object') {
     for (const [k, v] of Object.entries(node)) assertNoNulls(v, `${path}.${k}`);
     return;
   }
   if (typeof node === 'string' && node.trim() !== '' && !hasWords(node)) {
-    fail(path, `placeholder string ${JSON.stringify(node)} — omit the key instead`);
+    fail(path, `placeholder string ${JSON.stringify(node)}, omit the key instead`);
   }
 }
 
@@ -116,7 +119,16 @@ for (const [tier, def] of Object.entries(tax.tiers || {})) {
   check(TIER_GROUP_KEYS.includes(def.group), `taxonomy.tiers.${tier}`, `group "${def.group}" is not a tier group`);
   check(def.group === TIERS[tier]?.group, `taxonomy.tiers.${tier}`, 'group disagrees with scripts/taxonomy.mjs');
 }
-for (const t of tax.value_types || []) check(hasWords(t.definition), `taxonomy.value_types.${t.key}`, 'definition is shown in the methodology modal and is required');
+for (const t of tax.value_types || []) {
+  check(hasWords(t.definition), `taxonomy.value_types.${t.key}`, 'definition is shown in the methodology modal and is required');
+  check(!DASH.test(t.definition || ''), `taxonomy.value_types.${t.key}`, 'definition contains a dash');
+}
+// Everything else the methodology modal prints, which the first version of this
+// rule missed even though the commit claimed to enforce it there.
+(data.caveats || []).forEach((c, i) => check(!DASH.test(c), `caveats[${i}]`, 'contains a dash'));
+for (const k of ['formula', 'occasion_note']) {
+  if (data.scoring?.[k]) check(!DASH.test(data.scoring[k]), `scoring.${k}`, 'contains a dash');
+}
 
 const bands = tax.grade_bands || [];
 check(bands.length > 0, 'taxonomy.grade_bands', 'at least one band is required');
@@ -276,6 +288,15 @@ check(outOfOrder === 0, 'entries', `${outOfOrder} entries are not sorted by id �
 // ──────────────────────────────────────────────────────── parents & scenarios
 const byId = new Map(entries.map((e) => [e.id, e]));
 
+// Scenarios are checked through the same code path the page uses, so hydration
+// defaults (inherited subcategories, tier_group fallbacks) apply identically.
+let hydrated = null;
+try {
+  hydrated = hydrate(data);
+} catch (err) {
+  fail('scenarios', `could not hydrate the file to check scenarios: ${err.message}`);
+}
+
 for (const e of entries) {
   if (e.parent == null) continue;
   const at = `entries ${e.id}`;
@@ -306,6 +327,7 @@ scenarios.forEach((s, i) => {
   check(!DASH.test(s.label) && !DASH.test(s.blurb), at, 'scenario copy contains a dash');
   check(!!s.filter || !!s.view, at, 'needs either a filter or a view to route to');
   if (s.view) { check(['payback'].includes(s.view), at, `unknown view "${s.view}"`); return; }
+  if (!hydrated) return;
 
   const f = s.filter;
   for (const k of Object.keys(f)) {
@@ -318,23 +340,13 @@ scenarios.forEach((s, i) => {
   if (f.occasion) check(OCCASION_KEYS.includes(f.occasion), at, `unknown occasion "${f.occasion}"`);
   for (const g of f.tier_groups || []) check(TIER_GROUP_KEYS.includes(g), at, `unknown tier_group "${g}"`);
 
-  const hits = entries.filter((e) => {
-    if (f.kind && e.kind !== f.kind) return false;
-    if (f.effort && e.effort !== f.effort) return false;
-    if (f.section && e.section !== f.section) return false;
-    if (f.sections && !f.sections.includes(e.section)) return false;
-    if (f.value_type && e.value_type !== f.value_type) return false;
-    if (f.value_types && !f.value_types.includes(e.value_type)) return false;
-    if (f.tier_groups && !f.tier_groups.includes(e.venue?.tier_group)) return false;
-    if (f.subcategories && !f.subcategories.includes(e.subcategory)) return false;
-    if (f.has_expiry && !e.terms?.expires) return false;
-    if (f.occasion && e.occasion_fit?.[f.occasion] == null) return false;
-    if (f.min_occasion_fit != null && !(e.occasion_fit?.[f.occasion] >= f.min_occasion_fit)) return false;
-    if (f.max_min_spend != null && !(e.economics?.min_spend_sgd <= f.max_min_spend)) return false;
-    return true;
-  }).length;
+  // Run the real engine against hydrated entries rather than a second copy of
+  // it against raw ones. The two drifted in ways that would have failed a valid
+  // scenario: `subcategories` reads a field 27 ldr entries inherit at hydration
+  // and do not store, and `tier_groups` reads one that defaults to "other".
+  const hits = runScenario(hydrated, s).length;
 
-  check(hits > 0, at, 'matches nothing — a dead scenario is worse than no scenario');
+  check(hits > 0, at, 'matches nothing, and a dead scenario is worse than no scenario');
   if (hits > 30) warn(at, `matches ${hits} entries — that is the overwhelm this was meant to solve`);
   else if (hits < 3) warn(at, `matches only ${hits} — thin enough to look broken`);
 });

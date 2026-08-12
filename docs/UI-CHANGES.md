@@ -17,12 +17,13 @@ do about it**.
 
 ### New in `guide-core.js`
 
-* `runScenario(data, scenario)` — the filter engine. Every predicate maps to one
+* `runScenario(data, scenario)`, the filter engine. Every predicate maps to one
   key in `scenarios[].filter`; unknown keys fail validation rather than silently
   matching everything.
-* `feeProgress(data)` — the hero figure.
-* `hydrate()` now attaches `children`, `childCount` and `bestDiscount` to every
-  entry, and exposes `data.benefits` / `data.venues`.
+* `logSummary(data, log)`, `logUse`, `usesLeft`, `canLog` — the year log's
+  arithmetic. Storage stays in the page, so both halves are testable alone.
+* `hydrate()` now attaches `children` and `childCount` to every entry, and
+  exposes `data.benefits` and `data.venues`.
 
 ### Things that bit, and are now covered by tests
 

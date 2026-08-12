@@ -138,6 +138,33 @@ if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-scenario.png') })
 await page.locator('.backbtn').first().click();
 await page.waitForSelector('#view-home:not([hidden])');
 
+// The same entry can be expanded on Home and again inside a scenario. Leaving
+// the view does not tear its DOM down, so both panels used to carry the same
+// id and aria-controls resolved to the hidden one. Reproducing it needs a
+// benefit that appears in both places, left expanded across the navigation.
+const shared = data.entries.find((e) => e.effort === 'claim' && e.kind === 'benefit' && e.value_type === 'access');
+await page.evaluate((id) => {
+  const btn = [...document.querySelectorAll('.ben__btn')].find((b) => b.dataset.id === id);
+  if (btn) btn.click();
+}, shared.id);
+ok((await page.locator(`.ben__btn[data-id="${shared.id}"][aria-expanded="true"]`).count()) === 1,
+  `could not expand ${shared.id} on Home, so the duplicate-id repro would not run`);
+
+await page.locator('.scen[data-key="enrol"]').click();
+await page.waitForSelector('#view-results:not([hidden])');
+await page.evaluate((id) => {
+  const btn = [...document.querySelectorAll('#res-list .ben__btn')].find((b) => b.dataset.id === id);
+  if (btn) btn.click();
+}, shared.id);
+await page.waitForTimeout(150);
+ok((await page.locator(`#res-list .ben__btn[data-id="${shared.id}"][aria-expanded="true"]`).count()) === 1,
+  `${shared.id} should appear in the "Enrol and forget" scenario for this check to mean anything`);
+ok((await dupeIds()).length === 0,
+  `duplicate ids with the same entry expanded in two views: ${(await dupeIds()).join(', ')}`);
+
+await page.locator('.backbtn').first().click();
+await page.waitForSelector('#view-home:not([hidden])');
+
 // ── drilling from a parent benefit into its venues ──────────────────────
 const parent = benefits.find((b) => data.entries.some((e) => e.parent === b.id));
 const childCount = data.entries.filter((e) => e.parent === parent.id).length;
@@ -217,10 +244,11 @@ ok(await page.locator('#log-reset').isHidden(), 'no reset button with nothing lo
 await page.locator('.tab[data-view="home"]').click();
 const logCard = page.locator('.ben').filter({ has: page.locator('.ben__name') }).first();
 await logCard.locator('.ben__btn').click();
-await page.waitForSelector('.ben .stepper');
-const capped = await page.locator('.ben .stepper__n').first().innerText();
-await page.locator('.ben .stepper button[data-delta="1"]').first().click();
-ok((await page.locator('.ben .stepper__n').first().innerText()) !== capped, 'the stepper should count up');
+ok((await logCard.locator('.stepper').count()) === 1,
+  'the first benefit card should offer a stepper; if it lost its value this needs a different fixture');
+const capped = await logCard.locator('.stepper__n').innerText();
+await logCard.locator('.stepper button[data-delta="1"]').click();
+ok((await logCard.locator('.stepper__n').innerText()) !== capped, 'the stepper should count up');
 ok(!(await page.locator('#fee-big').innerText()).startsWith('Five benefits'),
   'the hero should switch to the reader\'s own tally once something is logged');
 ok(await page.locator('#tab-year-n').isVisible(), 'the nav badge should appear once something is logged');

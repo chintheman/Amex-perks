@@ -72,7 +72,6 @@ export function summaryOf(details, authored) {
 // ────────────────────────────────────────────────────────────── formatting
 export const fmtMoney = (n) =>
   n == null ? '—' : `S$${Number(n).toLocaleString('en-SG', { maximumFractionDigits: 0 })}`;
-export const fmtPct = (n) => (n == null ? '—' : `${Number(n).toFixed(0)}%`);
 export const fmtDate = (iso) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -114,7 +113,6 @@ function flatten(e, tax, weights) {
     cuisine: v.cuisine || null,
     tier: v.tier || null,
     tier_group: v.tier_group || 'other',
-    tier_label: v.tier ? tax.tiers[v.tier]?.label || v.tier : null,
     pax: v.pax ?? null,
     fixed_set: v.fixed_set === true,
     set_price_sgd: v.set_price_sgd ?? null,
@@ -171,7 +169,6 @@ export function hydrate(raw) {
   for (const e of entries) {
     e.children = children.get(e.id) || [];
     e.childCount = e.children.length;
-    e.bestDiscount = e.children.reduce((m, c) => Math.max(m, c.discount_pct ?? 0), e.discount_pct ?? 0) || null;
   }
   return { ...raw, tax, entries, byId, benefits: entries.filter((e) => e.kind === 'benefit'), venues: entries.filter((e) => e.kind === 'venue') };
 }
@@ -182,53 +179,6 @@ export async function loadData(url = './benefits-data.json') {
   const raw = await res.json();
   if (raw.schema_version !== 2) throw new Error(`unsupported schema_version ${raw.schema_version}`);
   return hydrate(raw);
-}
-
-// ─────────────────────────────────────────────────────── grouping & filters
-// `section` and `tier_group` are stored on every entry now, so these are
-// plain reads instead of the v1 string-matching that could mis-bucket a typo.
-export const sectionKey = (e) => e.section;
-export const tierGroupKey = (e) => e.tier_group;
-
-export const SORTS = [
-  { value: 'composite_desc', label: 'Sort: Value score (high→low)' },
-  { value: 'discount_desc', label: 'Sort: Discount % (high→low)' },
-  { value: 'minspend_asc', label: 'Sort: Min. spend (low→high)' },
-  { value: 'name_asc', label: 'Sort: Name (A→Z)' },
-];
-
-const nz = (v) => (v == null ? -1 : v);
-
-export function getFiltered(entries, s) {
-  const q = (s.q || '').trim().toLowerCase();
-  const rows = entries.filter((e) => {
-    if (s.occasion && e.occasion_fit[s.occasion] == null) return false;
-    if (s.category && s.category !== 'all' && e.category !== s.category) return false;
-    if (s.type && s.type !== 'all' && e.value_type !== s.type) return false;
-    if (s.grade && s.grade !== 'all' && e.grade !== s.grade) return false;
-    if (s.section && s.section !== 'all' && e.section !== s.section) return false;
-    if (q && !e.search.includes(q)) return false;
-    return true;
-  });
-  const sorters = {
-    composite_desc: (a, b) => nz(b.composite_score) - nz(a.composite_score),
-    discount_desc: (a, b) => nz(b.discount_pct) - nz(a.discount_pct),
-    minspend_asc: (a, b) => nz(a.min_spend_sgd) - nz(b.min_spend_sgd),
-    name_asc: (a, b) => a.name.localeCompare(b.name),
-    occasion_desc: (a, b) =>
-      s.occasion ? nz(b.occasion_fit[s.occasion]) - nz(a.occasion_fit[s.occasion]) : 0,
-  };
-  return rows.sort(sorters[s.sort] || sorters.composite_desc);
-}
-
-// Dining picks for the Eat view: bookable dining only, ranked by occasion fit
-// when an occasion is selected, otherwise by composite score.
-export function eatRows(data, occasion) {
-  const rows = data.entries.filter((e) => e.category === 'dining' && e.value_type !== 'access');
-  return occasion
-    ? rows.filter((e) => e.occasion_fit[occasion] != null)
-        .sort((a, b) => b.occasion_fit[occasion] - a.occasion_fit[occasion])
-    : rows.slice().sort((a, b) => nz(b.composite_score) - nz(a.composite_score));
 }
 
 // ─────────────────────────────────────────────────────────────── scenarios
@@ -244,11 +194,14 @@ const PREDICATES = {
   value_types: (e, v) => v.includes(e.value_type),
   tier_groups: (e, v) => v.includes(e.tier_group),
   subcategories: (e, v) => v.includes(e.subcategory),
-  has_expiry: (e) => !!e.expires,
+  has_expiry: (e, v) => (v ? !!e.expires : !e.expires),
   occasion: (e, v) => e.occasion_fit[v] != null,
   min_occasion_fit: (e, v, f) => e.occasion_fit[f.occasion] >= v,
   max_min_spend: (e, v) => e.min_spend_sgd != null && e.min_spend_sgd <= v,
 };
+
+// Missing values sort last rather than throwing off the comparison.
+const nz = (v) => (v == null ? -1 : v);
 
 const SCENARIO_SORTS = {
   occasion_desc: (f) => (a, b) => nz(b.occasion_fit[f.occasion]) - nz(a.occasion_fit[f.occasion]),
@@ -325,19 +278,6 @@ export function logSummary(data, log) {
   };
 }
 
-// ─────────────────────────────────────────────────── fee progress
-// The one number the whole product exists to answer, so the header carries it.
-export function feeProgress(data) {
-  const pb = paybackView(data);
-  return {
-    claimed: pb.totalSgd,
-    fee: data.card.annual_fee_sgd,
-    pct: Math.min(100, (pb.totalSgd / data.card.annual_fee_sgd) * 100),
-    cleared: pb.clearedFee,
-    text: `${fmtMoney(pb.totalSgd)} claimable of the ${fmtMoney(data.card.annual_fee_sgd)} fee`,
-  };
-}
-
 // One-line gist for a collapsed row. v2 stores a real `summary`, so this no
 // longer truncates prose mid-sentence.
 export function gist(e) {
@@ -347,19 +287,6 @@ export function gist(e) {
   if (!bits.length && e.subcategory) bits.push(e.subcategory);
   if (e.summary) bits.push(e.summary.replace(/\.+$/, ''));
   return bits.join(' · ');
-}
-
-export function heroStats(data) {
-  const E = data.entries;
-  const scored = E.filter((e) => e.value_type !== 'access');
-  const dining = E.filter((e) => e.category === 'dining').length;
-  return [
-    { val: String(E.length), lbl: 'Benefits tracked' },
-    { val: `${dining} / ${E.length - dining}`, lbl: 'Dining / Lifestyle' },
-    { val: String(E.filter((e) => e.locations.length).length), lbl: 'On the map' },
-    { val: String(scored.filter((e) => e.grade === 'A+' || e.grade === 'A').length), lbl: 'A-grade or better' },
-    { val: fmtMoney(data.card.annual_fee_sgd), lbl: 'Annual fee (SG)' },
-  ];
 }
 
 // ───────────────────────────────────────────────────────────── payback path
@@ -408,9 +335,9 @@ export function paybackView(data) {
   // Which of them cost you something to collect, so the sentence can name them
   // rather than hard-coding a number that goes stale when the path is re-cut.
   const paidSteps = data.payback_path.steps.filter((s) => (data.byId.get(s.ref)?.min_spend_sgd || 0) > 0);
-  // What you must spend to collect it. Two of the six are statement credits
-  // that only pay out against a qualifying transaction, so the headline figure
-  // is not free money and should never be presented as if it were.
+  // What you must spend to collect it. Some steps are statement credits that
+  // only pay out against a qualifying transaction, so the headline figure is
+  // not free money and should never be presented as if it were.
   const outlay = data.payback_path.steps.reduce((sum, s) => {
     const e = data.byId.get(s.ref);
     return sum + (e?.min_spend_sgd || 0) * (s.uses || 1);
@@ -427,7 +354,6 @@ export function paybackView(data) {
       const e = data.byId.get(s.ref);
       return e && !e.min_spend_sgd ? sum + (e.gross_value_sgd || 0) * (s.uses || 1) : sum;
     }, 0),
-    count: String(rows.length),
     fee: fmtMoney(fee),
     clearedFee: cum >= fee,
     surplusText: surplus > 0 ? ` with S$${surplus.toFixed(0)} to spare` : '',

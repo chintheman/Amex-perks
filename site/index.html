@@ -443,6 +443,9 @@ let animSig = null;
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+// Small counts read better spelled out in a headline than as digits.
+const WORDS = ['no', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+const numWord = (n) => WORDS[n] ?? String(n);
 
 // ─────────────────────────────────────────────────────────────── theme
 // Sun when dark is active (click for light), moon when light is active.
@@ -516,7 +519,7 @@ function benefitCard(e) {
     : (e.advance || 'No conditions listed');
   return `
   <article class="ben">
-    <button type="button" class="ben__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="b-${esc(e.id)}">
+    <button type="button" class="ben__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="b-${state.view}-${esc(e.id)}">
       <span class="ben__l">
         <span class="ben__name">${esc(e.name)}</span>
         <span class="ben__gist">${esc(e.summary || e.subcategory || '')}</span>
@@ -526,7 +529,7 @@ function benefitCard(e) {
         <span class="chev" aria-hidden="true">▼</span>
       </span>
     </button>
-    ${open ? `<div class="ben__body" id="b-${esc(e.id)}">
+    ${open ? `<div class="ben__body" id="b-${state.view}-${esc(e.id)}">
       ${badges(e)}
       <p class="body">${esc(e.details || e.summary || '')}</p>
       ${sourceFoot(e, meta)}
@@ -580,7 +583,7 @@ function pickCard(e, rank, fit) {
     : (e.advance || 'Always on');
   return `
   <article class="pick" style="--typecolor:${core.vr(core.TYPE_VAR[e.value_type])}">
-    <button type="button" class="pick__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="d-${esc(e.id)}">
+    <button type="button" class="pick__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="d-${state.view}-${esc(e.id)}">
       <span class="pick__l">
         ${rank != null ? `<span class="pick__rank">${rank}</span>` : ''}
         <span style="min-width:0">
@@ -593,7 +596,7 @@ function pickCard(e, rank, fit) {
         <span class="chev" aria-hidden="true">▼</span>
       </span>
     </button>
-    ${open ? `<div class="pick__body" id="d-${esc(e.id)}">
+    ${open ? `<div class="pick__body" id="d-${state.view}-${esc(e.id)}">
       ${badges(e, { fit })}
       <p class="body">${esc(e.details || e.summary || '')}</p>
       ${sourceFoot(e, meta)}
@@ -603,7 +606,10 @@ function pickCard(e, rank, fit) {
 }
 
 function resultCard(e, rank, fit) {
-  return e.kind === 'benefit' && e.value_type === 'access' && !e.discount_pct
+  // benefitCard renders neither a rank nor a fit badge, so it may only be used
+  // where there is neither to show. Otherwise a ranked list would skip numbers.
+  const plain = rank == null && fit == null;
+  return plain && e.kind === 'benefit' && e.value_type === 'access' && !e.discount_pct
     ? benefitCard(e)
     : pickCard(e, rank, fit);
 }
@@ -822,9 +828,15 @@ function renderFee() {
     $('fee-fill').style.width = `${t.pct}%`;
     $('fee-sub').textContent = 'Counted in this browser only';
   } else {
-    $('fee-big').textContent = `Five benefits clear the ${fee} fee.`;
-    $('fee-note').textContent = 'Four of them cost you nothing extra.';
-    $('fee-fill').style.width = `${Math.min(100, (1610 / d.card.annual_fee_sgd) * 100)}%`;
+    // Every number here comes from the path, so re-cutting it updates the copy
+    // instead of leaving the hero asserting something the data no longer says.
+    const freeCount = pb.benefitCount - pb.paidCount;
+    $('fee-big').textContent = `${numWord(pb.benefitCount)} benefits clear the ${fee} fee.`;
+    $('fee-note').textContent = freeCount === pb.benefitCount
+      ? 'None of them need any extra spending.'
+      : `${numWord(freeCount)} of them cost you nothing extra.`;
+    // The bar shows the part that costs nothing, which is the claim being made.
+    $('fee-fill').style.width = `${Math.min(100, (pb.freeValueSgd / d.card.annual_fee_sgd) * 100)}%`;
     $('fee-sub').textContent = `Worked out from ${pb.benefitCount} benefits totalling ${pb.total}`;
   }
 

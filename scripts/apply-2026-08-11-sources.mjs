@@ -161,7 +161,7 @@ const ADD = [
   }),
   entitlement({
     id: 'sands-lifestyle-prestige-membership',
-    name: 'Marina Bay Sands Sands LifeStyle Prestige',
+    name: 'Sands LifeStyle Prestige Membership',
     subcategory: 'Private Club Access',
     summary: 'Prestige tier without the usual S$5,000 calendar-year spend.',
     details: 'Prestige status for three months, extended by a further nine months when you spend at least S$1,500 on eligible transactions within that first three-month period. Enrolment is required. Available until 31 December 2026.',
