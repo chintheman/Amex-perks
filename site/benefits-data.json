@@ -2234,7 +2234,7 @@
     },
     {
       "id": "membership-rewards-base-earn",
-      "name": "Membership Rewards — Base Earn",
+      "name": "Membership Rewards Base Earn",
       "kind": "benefit",
       "category": "lifestyle",
       "section": "life",
@@ -3149,7 +3149,7 @@
     },
     {
       "id": "sands-lifestyle-prestige-membership",
-      "name": "Marina Bay Sands — Sands LifeStyle Prestige",
+      "name": "Marina Bay Sands Sands LifeStyle Prestige",
       "kind": "benefit",
       "category": "lifestyle",
       "section": "life",
@@ -3297,7 +3297,7 @@
     },
     {
       "id": "sheraton-towers-singapore-weddings",
-      "name": "Sheraton Towers Singapore — Weddings",
+      "name": "Sheraton Towers Singapore Weddings",
       "kind": "benefit",
       "category": "lifestyle",
       "section": "life",
