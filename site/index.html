@@ -84,6 +84,8 @@ button{font-family:var(--sans);cursor:pointer;}
 .hero{background:var(--hero1);color:#fff;border-bottom:4px solid var(--blue);}
 .hero__in{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(22px,4vw,40px);align-items:center;padding-top:clamp(30px,6vw,48px);padding-bottom:clamp(26px,5vw,40px);}
 .hero__eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#9CC6F2;}
+.hero__eyebrow a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(156,198,242,0.45);}
+.hero__eyebrow a:hover{color:#fff;border-bottom-color:#fff;}
 .hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin:12px 0 10px;color:#fff;text-wrap:balance;}
 .hero__lede{margin:0;font-size:15px;line-height:1.5;color:rgba(255,255,255,0.78);max-width:46ch;text-wrap:pretty;}
 /* The one number the product exists to answer, so it sits in the hero. */
@@ -92,6 +94,7 @@ button{font-family:var(--sans);cursor:pointer;}
 .fee__big{font-size:19px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;}
 .fee__bar{height:6px;border-radius:3px;background:rgba(255,255,255,0.16);overflow:hidden;}
 .fee__fill{height:100%;border-radius:3px;background:#4ADE80;transition:width .8s cubic-bezier(.2,.7,.2,1);}
+.prov{margin:20px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,0.62);max-width:44ch;}
 .stats{display:flex;gap:22px;margin:20px 0 0;flex-wrap:wrap;list-style:none;padding:0;}
 .stats__val{display:block;font-family:var(--mono);font-weight:600;font-size:22px;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1;}
 .stats__lbl{display:block;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:600;margin-top:3px;}
@@ -240,7 +243,7 @@ button{font-family:var(--sans);cursor:pointer;}
   <div class="wrap hdr__in">
     <button type="button" class="hdr__brand" data-act="view" data-view="home">
       <span class="hdr__name">Amex Platinum Guide</span>
-      <span class="hdr__sub">Community guide · Singapore</span>
+      <span class="hdr__sub">A cardholder's guide · Singapore</span>
     </button>
     <nav class="hdr__nav" aria-label="Views">
       <button type="button" class="tab" data-act="view" data-view="home" aria-current="page">Home</button>
@@ -256,14 +259,14 @@ button{font-family:var(--sans);cursor:pointer;}
 <section class="hero">
   <div class="wrap hero__in">
     <div>
-      <div class="hero__eyebrow">American Express Platinum Card · Singapore</div>
-      <h1>Make your Platinum pay for itself</h1>
-      <p class="hero__lede">Every Amex Platinum benefit in Singapore, checked against Amex's own pages. Pick what you're doing and it works out which ones apply to you.</p>
+      <div class="hero__eyebrow"><a href="https://www.americanexpress.com/sg/charge-cards/platinum-card/" target="_blank" rel="noopener">American Express Platinum Card ↗</a> · Singapore</div>
+      <h1>Make your Platinum Card pay for itself</h1>
+      <p class="hero__lede">Every Amex Platinum benefit in Singapore, sourced from Amex's own pages. Say what you want to do and it shortlists the ones worth using.</p>
       <div class="fee">
         <div class="fee__row"><span class="fee__big" id="fee-big">—</span><span id="fee-note"></span></div>
         <div class="fee__bar"><div class="fee__fill" id="fee-fill" style="width:0"></div></div>
       </div>
-      <ul class="stats" id="stats"></ul>
+      <p class="prov" id="provenance">Loading…</p>
       <div class="fresh"><span class="fresh__dot" aria-hidden="true"></span><span id="freshness">Loading…</span></div>
     </div>
     <div class="hero__art">
@@ -341,7 +344,7 @@ button{font-family:var(--sans);cursor:pointer;}
   <div class="wrap ftr__grid">
     <div>
       <h4>Amex Platinum Guide · Singapore</h4>
-      <p>A community guide, not affiliated with or endorsed by American Express. Data refreshes every two weeks. Reconfirm terms with Amex or the venue before relying on a benefit.</p>
+      <p>Written by an Amex Platinum cardholder, not by American Express, and not endorsed by them. Data refreshes every two weeks. Reconfirm terms with Amex or the venue before relying on a benefit.</p>
       <button type="button" class="ftr__methodbtn" data-act="method-open">How scoring works</button>
     </div>
     <div>
@@ -638,7 +641,7 @@ function renderPayback() {
     <div class="pb__panel">
       <div class="pb__top">
         <div class="pb__total">${esc(pb.total)}</div>
-        <div class="pb__gloss">reached after <b>${esc(pb.count)} benefits</b>, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.</div>
+        <div class="pb__gloss">from <b>${esc(pb.benefitCount)} benefits</b> across ${esc(pb.count)} uses, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}. Collecting it means spending <b>${esc(core.fmtMoney(pb.outlaySgd))}</b> on the two statement credits.</div>
       </div>
       <div class="pb__bar"><div class="pb__fill" style="width:${pb.pct}%"></div></div>
       <div>
@@ -672,11 +675,9 @@ function renderStatic() {
   $('fee-big').textContent = `${core.fmtMoney(fee.claimed)} claimable`;
   $('fee-note').textContent = `against the ${core.fmtMoney(fee.fee)} fee`;
   $('fee-fill').style.width = `${fee.pct}%`;
-  $('stats').innerHTML = [
-    { val: String(d.benefits.length), lbl: 'Benefits' },
-    { val: String(d.venues.length), lbl: 'Places to use them' },
-    { val: String(d.benefits.filter((e) => e.effort === 'claim').length), lbl: 'Need enrolling' },
-  ].map((s) => `<li><span class="stats__val">${esc(s.val)}</span><span class="stats__lbl">${esc(s.lbl)}</span></li>`).join('');
+  $('provenance').textContent =
+    "Every benefit here is read off Amex's own Singapore pages, not a forum thread. "
+    + `Amex changes these without notice, so the whole guide is rechecked every ${d.refresh_days ?? 14} days.`;
   $('freshness').textContent = `Verified ${core.fmtDate(d.generated_at)} · Next refresh ${core.fmtDate(d.next_refresh)}`;
   $('cadence').innerHTML = [
     `Generated: ${core.fmtDate(d.generated_at)}`,

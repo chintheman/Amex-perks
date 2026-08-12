@@ -68,10 +68,16 @@ await page.goto(`${base}/index.html`, { waitUntil: 'domcontentloaded' });
 await page.waitForSelector('.scen');
 
 // ── header + hero ───────────────────────────────────────────────────────
-ok((await page.locator('#stats li').count()) === 3, 'hero should show 3 stats');
-ok((await page.locator('#stats li').first().innerText()).includes(String(benefits.length)),
-  'first hero stat should be the benefit count');
+// Inventory counts were cut from the hero: they answered "how thorough is this
+// guide" rather than a reader's question, and the benefits section repeats them.
+ok((await page.locator('#stats').count()) === 0, 'the hero stats row should be gone');
+const prov = await page.locator('#provenance').innerText();
+ok(prov.includes("Amex's own Singapore pages"), 'hero should say where the data comes from');
+ok(/rechecked every \d+ days/.test(prov), 'hero should say how often it is rechecked');
 ok(/Verified .+ · Next refresh /.test(await page.locator('#freshness').innerText()), 'freshness line missing');
+ok((await page.locator('.hero__eyebrow a').getAttribute('href')).includes('americanexpress.com'),
+  'the eyebrow should link to the official Amex card page');
+ok((await page.locator('h1').innerText()).includes('Platinum Card'), 'headline should name the Platinum Card');
 ok(await page.locator('.cardshot img').evaluate((i) => i.complete && i.naturalWidth > 0),
   'hero card art failed to load — the placeholder fallback took over');
 // The break-even figure is the reason the product exists, so it is in the hero.
@@ -182,6 +188,11 @@ await page.waitForSelector('.pb__step');
 ok((await page.locator('.pb__step').count()) === 8, `expected 8 break-even rows, got ${await page.locator('.pb__step').count()}`);
 ok((await page.locator('.pb__total').innerText()) === 'S$1,850', `break-even total wrong: ${await page.locator('.pb__total').innerText()}`);
 ok((await page.locator('.pb__step--clears').count()) === 1, 'exactly one row should be marked as clearing the fee');
+const gloss = (await page.locator('.pb__gloss').innerText()).replace(/\s+/g, ' ');
+ok(gloss.includes('S$1,744'), 'gloss should name the annual fee');
+// Six benefits, eight uses. Counting rows made the page claim eight benefits.
+ok(gloss.includes('6 benefits across 8 uses'), `gloss should separate benefits from uses, got: ${gloss}`);
+ok(gloss.includes('S$1,200'), 'gloss should disclose the spend needed to collect the credits');
 const conditions = await page.locator('.pb__cond').allInnerTexts();
 ok(conditions.every((c) => c.trim().length > 0), 'every break-even row needs a condition line');
 if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-payback.png') });

@@ -342,10 +342,27 @@ export function paybackView(data) {
     };
   });
   const surplus = cum - fee;
+  // Distinct benefits, not rows. Table for Two used three times is one benefit
+  // used three times; counting rows made the page claim eight benefits when
+  // the path only ever draws on six.
+  const benefitCount = new Set(data.payback_path.steps.map((s) => s.ref)).size;
+  // What you must spend to collect it. Two of the six are statement credits
+  // that only pay out against a qualifying transaction, so the headline figure
+  // is not free money and should never be presented as if it were.
+  const outlay = data.payback_path.steps.reduce((sum, s) => {
+    const e = data.byId.get(s.ref);
+    return sum + (e?.min_spend_sgd || 0) * (s.uses || 1);
+  }, 0);
   return {
     steps: rows,
     total: fmtMoney(cum),
     totalSgd: cum,
+    benefitCount,
+    outlaySgd: outlay,
+    freeValueSgd: data.payback_path.steps.reduce((sum, s) => {
+      const e = data.byId.get(s.ref);
+      return e && !e.min_spend_sgd ? sum + (e.gross_value_sgd || 0) * (s.uses || 1) : sum;
+    }, 0),
     count: String(rows.length),
     fee: fmtMoney(fee),
     clearedFee: cum >= fee,
