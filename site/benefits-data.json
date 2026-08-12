@@ -67,7 +67,7 @@
         "key": "promo",
         "label": "Dining Promotions",
         "chip": "Promotions",
-        "desc": "Limited-time offers — check validity dates",
+        "desc": "Limited-time offers, so check the validity dates",
         "default_subcategory": "Dining Promotions"
       },
       {
@@ -170,17 +170,17 @@
       {
         "key": "date_night",
         "label": "Date Night",
-        "desc": "Romantic, 2-for-1 sweet spot — best discounts almost everywhere are for pairs."
+        "desc": "Romantic, 2-for-1 sweet spot. The best discounts almost everywhere are for pairs."
       },
       {
         "key": "business",
         "label": "Business Dinner",
-        "desc": "Polished, quiet fine-dining suited to entertaining a client — not bargain-hunting."
+        "desc": "Polished, quiet fine dining suited to entertaining a client, not bargain hunting."
       },
       {
         "key": "free_treat",
         "label": "Free Treat",
-        "desc": "Zero minimum spend — a genuinely complimentary dining experience or credit."
+        "desc": "Zero minimum spend, so a genuinely complimentary dining experience or credit."
       }
     ],
     "grade_bands": [
@@ -225,7 +225,7 @@
       {
         "key": "claim",
         "label": "Claim",
-        "desc": "Needs enrolling in or registering — once, then it is yours"
+        "desc": "Needs enrolling in or registering once, then it is yours"
       },
       {
         "key": "book",
@@ -4722,7 +4722,7 @@
     {
       "key": "crowd",
       "label": "Feeding a crowd",
-      "blurb": "Buffets and high tea — where a group discount actually lands.",
+      "blurb": "Buffets and high tea, where a group discount actually lands.",
       "filter": {
         "kind": "venue",
         "tier_groups": [

@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amex Platinum Benefits Guide — Singapore</title>
-<meta name="description" content="An independent guide to every American Express Platinum benefit in Singapore. Pick what you're doing and it shows you what your card is good for.">
+<title>Amex Platinum Benefits Guide · Singapore</title>
+<meta name="description" content="A community guide to every American Express Platinum benefit in Singapore. Pick what you're doing and it shows you which perks apply.">
 <!-- Link previews. Absolute URLs because Slack/Telegram/X do not resolve
      relative ones; update the host if this is ever served elsewhere. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Amex Platinum Benefits Guide — Singapore">
+<meta property="og:title" content="Amex Platinum Benefits Guide · Singapore">
 <meta property="og:description" content="Every Amex Platinum benefit in Singapore, checked against Amex's own pages. Pick what you're doing and it works out which perks apply.">
 <meta property="og:url" content="https://www.0xsteamboat.me/amex/">
 <meta property="og:image" content="https://www.0xsteamboat.me/amex/assets/amex-platinum-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Amex Platinum Benefits Guide — Singapore">
+<meta name="twitter:title" content="Amex Platinum Benefits Guide · Singapore">
 <meta name="twitter:description" content="Every Amex Platinum benefit in Singapore, checked against Amex's own pages. Pick what you're doing and it works out which perks apply.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2300175A'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='16' font-weight='bold' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +78,7 @@ button{font-family:var(--sans);cursor:pointer;}
 .hdr__nav{display:flex;gap:8px;align-items:center;}
 .tab{border:1px solid transparent;background:none;color:rgba(255,255,255,0.75);border-radius:6px;padding:7px 12px;font-size:12px;font-weight:700;white-space:nowrap;}
 .tab[aria-current="page"]{background:rgba(255,255,255,0.16);color:#fff;border-color:rgba(255,255,255,0.45);}
-.themebtn{border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);color:#fff;border-radius:6px;padding:7px 11px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+.themebtn{border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);color:#fff;border-radius:6px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:0 0 auto;}
 
 /* ── hero ───────────────────────────────────────────────────────────── */
 .hero{background:var(--hero1);color:#fff;border-bottom:4px solid var(--blue);}
@@ -240,13 +240,15 @@ button{font-family:var(--sans);cursor:pointer;}
   <div class="wrap hdr__in">
     <button type="button" class="hdr__brand" data-act="view" data-view="home">
       <span class="hdr__name">Amex Platinum Guide</span>
-      <span class="hdr__sub">Unofficial · Singapore</span>
+      <span class="hdr__sub">Community guide · Singapore</span>
     </button>
     <nav class="hdr__nav" aria-label="Views">
       <button type="button" class="tab" data-act="view" data-view="home" aria-current="page">Home</button>
       <button type="button" class="tab" data-act="view" data-view="places">Places to eat</button>
-      <button type="button" class="tab" data-act="view" data-view="payback">Payback</button>
-      <button type="button" class="themebtn" data-act="theme" id="themebtn">Dark</button>
+      <button type="button" class="tab" data-act="view" data-view="payback">Break even</button>
+      <button type="button" class="themebtn" data-act="theme" id="themebtn" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg id="theme-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"></svg>
+      </button>
     </nav>
   </div>
 </header>
@@ -255,8 +257,8 @@ button{font-family:var(--sans);cursor:pointer;}
   <div class="wrap hero__in">
     <div>
       <div class="hero__eyebrow">American Express Platinum Card · Singapore</div>
-      <h1>What is your card actually good for?</h1>
-      <p class="hero__lede">An independent guide to every Amex Platinum benefit in Singapore. Tell it what you're doing — it works out the rest.</p>
+      <h1>Make your Platinum pay for itself</h1>
+      <p class="hero__lede">Every Amex Platinum benefit in Singapore, checked against Amex's own pages. Pick what you're doing and it works out which ones apply to you.</p>
       <div class="fee">
         <div class="fee__row"><span class="fee__big" id="fee-big">—</span><span id="fee-note"></span></div>
         <div class="fee__bar"><div class="fee__fill" id="fee-fill" style="width:0"></div></div>
@@ -279,7 +281,7 @@ button{font-family:var(--sans);cursor:pointer;}
     <div class="sechead">
       <div>
         <h2>What are you doing?</h2>
-        <p>Pick the closest one. Every option is a real filter over the same data — nothing is hidden behind it.</p>
+        <p>Pick the closest one. Every option is a real filter over the same data, so nothing is hidden behind it.</p>
       </div>
     </div>
     <div class="scenarios" id="scenarios"></div>
@@ -338,8 +340,8 @@ button{font-family:var(--sans);cursor:pointer;}
 <footer class="ftr">
   <div class="wrap ftr__grid">
     <div>
-      <h4>Amex Platinum Guide — Singapore</h4>
-      <p>Independent — not affiliated with or endorsed by American Express. Data refreshes every two weeks; reconfirm terms with Amex or the venue before relying on a benefit.</p>
+      <h4>Amex Platinum Guide · Singapore</h4>
+      <p>A community guide, not affiliated with or endorsed by American Express. Data refreshes every two weeks. Reconfirm terms with Amex or the venue before relying on a benefit.</p>
       <button type="button" class="ftr__methodbtn" data-act="method-open">How scoring works</button>
     </div>
     <div>
@@ -391,10 +393,18 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 
 // ─────────────────────────────────────────────────────────────── theme
+// Sun when dark is active (click for light), moon when light is active.
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+const MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+
 function applyTheme(theme) {
   state.theme = theme;
   document.documentElement.setAttribute('data-theme', theme);
-  $('themebtn').textContent = theme === 'dark' ? 'Light' : 'Dark';
+  const next = theme === 'dark' ? 'light' : 'dark';
+  $('theme-icon').innerHTML = theme === 'dark' ? SUN : MOON;
+  const btn = $('themebtn');
+  btn.setAttribute('aria-label', `Switch to ${next} mode`);
+  btn.setAttribute('title', `Switch to ${next} mode`);
 }
 
 // ────────────────────────────────────────────────────── shared fragments
@@ -623,12 +633,12 @@ function renderPayback() {
     <button type="button" class="backbtn" data-act="view" data-view="home">← Home</button>
     <div class="pb__intro">
       <h2>Minimum path to break even</h2>
-      <p>The fewest benefits you'd need to use to clear the ${esc(fee)} annual fee.</p>
+      <p>The fewest benefits you would need to use to clear the ${esc(fee)} annual fee.</p>
     </div>
     <div class="pb__panel">
       <div class="pb__top">
         <div class="pb__total">${esc(pb.total)}</div>
-        <div class="pb__gloss">reached after <b>${esc(pb.count)} benefits</b> — clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.</div>
+        <div class="pb__gloss">reached after <b>${esc(pb.count)} benefits</b>, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.</div>
       </div>
       <div class="pb__bar"><div class="pb__fill" style="width:${pb.pct}%"></div></div>
       <div>
@@ -636,7 +646,7 @@ function renderPayback() {
           <div class="pb__step${s.clearsHere ? ' pb__step--clears' : ''}">
             <span class="pb__n">${esc(s.num)}</span>
             <div>
-              <div class="pb__title">${esc(s.name)}${s.clearsHere ? ' — fee cleared here' : ''}</div>
+              <div class="pb__title">${esc(s.name)}${s.clearsHere ? ', fee cleared here' : ''}</div>
               <div class="pb__cond">${esc(s.condition)}</div>
             </div>
             <div class="pb__vals">

@@ -20,7 +20,7 @@ export const VALUE_TYPES = [
 export const SECTIONS = [
   { key: 'ldr',   label: 'Love Dining · Restaurants', chip: 'Restaurants',        desc: 'Year-round 50% off food for two at standalone restaurants', default_subcategory: 'Love Dining · Restaurant' },
   { key: 'ldh',   label: 'Love Dining · Hotels',      chip: 'Hotel dining',       desc: 'Up to 50% off at hotel restaurants and bars', default_subcategory: 'Love Dining · Hotel Outlet' },
-  { key: 'promo', label: 'Dining Promotions',         chip: 'Promotions',         desc: 'Limited-time offers — check validity dates', default_subcategory: 'Dining Promotions' },
+  { key: 'promo', label: 'Dining Promotions',         chip: 'Promotions',         desc: 'Limited-time offers, so check the validity dates', default_subcategory: 'Dining Promotions' },
   { key: 'progs', label: 'Seasonal, Credits & Programs', chip: 'Credits & programs', desc: 'Statement credits, seasonal offers, special programs' },
   { key: 'life',  label: 'Lifestyle & Travel',        chip: 'Lifestyle & travel', desc: 'Hotels, lounges, spa, golf, shopping, insurance' },
 ];
@@ -53,9 +53,9 @@ export const TIERS = {
 };
 
 export const OCCASIONS = [
-  { key: 'date_night', label: 'Date Night',      desc: 'Romantic, 2-for-1 sweet spot — best discounts almost everywhere are for pairs.' },
-  { key: 'business',   label: 'Business Dinner', desc: 'Polished, quiet fine-dining suited to entertaining a client — not bargain-hunting.' },
-  { key: 'free_treat', label: 'Free Treat',      desc: 'Zero minimum spend — a genuinely complimentary dining experience or credit.' },
+  { key: 'date_night', label: 'Date Night',      desc: 'Romantic, 2-for-1 sweet spot. The best discounts almost everywhere are for pairs.' },
+  { key: 'business',   label: 'Business Dinner', desc: 'Polished, quiet fine dining suited to entertaining a client, not bargain hunting.' },
+  { key: 'free_treat', label: 'Free Treat',      desc: 'Zero minimum spend, so a genuinely complimentary dining experience or credit.' },
 ];
 
 // Ordered high -> low. `min` is inclusive; the last band is the floor.
@@ -100,7 +100,7 @@ export const KINDS = [
 // it maps to the only three states that matter: act once, act each time, or
 // never think about it again.
 export const EFFORTS = [
-  { key: 'claim', label: 'Claim', desc: 'Needs enrolling in or registering — once, then it is yours' },
+  { key: 'claim', label: 'Claim', desc: 'Needs enrolling in or registering once, then it is yours' },
   { key: 'book', label: 'Book', desc: 'Reserve or book each time you use it' },
   { key: 'have', label: 'Have', desc: 'Already active. Nothing to do' },
 ];
