@@ -78,6 +78,7 @@ button{font-family:var(--sans);cursor:pointer;}
 .hdr__nav{display:flex;gap:8px;align-items:center;}
 .tab{border:1px solid transparent;background:none;color:rgba(255,255,255,0.75);border-radius:6px;padding:7px 12px;font-size:12px;font-weight:700;white-space:nowrap;}
 .tab[aria-current="page"]{background:rgba(255,255,255,0.16);color:#fff;border-color:rgba(255,255,255,0.45);}
+.tab__n{margin-left:6px;font-family:var(--mono);font-size:10px;font-weight:700;background:#4ADE80;color:#04240f;border-radius:99px;padding:1px 6px;}
 .themebtn{border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);color:#fff;border-radius:6px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:0 0 auto;}
 
 /* ── hero ───────────────────────────────────────────────────────────── */
@@ -90,8 +91,9 @@ button{font-family:var(--sans);cursor:pointer;}
 .hero__lede{margin:0;font-size:15px;line-height:1.5;color:rgba(255,255,255,0.78);max-width:46ch;text-wrap:pretty;}
 /* The one number the product exists to answer, so it sits in the hero. */
 .fee{margin-top:22px;max-width:42ch;}
-.fee__row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.75);margin-bottom:7px;}
-.fee__big{font-size:19px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;}
+.fee__big{margin:0 0 5px;font-size:clamp(17px,2vw,20px);font-weight:800;color:#fff;letter-spacing:-0.01em;line-height:1.25;}
+.fee__note{margin:0 0 10px;font-size:13px;color:rgba(255,255,255,0.7);}
+.fee__sub{margin:8px 0 0;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,0.6);}
 .fee__bar{height:6px;border-radius:3px;background:rgba(255,255,255,0.16);overflow:hidden;}
 .fee__fill{height:100%;border-radius:3px;background:#4ADE80;transition:width .8s cubic-bezier(.2,.7,.2,1);}
 .prov{margin:20px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,0.62);max-width:44ch;}
@@ -192,6 +194,30 @@ button{font-family:var(--sans);cursor:pointer;}
 .pick__body{padding:12px 15px 13px;border-top:1px solid var(--line);}
 .morebtn{margin-top:10px;}
 
+/* ── the year log ───────────────────────────────────────────────────── */
+.stepper{display:inline-flex;align-items:center;gap:0;border:1px solid var(--linestrong);border-radius:6px;overflow:hidden;background:var(--card);}
+.stepper button{border:0;background:none;color:var(--blue);font-size:14px;font-weight:800;line-height:1;padding:6px 11px;font-family:var(--mono);}
+.stepper button:disabled{color:var(--muted);cursor:not-allowed;}
+.stepper__n{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);padding:0 8px;min-width:62px;text-align:center;font-variant-numeric:tabular-nums;}
+.logrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);}
+.logrow__lbl{font-size:11.5px;color:var(--muted);font-weight:600;}
+.logrow__lbl b{color:var(--status-good);}
+.tally{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,3vw,26px);box-shadow:var(--shadow);margin-bottom:22px;}
+.tally__big{font-family:var(--mono);font-size:clamp(30px,5vw,40px);font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1;}
+.tally__big--done{color:var(--status-good);}
+.tally__gloss{color:var(--sec);font-size:13.5px;max-width:52ch;margin:9px 0 0;}
+.tally__gloss b{color:var(--ink);}
+.tally__bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;margin:16px 0 0;}
+.tally__fill{height:100%;border-radius:5px;background:var(--blue);transition:width .8s cubic-bezier(.2,.7,.2,1);}
+.tally__fill--done{background:var(--status-good);}
+.logged{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;}
+.logged__row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-top:1px solid var(--line);}
+.logged__row:first-child{border-top:0;}
+.logged__l{min-width:0;}
+.logged__name{display:block;font-size:13.5px;font-weight:700;color:var(--ink);}
+.logged__meta{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
+.logged__v{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+
 /* ── payback ────────────────────────────────────────────────────────── */
 .pb__intro{max-width:70ch;margin-bottom:18px;}
 .pb__intro h2{font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.015em;margin:0 0 6px;color:var(--ink);}
@@ -249,6 +275,7 @@ button{font-family:var(--sans);cursor:pointer;}
       <button type="button" class="tab" data-act="view" data-view="home" aria-current="page">Home</button>
       <button type="button" class="tab" data-act="view" data-view="places">Places to eat</button>
       <button type="button" class="tab" data-act="view" data-view="payback">Break even</button>
+      <button type="button" class="tab" data-act="view" data-view="year">My year<span id="tab-year-n" class="tab__n" hidden></span></button>
       <button type="button" class="themebtn" data-act="theme" id="themebtn" aria-label="Switch to dark mode" title="Switch to dark mode">
         <svg id="theme-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"></svg>
       </button>
@@ -263,8 +290,10 @@ button{font-family:var(--sans);cursor:pointer;}
       <h1>Make your Platinum Card pay for itself</h1>
       <p class="hero__lede">Every Amex Platinum benefit in Singapore, sourced from Amex's own pages. Say what you want to do and it shortlists the ones worth using.</p>
       <div class="fee">
-        <div class="fee__row"><span class="fee__big" id="fee-big">—</span><span id="fee-note"></span></div>
+        <p class="fee__big" id="fee-big">Loading…</p>
+        <p class="fee__note" id="fee-note"></p>
         <div class="fee__bar"><div class="fee__fill" id="fee-fill" style="width:0"></div></div>
+        <p class="fee__sub" id="fee-sub"></p>
       </div>
       <p class="prov" id="provenance">Loading…</p>
       <div class="fresh"><span class="fresh__dot" aria-hidden="true"></span><span id="freshness">Loading…</span></div>
@@ -338,6 +367,17 @@ button{font-family:var(--sans);cursor:pointer;}
   </section>
 
   <section class="view" id="view-payback" hidden></section>
+
+  <section class="view" id="view-year" hidden>
+    <div class="sechead">
+      <div>
+        <h2>Your year so far</h2>
+        <p>Tick a benefit off anywhere in the guide and it lands here. Kept in this browser only, never sent anywhere.</p>
+      </div>
+      <button type="button" class="ghostbtn" data-act="log-reset" id="log-reset" hidden>Start over</button>
+    </div>
+    <div id="year-body"></div>
+  </section>
 </main>
 
 <footer class="ftr">
@@ -383,7 +423,16 @@ const state = {
   moreEfforts: new Set(),
   theme: 'light',
   showMethod: false,
+  log: {},
 };
+
+const LOG_KEY = 'pbg-log-v1';
+function loadLog() {
+  try { return JSON.parse(localStorage.getItem(LOG_KEY)) || {}; } catch { return {}; }
+}
+function saveLog() {
+  try { localStorage.setItem(LOG_KEY, JSON.stringify(state.log)); } catch { /* private mode */ }
+}
 
 let map = null;
 let markers = [];
@@ -432,6 +481,26 @@ const badges = (e, { fit } = {}) => `
     ${e.expires ? `<span class="badge" style="background:var(--status-warning)">Ends ${esc(core.fmtDate(e.expires))}</span>` : ''}
   </div>`;
 
+// Ticking a use is the whole tracker. It sits inside the expanded card so it
+// never competes with the benefit's own numbers when collapsed.
+function stepper(e) {
+  if (!core.canLog(e)) return '';
+  const used = state.log[e.id] || 0;
+  const left = core.usesLeft(e, state.log);
+  const cap = e.annual_cap;
+  return `
+    <div class="logrow">
+      <span class="logrow__lbl">${used
+    ? `Used <b>${used}${cap ? ` of ${cap}` : ''}</b> · ${esc(core.fmtMoney(used * e.gross_value_sgd))} logged`
+    : `Worth ${esc(core.fmtMoney(e.gross_value_sgd))} each time${cap ? `, up to ${cap}×` : ''}`}</span>
+      <span class="stepper">
+        <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="-1" ${used ? '' : 'disabled'} aria-label="Remove a use of ${esc(e.name)}">−</button>
+        <span class="stepper__n">${used}${cap ? ` / ${cap}` : ''}</span>
+        <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="1" ${left > 0 ? '' : 'disabled'} aria-label="Log a use of ${esc(e.name)}">+</button>
+      </span>
+    </div>`;
+}
+
 const sourceFoot = (e, meta) => `
   <div class="foot">
     <span class="foot__meta">${esc(meta)}</span>
@@ -461,6 +530,7 @@ function benefitCard(e) {
       ${badges(e)}
       <p class="body">${esc(e.details || e.summary || '')}</p>
       ${sourceFoot(e, meta)}
+      ${stepper(e)}
       ${e.childCount ? `<button type="button" class="ben__open" data-act="parent" data-id="${esc(e.id)}">See all ${e.childCount} ${e.section === 'life' ? 'places' : 'venues'} →</button>` : ''}
     </div>` : ''}
   </article>`;
@@ -527,6 +597,7 @@ function pickCard(e, rank, fit) {
       ${badges(e, { fit })}
       <p class="body">${esc(e.details || e.summary || '')}</p>
       ${sourceFoot(e, meta)}
+      ${stepper(e)}
     </div>` : ''}
   </article>`;
 }
@@ -641,7 +712,7 @@ function renderPayback() {
     <div class="pb__panel">
       <div class="pb__top">
         <div class="pb__total">${esc(pb.total)}</div>
-        <div class="pb__gloss">from <b>${esc(pb.benefitCount)} benefits</b> across ${esc(pb.count)} uses, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}. Collecting it means spending <b>${esc(core.fmtMoney(pb.outlaySgd))}</b> on the two statement credits.</div>
+        <div class="pb__gloss">from <b>${esc(pb.benefitCount)} benefits</b> across ${esc(pb.useCount)} uses, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.${pb.outlaySgd ? ` Collecting it means spending <b>${esc(core.fmtMoney(pb.outlaySgd))}</b> on ${pb.paidCount === 1 ? 'the one credit that needs a qualifying transaction' : `the ${esc(pb.paidCount)} credits that need a qualifying transaction`}.` : ''}</div>
       </div>
       <div class="pb__bar"><div class="pb__fill" style="width:${pb.pct}%"></div></div>
       <div>
@@ -661,6 +732,56 @@ function renderPayback() {
     </div>`;
 }
 
+// ──────────────────────────────────────────────────────────── the year view
+function renderYear() {
+  const d = state.data;
+  const t = core.logSummary(d, state.log);
+  $('log-reset').hidden = t.rows.length === 0;
+
+  if (!t.rows.length) {
+    $('year-body').innerHTML = `
+      <div class="empty">
+        Nothing logged yet. Open any benefit and press <b>+</b> when you use it.<br>
+        Five benefits are enough to clear the ${esc(core.fmtMoney(t.fee))} fee.
+      </div>`;
+    return;
+  }
+
+  const headline = t.cleared
+    ? `You are ${esc(core.fmtMoney(t.surplus))} ahead of the fee.`
+    : `${esc(core.fmtMoney(t.shortfall))} to go.`;
+
+  $('year-body').innerHTML = `
+    <div class="tally">
+      <div class="tally__big${t.cleared ? ' tally__big--done' : ''}">${esc(core.fmtMoney(t.totalSgd))}</div>
+      <p class="tally__gloss">
+        from <b>${t.benefitCount} benefit${t.benefitCount === 1 ? '' : 's'}</b> across ${t.uses} use${t.uses === 1 ? '' : 's'},
+        against the ${esc(core.fmtMoney(t.fee))} annual fee. <b>${headline}</b>
+      </p>
+      <div class="tally__bar"><div class="tally__fill${t.cleared ? ' tally__fill--done' : ''}" style="width:${t.pct}%"></div></div>
+      <p class="tally__gloss" style="font-size:12px;margin-top:12px">
+        You have logged ${t.benefitCount} of the ${esc(t.loggableCount)} things worth tracking here.
+      </p>
+    </div>
+    <div class="logged">
+      ${t.rows.map((r) => `
+        <div class="logged__row">
+          <span class="logged__l">
+            <span class="logged__name">${esc(r.entry.name)}</span>
+            <span class="logged__meta">${r.uses}× ${esc(core.fmtMoney(r.entry.gross_value_sgd))}${r.entry.annual_cap ? ` · cap ${r.entry.annual_cap}` : ''}</span>
+          </span>
+          <span style="display:flex;align-items:center;gap:12px">
+            <span class="logged__v">${esc(core.fmtMoney(r.value))}</span>
+            <span class="stepper">
+              <button type="button" data-act="log" data-id="${esc(r.entry.id)}" data-delta="-1" aria-label="Remove a use of ${esc(r.entry.name)}">−</button>
+              <span class="stepper__n">${r.uses}</span>
+              <button type="button" data-act="log" data-id="${esc(r.entry.id)}" data-delta="1" ${core.usesLeft(r.entry, state.log) > 0 ? '' : 'disabled'} aria-label="Log a use of ${esc(r.entry.name)}">+</button>
+            </span>
+          </span>
+        </div>`).join('')}
+    </div>`;
+}
+
 // ───────────────────────────────────────────────────────────────── chrome
 function setHtml(el, html) {
   el.innerHTML = html;
@@ -671,10 +792,7 @@ function setHtml(el, html) {
 
 function renderStatic() {
   const d = state.data;
-  const fee = core.feeProgress(d);
-  $('fee-big').textContent = `${core.fmtMoney(fee.claimed)} claimable`;
-  $('fee-note').textContent = `against the ${core.fmtMoney(fee.fee)} fee`;
-  $('fee-fill').style.width = `${fee.pct}%`;
+  renderFee();
   $('provenance').textContent =
     "Every benefit here is read off Amex's own Singapore pages, not a forum thread. "
     + `Amex changes these without notice, so the whole guide is rechecked every ${d.refresh_days ?? 14} days.`;
@@ -684,6 +802,35 @@ function renderStatic() {
     `Next refresh: ${core.fmtDate(d.next_refresh)}`,
     `Cycle: every ${d.refresh_days ?? 14} days`,
   ].map((t) => `<li>${esc(t)}</li>`).join('');
+}
+
+// The hero number tracks the log once there is one: before you have used
+// anything it makes the case, after that it reports where you actually are.
+function renderFee() {
+  const d = state.data;
+  const pb = core.paybackView(d);
+  const t = core.logSummary(d, state.log);
+  const fee = core.fmtMoney(d.card.annual_fee_sgd);
+
+  if (t.rows.length) {
+    $('fee-big').textContent = t.cleared
+      ? `You have cleared the ${fee} fee.`
+      : `${core.fmtMoney(t.totalSgd)} of the ${fee} fee, so far.`;
+    $('fee-note').textContent = t.cleared
+      ? `${core.fmtMoney(t.surplus)} ahead, from ${t.benefitCount} benefits.`
+      : `${core.fmtMoney(t.shortfall)} to go. Keep ticking benefits off as you use them.`;
+    $('fee-fill').style.width = `${t.pct}%`;
+    $('fee-sub').textContent = 'Counted in this browser only';
+  } else {
+    $('fee-big').textContent = `Five benefits clear the ${fee} fee.`;
+    $('fee-note').textContent = `Four of them need no extra spending at all, and get you ${core.fmtMoney(1610)} of the way.`;
+    $('fee-fill').style.width = `${Math.min(100, (1610 / d.card.annual_fee_sgd) * 100)}%`;
+    $('fee-sub').textContent = `Worked out from ${pb.benefitCount} benefits totalling ${pb.total}`;
+  }
+
+  const badge = $('tab-year-n');
+  badge.hidden = !t.rows.length;
+  badge.textContent = core.fmtMoney(t.totalSgd).replace('S$', '');
 }
 
 function renderModal() {
@@ -770,7 +917,7 @@ function ensureMap(rows, sig, elId) {
 // ──────────────────────────────────────────────────────────────── render
 function render() {
   mapToken += 1; // invalidates any mount retry queued by the previous render
-  const views = { home: 'view-home', results: 'view-results', places: 'view-places', payback: 'view-payback' };
+  const views = { home: 'view-home', results: 'view-results', places: 'view-places', payback: 'view-payback', year: 'view-year' };
   for (const [name, id] of Object.entries(views)) $(id).hidden = state.view !== name;
   for (const tab of document.querySelectorAll('.tab')) {
     if (state.view === tab.dataset.view) tab.setAttribute('aria-current', 'page');
@@ -786,6 +933,7 @@ function render() {
   if (state.view === 'home') renderHome();
   else if (state.view === 'results') renderResults();
   else if (state.view === 'places') renderPlaces();
+  else if (state.view === 'year') renderYear();
   else renderPayback();
   renderModal();
 }
@@ -846,6 +994,18 @@ document.addEventListener('click', (ev) => {
       if (state.moreEfforts.has(k)) state.moreEfforts.delete(k); else state.moreEfforts.add(k);
       break;
     }
+    case 'log': {
+      const entry = state.data.byId.get(el.dataset.id);
+      state.log = core.logUse(state.log, entry, Number(el.dataset.delta));
+      saveLog();
+      renderFee();
+      break;
+    }
+    case 'log-reset':
+      state.log = {};
+      saveLog();
+      renderFee();
+      break;
     case 'method-open': state.showMethod = true; break;
     case 'method-close': state.showMethod = false; break;
     default: return;
@@ -864,6 +1024,7 @@ const saved = localStorage.getItem('pbg-theme');
 applyTheme(saved || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
 try {
+  state.log = loadLog();
   state.data = await core.loadData();
   state.data.tax.effortByKey = Object.fromEntries(state.data.tax.efforts.map((e) => [e.key, e]));
   renderStatic();

@@ -248,15 +248,11 @@
   "payback_path": {
     "steps": [
       {
-        "ref": "global-dining-credit",
-        "uses": 1
+        "ref": "table-for-two-platinum-edition",
+        "uses": 6
       },
       {
-        "ref": "platinum-wine-credit",
-        "uses": 1
-      },
-      {
-        "ref": "airline-credit",
+        "ref": "complimentary-annual-hotel-night",
         "uses": 1
       },
       {
@@ -264,13 +260,12 @@
         "uses": 2
       },
       {
-        "ref": "complimentary-annual-hotel-night",
+        "ref": "global-dining-credit",
         "uses": 1
       },
       {
-        "ref": "table-for-two-platinum-edition",
-        "uses": 3,
-        "split": true
+        "ref": "platinum-wine-credit",
+        "uses": 1
       }
     ]
   },

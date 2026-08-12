@@ -81,9 +81,10 @@ ok((await page.locator('h1').innerText()).includes('Platinum Card'), 'headline s
 ok(await page.locator('.cardshot img').evaluate((i) => i.complete && i.naturalWidth > 0),
   'hero card art failed to load — the placeholder fallback took over');
 // The break-even figure is the reason the product exists, so it is in the hero.
-ok(/^S\$[\d,]+ claimable$/.test(await page.locator('#fee-big').innerText()),
+ok(/^Five benefits clear the S\$1,744 fee\.$/.test(await page.locator('#fee-big').innerText()),
   `fee headline wrong: ${await page.locator('#fee-big').innerText()}`);
-ok((await page.locator('#fee-note').innerText()).includes('S$1,744'), 'fee note should name the annual fee');
+ok((await page.locator('#fee-note').innerText()).includes('no extra spending'),
+  'fee note should say four of the five need no extra spending');
 ok(Number((await page.locator('#fee-fill').evaluate((el) => el.style.width)).replace('%', '')) > 0,
   'fee progress bar never filled');
 
@@ -185,17 +186,73 @@ if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-places.png') });
 // ── payback ─────────────────────────────────────────────────────────────
 await page.locator('.tab[data-view="payback"]').click();
 await page.waitForSelector('.pb__step');
-ok((await page.locator('.pb__step').count()) === 8, `expected 8 break-even rows, got ${await page.locator('.pb__step').count()}`);
-ok((await page.locator('.pb__total').innerText()) === 'S$1,850', `break-even total wrong: ${await page.locator('.pb__total').innerText()}`);
+ok((await page.locator('.pb__step').count()) === data.payback_path.steps.length,
+  `break-even rows should match the path, got ${await page.locator('.pb__step').count()}`);
+ok((await page.locator('.pb__total').innerText()) === 'S$2,010', `break-even total wrong: ${await page.locator('.pb__total').innerText()}`);
 ok((await page.locator('.pb__step--clears').count()) === 1, 'exactly one row should be marked as clearing the fee');
 const gloss = (await page.locator('.pb__gloss').innerText()).replace(/\s+/g, ' ');
 ok(gloss.includes('S$1,744'), 'gloss should name the annual fee');
 // Six benefits, eight uses. Counting rows made the page claim eight benefits.
-ok(gloss.includes('6 benefits across 8 uses'), `gloss should separate benefits from uses, got: ${gloss}`);
-ok(gloss.includes('S$1,200'), 'gloss should disclose the spend needed to collect the credits');
+ok(gloss.includes('5 benefits across 11 uses'), `gloss should separate benefits from uses, got: ${gloss}`);
+ok(gloss.includes('S$600'), 'gloss should disclose the spend needed to collect the credit');
 const conditions = await page.locator('.pb__cond').allInnerTexts();
 ok(conditions.every((c) => c.trim().length > 0), 'every break-even row needs a condition line');
 if (SHOTS) await page.screenshot({ path: join(ROOT, 'docs/shot-payback.png') });
+
+
+// ── the year log ────────────────────────────────────────────────────────
+// Ticking a use anywhere should reach the hero, the nav badge and the tally.
+await page.locator('.tab[data-view="home"]').click();
+await page.waitForSelector('#view-home:not([hidden])');
+await page.evaluate(() => localStorage.removeItem('pbg-log-v1'));
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.waitForSelector('.scen');
+
+ok(await page.locator('#tab-year-n').isHidden(), 'the nav badge should be hidden with an empty log');
+await page.locator('.tab[data-view="year"]').click();
+await page.waitForSelector('#view-year:not([hidden])');
+ok((await page.locator('#year-body .empty').count()) === 1, 'an empty log should explain itself');
+ok(await page.locator('#log-reset').isHidden(), 'no reset button with nothing logged');
+
+await page.locator('.tab[data-view="home"]').click();
+const logCard = page.locator('.ben').filter({ has: page.locator('.ben__name') }).first();
+await logCard.locator('.ben__btn').click();
+await page.waitForSelector('.ben .stepper');
+const capped = await page.locator('.ben .stepper__n').first().innerText();
+await page.locator('.ben .stepper button[data-delta="1"]').first().click();
+ok((await page.locator('.ben .stepper__n').first().innerText()) !== capped, 'the stepper should count up');
+ok(!(await page.locator('#fee-big').innerText()).startsWith('Five benefits'),
+  'the hero should switch to the reader\'s own tally once something is logged');
+ok(await page.locator('#tab-year-n').isVisible(), 'the nav badge should appear once something is logged');
+
+await page.locator('.tab[data-view="year"]').click();
+await page.waitForSelector('.tally__big');
+const tally = await page.locator('.tally__big').innerText();
+ok(/^S\$[\d,]+$/.test(tally), `tally should be a money figure, got ${tally}`);
+ok((await page.locator('.logged__row').count()) === 1, 'one logged benefit should be one row');
+
+// A cap is a cap: pressing + past it must not keep counting.
+const first = data.entries.find((e) => e.economics?.gross_value_sgd && e.terms?.annual_cap);
+await page.evaluate(([id, cap]) => {
+  localStorage.setItem('pbg-log-v1', JSON.stringify({ [id]: cap }));
+}, [first.id, first.terms.annual_cap]);
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.waitForSelector('.scen');
+await page.locator('.tab[data-view="year"]').click();
+await page.waitForSelector('.logged__row');
+ok(await page.locator('.logged__row .stepper button[data-delta="1"]').first().isDisabled(),
+  'a capped-out benefit should not accept another use');
+
+// Reload keeps it; Start over clears it.
+const before = await page.locator('.tally__big').innerText();
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.waitForSelector('.scen');
+await page.locator('.tab[data-view="year"]').click();
+await page.waitForSelector('.tally__big');
+ok((await page.locator('.tally__big').innerText()) === before, 'the log should survive a reload');
+await page.locator('#log-reset').click();
+ok((await page.locator('#year-body .empty').count()) === 1, 'Start over should empty the log');
+ok(await page.locator('#tab-year-n').isHidden(), 'the badge should go once the log is cleared');
 
 // ── methodology modal ───────────────────────────────────────────────────
 await page.locator('[data-act="method-open"]').click();
@@ -225,4 +282,4 @@ if (failures.length) {
   for (const f of failures) console.error(`  - ${f}`);
   process.exit(1);
 }
-console.log('✓ page: hero, scenarios, benefits by effort, drill-down, places, payback, modal and theme all render correctly');
+console.log('✓ page: hero, scenarios, benefits by effort, drill-down, places, break-even, the year log, modal and theme all render correctly');

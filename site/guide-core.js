@@ -267,6 +267,64 @@ export function runScenario(data, scenario) {
   return rows.sort(sorter);
 }
 
+// ────────────────────────────────────────────────────────── the year's log
+// What you have actually used, as {entryId: uses}. Kept deliberately dumb: the
+// page owns storage, this owns the arithmetic, so both are testable alone.
+//
+// Anything with a gross value can be logged, benefit or venue alike, because
+// the value is real either way: a S$45 saving at one restaurant counts exactly
+// as much as S$200 of statement credit.
+
+export const canLog = (e) => e.gross_value_sgd != null && e.gross_value_sgd > 0;
+
+/** Uses left before the entry hits its annual cap. Infinity when uncapped. */
+export function usesLeft(entry, log) {
+  if (!canLog(entry)) return 0;
+  const used = log[entry.id] || 0;
+  return entry.annual_cap == null ? Infinity : Math.max(0, entry.annual_cap - used);
+}
+
+export function logUse(log, entry, delta = 1) {
+  const used = log[entry.id] || 0;
+  const cap = entry.annual_cap ?? Infinity;
+  const next = Math.max(0, Math.min(cap, used + delta));
+  const out = { ...log };
+  if (next === 0) delete out[entry.id]; else out[entry.id] = next;
+  return out;
+}
+
+export function logSummary(data, log) {
+  const rows = Object.entries(log)
+    .map(([id, uses]) => {
+      const entry = data.byId.get(id);
+      if (!entry || !uses) return null;
+      return { entry, uses, value: (entry.gross_value_sgd || 0) * uses };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.value - a.value);
+
+  const total = rows.reduce((sum, r) => sum + r.value, 0);
+  const fee = data.card.annual_fee_sgd;
+  // Deliberately a count, not a total. Summing every remaining use gives about
+  // S$54,000, which assumes maxing the cap on all 92 entries including twelve
+  // visits to every buffet. True, useless, and it would make every other figure
+  // on the page look invented.
+  const loggableCount = data.entries.filter(canLog).length;
+
+  return {
+    rows,
+    totalSgd: total,
+    fee,
+    pct: Math.min(100, (total / fee) * 100),
+    cleared: total >= fee,
+    shortfall: Math.max(0, fee - total),
+    surplus: Math.max(0, total - fee),
+    uses: rows.reduce((n, r) => n + r.uses, 0),
+    benefitCount: rows.length,
+    loggableCount,
+  };
+}
+
 // ─────────────────────────────────────────────────── fee progress
 // The one number the whole product exists to answer, so the header carries it.
 export function feeProgress(data) {
@@ -346,6 +404,10 @@ export function paybackView(data) {
   // used three times; counting rows made the page claim eight benefits when
   // the path only ever draws on six.
   const benefitCount = new Set(data.payback_path.steps.map((s) => s.ref)).size;
+  const useCount = data.payback_path.steps.reduce((n, s) => n + (s.uses || 1), 0);
+  // Which of them cost you something to collect, so the sentence can name them
+  // rather than hard-coding a number that goes stale when the path is re-cut.
+  const paidSteps = data.payback_path.steps.filter((s) => (data.byId.get(s.ref)?.min_spend_sgd || 0) > 0);
   // What you must spend to collect it. Two of the six are statement credits
   // that only pay out against a qualifying transaction, so the headline figure
   // is not free money and should never be presented as if it were.
@@ -358,6 +420,8 @@ export function paybackView(data) {
     total: fmtMoney(cum),
     totalSgd: cum,
     benefitCount,
+    useCount,
+    paidCount: paidSteps.length,
     outlaySgd: outlay,
     freeValueSgd: data.payback_path.steps.reduce((sum, s) => {
       const e = data.byId.get(s.ref);
