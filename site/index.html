@@ -464,7 +464,7 @@ function applyTheme(theme) {
 
 // ────────────────────────────────────────────────────── shared fragments
 function headlineNumber(e) {
-  if (e.kind === 'benefit' && e.childCount) return { num: String(e.childCount), lbl: e.section === 'life' ? 'places' : 'venues' };
+  if (e.kind === 'benefit' && e.childCount) return { num: String(e.childCount), lbl: 'places' };
   if (e.discount_pct != null) return { num: `${e.discount_pct}%`, lbl: 'off' };
   if (e.annual_value_sgd != null) return { num: core.fmtMoney(e.annual_value_sgd), lbl: 'per year' };
   return { num: '—', lbl: 'no cap' };
@@ -534,7 +534,7 @@ function benefitCard(e) {
       <p class="body">${esc(e.details || e.summary || '')}</p>
       ${sourceFoot(e, meta)}
       ${stepper(e)}
-      ${e.childCount ? `<button type="button" class="ben__open" data-act="parent" data-id="${esc(e.id)}">See all ${e.childCount} ${e.section === 'life' ? 'places' : 'venues'} →</button>` : ''}
+      ${e.childCount ? `<button type="button" class="ben__open" data-act="parent" data-id="${esc(e.id)}">See all ${e.childCount} places →</button>` : ''}
     </div>` : ''}
   </article>`;
 }
