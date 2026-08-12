@@ -83,8 +83,8 @@ ok(await page.locator('.cardshot img').evaluate((i) => i.complete && i.naturalWi
 // The break-even figure is the reason the product exists, so it is in the hero.
 ok(/^Five benefits clear the S\$1,744 fee\.$/.test(await page.locator('#fee-big').innerText()),
   `fee headline wrong: ${await page.locator('#fee-big').innerText()}`);
-ok((await page.locator('#fee-note').innerText()).includes('no extra spending'),
-  'fee note should say four of the five need no extra spending');
+ok((await page.locator('#fee-note').innerText()) === 'Four of them cost you nothing extra.',
+  `fee note wrong: ${await page.locator('#fee-note').innerText()}`);
 ok(Number((await page.locator('#fee-fill').evaluate((el) => el.style.width)).replace('%', '')) > 0,
   'fee progress bar never filled');
 

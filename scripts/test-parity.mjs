@@ -35,6 +35,7 @@ rmSync(out, { force: true });
 
 const failures = [];
 const expected = [];
+
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 // v1's implicit taxonomy rules, copied verbatim from the original guide-core.js

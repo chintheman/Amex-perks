@@ -44,6 +44,10 @@ const BLOCK_KEYS = {
   occasion_fit: OCCASION_KEYS,
 };
 const LOCATION_KEYS = ['name', 'lat', 'lng', 'address'];
+// House style: no em or en dashes in anything written for this guide. `details`
+// is exempt because it quotes Amex's own wording, and editing a source quote to
+// satisfy a style rule would be wrong.
+const DASH = /[\u2013\u2014]/;
 const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s));
 const hasWords = (s) => typeof s === 'string' && /[a-z0-9]/i.test(s);
 const inRange = (n, lo, hi) => typeof n === 'number' && Number.isFinite(n) && n >= lo && n <= hi;
@@ -124,6 +128,14 @@ bands.forEach((b, i) => {
 if (bands.length) check(bands[bands.length - 1].min === 0, 'taxonomy.grade_bands', 'the last band must reach 0 so every score gets a grade');
 check(Array.isArray(data.caveats) && data.caveats.length > 0, 'caveats', 'the methodology modal needs at least one caveat');
 
+for (const grp of ['categories', 'value_types', 'sections', 'tier_groups', 'occasions', 'kinds', 'efforts']) {
+  for (const item of tax[grp] || []) {
+    for (const k of ['label', 'desc', 'chip']) {
+      if (item[k] && DASH.test(item[k])) fail(`taxonomy.${grp}.${item.key}.${k}`, 'contains a dash');
+    }
+  }
+}
+
 const sectionByKey = Object.fromEntries((tax.sections || []).map((s) => [s.key, s]));
 
 // ──────────────────────────────────────────────────────────────── entries
@@ -175,6 +187,8 @@ entries.forEach((e, i) => {
 
   // prose
   check(hasWords(e.name), at, 'name is required');
+  check(!DASH.test(e.name), at, `name contains a dash: ${e.name}`);
+  if (e.summary != null) check(!DASH.test(e.summary), at, 'summary contains a dash');
   if (e.summary != null) {
     check(e.summary.length <= 240, at, `summary is ${e.summary.length} chars — that is a paragraph, move it to details`);
     if (e.summary.length > SUMMARY_MAX + 50) warn(at, `summary is ${e.summary.length} chars — collapsed rows will truncate it`);
@@ -289,6 +303,7 @@ scenarios.forEach((s, i) => {
   seenScenarios.add(s.key);
   check(hasWords(s.label), at, 'label is required');
   check(hasWords(s.blurb), at, 'blurb explains why these results, and is required');
+  check(!DASH.test(s.label) && !DASH.test(s.blurb), at, 'scenario copy contains a dash');
   check(!!s.filter || !!s.view, at, 'needs either a filter or a view to route to');
   if (s.view) { check(['payback'].includes(s.view), at, `unknown view "${s.view}"`); return; }
 

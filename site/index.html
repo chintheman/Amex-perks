@@ -823,7 +823,7 @@ function renderFee() {
     $('fee-sub').textContent = 'Counted in this browser only';
   } else {
     $('fee-big').textContent = `Five benefits clear the ${fee} fee.`;
-    $('fee-note').textContent = `Four of them need no extra spending at all, and get you ${core.fmtMoney(1610)} of the way.`;
+    $('fee-note').textContent = 'Four of them cost you nothing extra.';
     $('fee-fill').style.width = `${Math.min(100, (1610 / d.card.annual_fee_sgd) * 100)}%`;
     $('fee-sub').textContent = `Worked out from ${pb.benefitCount} benefits totalling ${pb.total}`;
   }

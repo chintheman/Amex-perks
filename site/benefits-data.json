@@ -279,7 +279,7 @@
       "subcategory": "Rewards Program",
       "value_type": "access",
       "effort": "claim",
-      "summary": "10 Membership Rewards points per S$1.60 at partner merchants — annual enrolment required.",
+      "summary": "10 Membership Rewards points per S$1.60 at partner merchants, but only if you enrol each year.",
       "details": "Up to 10 bonus points per S$1.60 on the first S$16,000 of cumulative spend at participating Platinum 10Xcelerator partners in Singapore, when you enrol at go.amex/bonusmrenrolment-plat between 1 January and 31 December 2026. Spend beyond S$16,000 continues to earn a total of 10 points per S$1.60. Enrolment must be repeated each year.",
       "terms": {
         "advance": "Annual enrolment required",
@@ -377,7 +377,7 @@
     },
     {
       "id": "a-summer-to-savour-afternoon-tea-for-2",
-      "name": "A Summer to Savour — Afternoon Tea for 2",
+      "name": "A Summer to Savour",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -842,7 +842,7 @@
     },
     {
       "id": "beast-and-butterflies-35-off",
-      "name": "Beast & Butterflies — 35% Off",
+      "name": "Beast & Butterflies",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -1091,7 +1091,7 @@
     },
     {
       "id": "chillax-welcome-drink-privilege",
-      "name": "Chillax — Welcome Drink Privilege",
+      "name": "Chillax by Platinum",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -1772,7 +1772,7 @@
       "subcategory": "Car Rental",
       "value_type": "access",
       "effort": "claim",
-      "summary": "Complimentary Hertz Five Star status — discounts, upgrades and priority service.",
+      "summary": "Complimentary Hertz Five Star status, for discounts, upgrades and priority service.",
       "details": "Enrol in the programme and book directly with Hertz, quoting your Gold Plus Rewards Five Star membership number. Benefits do not apply to bookings made through third parties.",
       "terms": {
         "advance": "Enrolment required, book direct",
@@ -2460,7 +2460,7 @@
     },
     {
       "id": "nox-dine-in-the-dark",
-      "name": "NOX – Dine in the Dark",
+      "name": "NOX Dine in the Dark",
       "kind": "venue",
       "parent": "dining-promotions",
       "category": "dining",
@@ -2494,7 +2494,7 @@
       },
       "locations": [
         {
-          "name": "NOX – Dine in the Dark",
+          "name": "NOX Dine in the Dark",
           "lat": 1.281,
           "lng": 103.8464,
           "address": "83 Club Street, S069451"
@@ -3019,7 +3019,7 @@
       "subcategory": "Hotel Status",
       "value_type": "access",
       "effort": "claim",
-      "summary": "Straight to Radisson Rewards Premium — early check-in, late check-out, 27 points per dollar.",
+      "summary": "Straight to Radisson Rewards Premium, for early check in, late check out and 27 points per dollar.",
       "details": "Includes a members-only rate of up to 15% off. Enrolment in Radisson Rewards is required before the upgrade can be applied.",
       "terms": {
         "advance": "Enrolment required",
@@ -3685,7 +3685,7 @@
     },
     {
       "id": "table-for-two-platinum-edition",
-      "name": "Table for Two – Platinum Edition",
+      "name": "Table for Two by Platinum",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
@@ -4009,7 +4009,7 @@
       "subcategory": "Concierge & Assistance",
       "value_type": "access",
       "effort": "have",
-      "summary": "24/7 lifestyle concierge and global assistance hotline — 1800 392 1177 (SG) / +65 6392 1177 (intl).",
+      "summary": "24/7 lifestyle concierge and global assistance hotline on 1800 392 1177 in Singapore, or +65 6392 1177 from abroad.",
       "details": "Used for Tower Club bookings, general lifestyle arrangements, emergency card replacement (within 1 business day, virtually anywhere), and global assistance services.",
       "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/"
     },
@@ -4193,7 +4193,7 @@
       "subcategory": "Private Club Access",
       "value_type": "access",
       "effort": "book",
-      "summary": "Complimentary access to Atlantic Dining, Ba Xian Dining, Straits Bar & Fitness Centre at this private members' club — no joining fee for Platinum cardmembers.",
+      "summary": "Complimentary access to Atlantic Dining, Ba Xian Dining, Straits Bar and the Fitness Centre at this private members' club, with no joining fee.",
       "details": "Daily caps: 8 members/day (dining), 5 members/day (fitness). 10% surcharge + 10% service charge on all spend. Book via Platinum Concierge (1800 392 1177), ≥1 working day advance for F&B.",
       "locations": [
         {
@@ -4258,7 +4258,7 @@
       "subcategory": "Insurance & Protection",
       "value_type": "access",
       "effort": "have",
-      "summary": "Trip cancellation to S$10,000, flight delay to S$400 per person, and baggage cover — when you pay by card.",
+      "summary": "Trip cancellation to S$10,000, flight delay to S$400 per person, and baggage cover, whenever you pay by card.",
       "details": "Automatically applies from the moment travel is booked on the Platinum Card, extending to immediate family and Supplementary Members. Key exclusions: pre-existing conditions, high-risk sports, claims under S$150. Full T&Cs and claims via the insurer's portal.",
       "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/travel-insurance/"
     },
@@ -4395,7 +4395,7 @@
     },
     {
       "id": "winnie-the-pooh-high-tea-20-off",
-      "name": "Winnie the Pooh High Tea — 20% Off",
+      "name": "Winnie the Pooh High Tea",
       "kind": "benefit",
       "category": "dining",
       "section": "progs",
