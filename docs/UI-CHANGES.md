@@ -1,5 +1,85 @@
 # UI-side changes
 
+## Part 3: the editorial redesign (15 Aug 2026)
+
+Handoff **AMEXSG-EDIT-20260815** from Claude Design, canvas `Home Directions.dc.html`,
+approved frames 6a, 6b, 6c, 6d, 7a, 7b. The information architecture and the data
+layer are unchanged. The visual language, one view boundary and three features are not.
+
+### The language
+
+Editorial press: cream paper, ink text, engraved rules. **Nothing sits in a card.**
+Structure comes from horizontal rules, and the vocabulary is fixed: 2px ink opens a
+section, 1px ink closes one, `.25` frames a soft block, `.15` separates rows, dotted
+`.35` divides terms, dotted `.45` marks an editable value, a 2px underline marks an
+active filter, 3px marks the active tab. No pills, no badges, no icons, no radius, no
+shadows. Filters are underlined text; state is carried by weight, italic and colour.
+
+Money gets the cinematic treatment: Instrument Serif at 72px on the phone, 62px on the
+desktop. Every other figure is Spline Sans Mono with tabular figures. Newsreader
+carries headings, gists and the italic phrases.
+
+### Break even and My year merged into Your year
+
+Four tabs became three. The old `payback` view is gone and its argument now opens the
+`year` view, which has three states: the plan you have not started, the plan part
+done, and the plan overtaken. Past break even the gloss turns green, a 1px tick marks
+the fee and a champagne segment runs past it. Note the bar's denominator changes with
+the state, the fee while there is still a gap and the total once the total is larger.
+
+**This was not a frontend-only change.** The string `payback` was enum-locked in
+`scripts/validate.mjs`, `scripts/build-schema.mjs`, the generated
+`schema/benefits-data.schema.json` and `site/benefits-data.json`, with CI checking the
+schema was not stale. All four moved in one commit.
+
+### Three new things
+
+* **The urgent two** on Home: benefits expiring inside 90 days, and `effort:claim`
+  entries with nothing logged. Both derive their copy from the data, so "Three
+  benefits end soon, two this month" rewrites itself rather than going stale. The
+  window is deliberately narrower than the "Ending soon" scenario, so the two counts
+  do not agree and are not meant to.
+* **Card since** (`pbg-card-since-v1`, ISO date): drives a day-of-card-year line and
+  gives the annual caps a window to reset against. Until now `annual_cap` was a
+  lifetime ceiling with no date anywhere in the log path.
+* **Log anything**: the full list of 92 loggable entries with steppers, opened from
+  under the plan.
+
+### Things that bit, and are now covered
+
+* **`.ftr p` was beating `.count`.** A type-plus-class selector outranks a bare class,
+  so every footer caption rendered at 13px Newsreader instead of 9px mono. The lede
+  rule is scoped to its own class now.
+* **A phone tab bar would have duplicated every tab selector.** It is the same `nav`
+  moved by CSS, not a second copy: duplicating it gives `.tab[data-view=…]` two
+  matches, which throws under Playwright's strict mode and mints duplicate ids. The
+  test asserts exactly one node per tab.
+* **Count-up animation versus assertions.** The numerals animate over ~900ms, so
+  reading one mid-flight returns an intermediate frame. The page test runs with
+  `reducedMotion: 'reduce'` throughout and checks the motion itself separately.
+* **`paybackView()` returns pre-formatted strings** that `test-parity.mjs` freezes.
+  The count-up needs raw numbers, so `valueSgd` and `cumSgd` were added alongside
+  rather than changing `plus` and `cum`.
+* **`pbg-log-v1` kept its shape.** The page test writes it raw and `loadLog()`
+  silently discards anything it cannot parse, so a shape change would have failed as
+  a wrong answer rather than an error. The card-since date got its own key.
+* **The no-dash rule does not reach `index.html`.** `validate.mjs` only ever reads the
+  JSON, so the page test now walks the rendered chrome for em and en dashes. Entry
+  `details` stays exempt, the same carve-out the validator makes for Amex's own words.
+
+### Not done
+
+Screenshots `shot-benefits`, `shot-browse`, `shot-eat`, `shot-hero-logged` and
+`shot-payback` predate this redesign and show a page that no longer exists;
+`shot-payback` documents a view that has been removed outright. They were left in
+place rather than deleted. `shot-home`, `shot-scenario`, `shot-places` and `shot-year`
+are current.
+
+The desktop layouts for Results, Places and Your year were never mocked. They extend
+the 6d pattern rather than following a frame.
+
+---
+
 ## Part 2 — the scenario-first rebuild (11 Aug 2026)
 
 The page no longer opens on a task picker over a flat list of everything. It

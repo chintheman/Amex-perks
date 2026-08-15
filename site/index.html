@@ -15,396 +15,380 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Amex Platinum Benefits Guide · Singapore">
 <meta name="twitter:description" content="Every Amex Platinum benefit in Singapore, checked against Amex's own pages. Pick what you're doing and it works out which perks apply.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2300175A'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='16' font-weight='bold' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23231D10'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' fill='%23F4EFE3' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Spline+Sans+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
+/* ── Tokens ──────────────────────────────────────────────────────────────
+   Editorial press: cream paper, ink text, engraved rules. Everything is a
+   token, including the alpha hairlines, because the dark theme is derived
+   from this block rather than from a second stylesheet. */
 :root{
   color-scheme:light;
-  --page:#F2F4F8; --card:#FFFFFF; --sunk:#E9EDF3;
-  --ink:#0B1220; --sec:#46536B; --muted:#75808F;
-  --line:rgba(11,18,32,0.1); --linestrong:rgba(11,18,32,0.22);
-  --blue:#006FCF; --navy:#00175A; --hero1:#000F33;
-  --link:#005EB0; --linkh:#003C74;
-  --cat-dining:#2a78d6; --cat-lifestyle:#eb6834;
-  --type-discount:#2a78d6; --type-free:#1baf7a; --type-credit:#4a3aa7; --type-access:#82878F;
-  --status-good:#12833B; --status-warning:#B27B00; --status-serious:#C2410C; --status-critical:#C0152F;
-  --effort-claim:#B45309; --effort-book:#006FCF; --effort-have:#12833B;
-  --sans:'Schibsted Grotesk','Helvetica Neue',Arial,sans-serif;
+  --page:#F4EFE3; --ink:#231D10; --sec:#4E4436; --muted:#7A6F5C; --faint:#9D9077;
+  --hair:rgba(35,29,16,.15); --hairstrong:rgba(35,29,16,.25);
+  --control:rgba(35,29,16,.35); --dotted:rgba(35,29,16,.45);
+  --accent:#8C3B2A; --green:#1C4534;
+  --champagne:#CBB89A; --champagne-deep:#B49B66; --highlight:#E8D8A0;
+  --panel:#231D10; --panelink:#F4EFE3;
+  --sans:'Schibsted Grotesk',Arial,sans-serif;
   --mono:'Spline Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --shadow:0 1px 2px rgba(11,18,32,0.06);
-  --wrap:1080px; --gut:clamp(14px,4vw,24px);
+  --serif:'Newsreader',Georgia,serif;
+  --display:'Instrument Serif',Georgia,serif;
+  --gut:22px; --wrap:1080px; --col:340px;
 }
+/* Derived, not inverted: the seed tokens Claude Design supplied with the
+   approved frames. The ink panel flips to cream so it stays the one contrast
+   moment on the page rather than disappearing into the ground. */
 html[data-theme="dark"]{
   color-scheme:dark;
-  --page:#0A0E17; --card:#121828; --sunk:#0D1320;
-  --ink:#F2F4F8; --sec:#B7C0CD; --muted:#828C9D;
-  --line:rgba(255,255,255,0.1); --linestrong:rgba(255,255,255,0.24);
-  --blue:#3E93E0; --navy:#0A2A6E; --hero1:#050B1D;
-  --link:#74B4EF; --linkh:#A3CDF5;
-  --cat-dining:#3987e5; --cat-lifestyle:#d95926;
-  --type-discount:#3987e5; --type-free:#199e70; --type-credit:#9085e9; --type-access:#8b8d8f;
-  --status-good:#2fbf3f; --status-warning:#eab73a; --status-serious:#f0895f; --status-critical:#e66767;
-  --effort-claim:#E0A03C; --effort-book:#3E93E0; --effort-have:#2fbf3f;
-  --shadow:0 1px 2px rgba(0,0,0,0.45);
+  --page:#17130B; --ink:#F1EADB; --sec:#C9BFA9; --muted:#9A8F78; --faint:#7A7160;
+  --hair:rgba(241,234,219,.16); --hairstrong:rgba(241,234,219,.28);
+  --control:rgba(241,234,219,.38); --dotted:rgba(241,234,219,.45);
+  --accent:#C96A50; --green:#6FA383;
+  --panel:#F4EFE3; --panelink:#231D10;
 }
+
+/* ── Reset ── */
 *,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{margin:0;min-height:100vh;background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;}
-a{color:var(--link);} a:hover{color:var(--linkh);}
-input::placeholder{color:var(--muted);}
-button{font-family:var(--sans);cursor:pointer;}
-:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+body{
+  margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p,ul{margin:0;}
+ul{list-style:none;padding:0;}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left;}
+a{color:var(--accent);}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 [hidden]{display:none !important;}
-@keyframes pbgRiseA{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-@keyframes pbgRiseB{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
-.leaflet-popup-content{font-family:var(--sans);font-size:12.5px;}
-.leaflet-popup-content b{font-size:13px;}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 
-.wrap{max-width:var(--wrap);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut);}
-.riseA{animation:pbgRiseA .35s ease both;}
-.riseB{animation:pbgRiseB .35s ease both;}
+/* ── Rule vocabulary ──────────────────────────────────────────────────────
+   Structure comes from horizontal rules, not boxes. 2px ink opens a section,
+   1px ink closes one, .25 frames a soft block, .15 separates rows. Nothing
+   has a radius and nothing casts a shadow: the page is flat paper. */
+.r-open{border-top:2px solid var(--ink);}
+.r-close{border-bottom:1px solid var(--ink);}
+.r-soft{border-top:1px solid var(--hairstrong);border-bottom:1px solid var(--hairstrong);}
+.row{border-bottom:1px solid var(--hair);}
+.row:last-child{border-bottom:0;}
 
-/* ── header ─────────────────────────────────────────────────────────── */
-.hdr{position:sticky;top:0;z-index:600;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.12);}
-.hdr__in{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:11px;padding-bottom:11px;}
-.hdr__brand{display:flex;flex-direction:column;color:#fff;background:none;border:0;padding:0;text-align:left;}
-.hdr__name{font-weight:800;font-size:14.5px;letter-spacing:-0.01em;line-height:1.2;}
-.hdr__sub{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
-.hdr__nav{display:flex;gap:8px;align-items:center;}
-.tab{border:1px solid transparent;background:none;color:rgba(255,255,255,0.75);border-radius:6px;padding:7px 12px;font-size:12px;font-weight:700;white-space:nowrap;}
-.tab[aria-current="page"]{background:rgba(255,255,255,0.16);color:#fff;border-color:rgba(255,255,255,0.45);}
-.tab__n{margin-left:6px;font-family:var(--mono);font-size:10px;font-weight:700;background:#4ADE80;color:#04240f;border-radius:99px;padding:1px 6px;}
-.themebtn{border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);color:#fff;border-radius:6px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:0 0 auto;}
+/* ── Type roles ── */
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.count{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.serif{font-family:var(--serif);}
+.ital{font-family:var(--serif);font-style:italic;}
+.act{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
 
-/* ── hero ───────────────────────────────────────────────────────────── */
-.hero{background:var(--hero1);color:#fff;border-bottom:4px solid var(--blue);}
-.hero__in{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(22px,4vw,40px);align-items:center;padding-top:clamp(30px,6vw,48px);padding-bottom:clamp(26px,5vw,40px);}
-.hero__eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#9CC6F2;}
-.hero__eyebrow a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(156,198,242,0.45);}
-.hero__eyebrow a:hover{color:#fff;border-bottom-color:#fff;}
-.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin:12px 0 10px;color:#fff;text-wrap:balance;}
-.hero__lede{margin:0;font-size:15px;line-height:1.5;color:rgba(255,255,255,0.78);max-width:46ch;text-wrap:pretty;}
-/* The one number the product exists to answer, so it sits in the hero. */
-.fee{margin-top:22px;max-width:42ch;}
-.fee__big{margin:0 0 5px;font-size:clamp(17px,2vw,20px);font-weight:800;color:#fff;letter-spacing:-0.01em;line-height:1.25;}
-.fee__note{margin:0 0 10px;font-size:13px;color:rgba(255,255,255,0.7);}
-.fee__sub{margin:8px 0 0;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,0.6);}
-.fee__bar{height:6px;border-radius:3px;background:rgba(255,255,255,0.16);overflow:hidden;}
-.fee__fill{height:100%;border-radius:3px;background:#4ADE80;transition:width .8s cubic-bezier(.2,.7,.2,1);}
-.prov{margin:20px 0 0;font-size:13px;line-height:1.55;color:rgba(255,255,255,0.62);max-width:44ch;}
-.stats{display:flex;gap:22px;margin:20px 0 0;flex-wrap:wrap;list-style:none;padding:0;}
-.stats__val{display:block;font-family:var(--mono);font-weight:600;font-size:22px;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1;}
-.stats__lbl{display:block;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:600;margin-top:3px;}
-.fresh{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,0.72);}
-.fresh__dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,0.25);}
-.hero__art{display:flex;justify-content:center;}
-.cardshot{width:310px;max-width:100%;aspect-ratio:1.586;margin:0;}
-.cardshot img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 26px 48px rgba(0,0,0,0.55));}
-.cardshot__ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;border:1px dashed rgba(255,255,255,0.28);border-radius:16px;font-size:12px;color:rgba(255,255,255,0.6);background:linear-gradient(135deg,#233247,#0d1626);box-shadow:0 30px 70px -24px rgba(0,0,0,0.6);}
+/* ── Shell ── */
+.wrap{max-width:var(--wrap);margin:0 auto;}
+.gut{padding-left:var(--gut);padding-right:var(--gut);}
 
-/* ── shared ─────────────────────────────────────────────────────────── */
-.view{padding:26px 0 56px;}
-.sechead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-.sechead h2{margin:0;font-size:clamp(19px,2.5vw,24px);font-weight:800;letter-spacing:-0.018em;color:var(--ink);}
-.sechead__n{font-family:var(--mono);font-size:11px;color:var(--muted);}
-.sechead p{margin:4px 0 0;font-size:13.5px;color:var(--sec);max-width:60ch;}
-.chip{border:1px solid var(--linestrong);background:var(--sunk);color:var(--sec);border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;transition:background .15s;}
-.chip[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue);}
-.ghostbtn{border:1px solid var(--linestrong);background:var(--card);color:var(--blue);border-radius:6px;padding:9px 15px;font-size:12.5px;font-weight:700;}
-.num{display:block;font-family:var(--mono);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;}
-.numlbl{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:3px;}
-.chev{color:var(--muted);font-size:10px;transition:transform .15s;}
-[aria-expanded="true"] .chev{transform:rotate(180deg);}
-.badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
-.badge{font-size:10px;font-weight:800;padding:2px 8px;border-radius:5px;color:#fff;}
-.badge--type{text-transform:uppercase;letter-spacing:.05em;}
-.badge--fit{font-family:var(--mono);font-weight:700;background:var(--sunk);color:var(--blue);}
-.body{font-size:12.5px;color:var(--sec);margin:0;text-wrap:pretty;}
-.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:11px;}
-.foot__meta{color:var(--muted);font-weight:600;}
-.foot a{text-decoration:none;font-weight:700;}
-.empty{padding:44px;text-align:center;color:var(--muted);font-size:14px;background:var(--card);border:1px dashed var(--linestrong);border-radius:10px;}
-/* effort is state, so it reads as a chip rather than a word in a sentence */
-.eff{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;}
-.eff::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
-.eff--claim{color:var(--effort-claim);background:color-mix(in srgb,var(--effort-claim) 13%,transparent);}
-.eff--book{color:var(--effort-book);background:color-mix(in srgb,var(--effort-book) 13%,transparent);}
-.eff--have{color:var(--effort-have);background:color-mix(in srgb,var(--effort-have) 13%,transparent);}
+.mast{padding:18px var(--gut) 0;}
+.mast__rule{text-align:center;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 0;}
+.mast__name{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;}
+.mast__sub{text-align:center;padding:6px 0 0;font-family:var(--serif);font-style:italic;font-size:11px;color:var(--muted);}
+.mast__bar{display:none;}
 
-/* ── scenarios: the front door ──────────────────────────────────────── */
-.scenarios{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,238px),1fr));gap:10px;}
-.scen{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);color:var(--ink);display:flex;flex-direction:column;gap:5px;transition:border-color .15s,transform .15s;}
-.scen:hover{border-color:var(--blue);transform:translateY(-1px);}
-.scen__label{font-size:15.5px;font-weight:800;letter-spacing:-0.012em;}
-.scen__blurb{font-size:12.5px;color:var(--sec);text-wrap:pretty;}
-.scen__n{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px;}
-.scen--wide{grid-column:1/-1;background:color-mix(in srgb,var(--blue) 7%,var(--card));border-color:color-mix(in srgb,var(--blue) 35%,var(--line));}
-.scen--wide .scen__label{color:var(--blue);}
+/* One set of tab nodes, moved by CSS. Duplicating them into a second bar
+   would give every `.tab[data-view]` two matches, which breaks strict-mode
+   selectors in the page test and mints duplicate ids. */
+.nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;
+  background:var(--page);border-top:1px solid var(--ink);
+}
+.tab{flex:1;text-align:center;padding:14px 0;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.tab + .tab{border-left:1px solid var(--hairstrong);}
+.tab[aria-current="page"]{color:var(--ink);font-weight:700;border-bottom:3px solid var(--ink);}
+.tab__n{display:inline-block;margin-left:5px;font-size:9px;color:var(--accent);}
+body{padding-bottom:64px;}
 
-/* ── benefit cards ──────────────────────────────────────────────────── */
-.effgroups{display:flex;flex-direction:column;gap:28px;}
-.effhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--linestrong);}
-.effhead__l{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0;}
-.effhead h3{margin:0;font-size:15.5px;font-weight:800;letter-spacing:-0.01em;color:var(--ink);}
-.effhead__desc{font-size:11.5px;color:var(--muted);}
-.effhead__n{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;}
-.bengrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:10px;}
-.ben{background:var(--card);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow);overflow:hidden;align-self:start;}
-.ben__btn{width:100%;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px 16px;background:none;border:none;text-align:left;}
-.ben__l{min-width:0;display:flex;flex-direction:column;gap:4px;}
-.ben__name{font-size:14.5px;font-weight:800;color:var(--ink);line-height:1.3;}
-.ben__gist{font-size:12px;color:var(--muted);line-height:1.4;text-wrap:pretty;}
-.ben__r{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto;}
-.ben__num .num{font-size:15px;text-align:right;}
-.ben__body{padding:0 16px 14px;}
-.ben__open{display:flex;align-items:center;gap:6px;margin-top:11px;border:1px solid var(--linestrong);background:var(--sunk);color:var(--blue);border-radius:6px;padding:8px 13px;font-size:12px;font-weight:700;width:100%;justify-content:center;}
+.view{padding:0 0 32px;}
 
-/* ── results + venue cards ──────────────────────────────────────────── */
-.backbtn{border:0;background:none;color:var(--sec);font-size:12.5px;font-weight:700;padding:0;margin-bottom:14px;display:inline-flex;align-items:center;gap:6px;}
-.backbtn:hover{color:var(--blue);}
-.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px;}
-.toolbar__lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:4px;}
-.search{flex:1 1 220px;padding:10px 14px;border-radius:6px;border:1px solid var(--linestrong);background:var(--card);color:var(--ink);font-family:var(--sans);font-size:14px;outline-color:var(--blue);}
-.mapcard{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
-.mapcard__head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
-.mapcard__head h3{margin:0;font-size:13.5px;font-weight:800;color:var(--ink);}
-.mapcard__n{font-family:var(--mono);font-size:10.5px;color:var(--muted);}
-.mapbox{height:clamp(280px,42vh,380px);width:100%;background:var(--sunk);}
-.groups{display:flex;flex-direction:column;gap:26px;}
-.grouphead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px;padding-bottom:7px;border-bottom:2px solid var(--linestrong);}
-.grouphead__l{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;min-width:0;}
-.grouphead h3{margin:0;font-size:15px;font-weight:800;letter-spacing:-0.01em;color:var(--ink);}
-.grouphead__desc{font-size:11.5px;color:var(--muted);}
-.grouphead__n{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;}
-.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:10px;}
-.pick{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--typecolor);border-radius:9px;box-shadow:var(--shadow);overflow:hidden;align-self:start;}
-.pick__btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;background:none;border:none;text-align:left;}
-.pick__l{min-width:0;display:flex;gap:9px;align-items:flex-start;}
-.pick__rank{flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:var(--blue);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
-.pick__name{display:block;font-size:14px;font-weight:800;color:var(--ink);line-height:1.3;}
-.pick__venue{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
-.pick__r{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
-.pick__num{text-align:right;}
-.pick__num .num{font-size:16px;}
-.pick__body{padding:12px 15px 13px;border-top:1px solid var(--line);}
-.morebtn{margin-top:10px;}
+/* ── Hero ── */
+.hero{padding:34px var(--gut) 28px;text-align:center;}
+.hero__num{font-family:var(--display);font-weight:400;font-size:72px;line-height:1;margin:14px 0 8px;font-variant-numeric:tabular-nums;}
+.hero__sub{font-size:13px;color:var(--muted);}
+.hero__div{width:48px;height:1px;background:var(--ink);margin:24px auto;}
+.hero__lede{font-family:var(--serif);font-size:14px;line-height:1.55;color:var(--sec);max-width:36ch;margin:0 auto;}
 
-/* ── the year log ───────────────────────────────────────────────────── */
-.stepper{display:inline-flex;align-items:center;gap:0;border:1px solid var(--linestrong);border-radius:6px;overflow:hidden;background:var(--card);}
-.stepper button{border:0;background:none;color:var(--blue);font-size:14px;font-weight:800;line-height:1;padding:6px 11px;font-family:var(--mono);}
-.stepper button:disabled{color:var(--muted);cursor:not-allowed;}
-.stepper__n{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);padding:0 8px;min-width:62px;text-align:center;font-variant-numeric:tabular-nums;}
-.logrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);}
-.logrow__lbl{font-size:11.5px;color:var(--muted);font-weight:600;}
-.logrow__lbl b{color:var(--status-good);}
-.tally{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,3vw,26px);box-shadow:var(--shadow);margin-bottom:22px;}
-.tally__big{font-family:var(--mono);font-size:clamp(30px,5vw,40px);font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1;}
-.tally__big--done{color:var(--status-good);}
-.tally__gloss{color:var(--sec);font-size:13.5px;max-width:52ch;margin:9px 0 0;}
-.tally__gloss b{color:var(--ink);}
-.tally__bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;margin:16px 0 0;}
-.tally__fill{height:100%;border-radius:5px;background:var(--blue);transition:width .8s cubic-bezier(.2,.7,.2,1);}
-.tally__fill--done{background:var(--status-good);}
-.logged{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden;}
-.logged__row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-top:1px solid var(--line);}
-.logged__row:first-child{border-top:0;}
-.logged__l{min-width:0;}
-.logged__name{display:block;font-size:13.5px;font-weight:700;color:var(--ink);}
-.logged__meta{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
-.logged__v{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+/* ── Urgent two ── */
+.urg__head{margin:0 var(--gut);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);padding:8px 2px;}
+.urg__head .label{color:var(--accent);}
+.urg{padding:0 var(--gut);}
+.urg__row{display:flex;justify-content:space-between;gap:14px;padding:12px 2px;width:100%;align-items:baseline;}
+.urg__txt{font-family:var(--serif);font-size:14.5px;color:var(--ink);}
+.urg__hint{font-family:var(--mono);font-size:10px;color:var(--accent);flex:0 0 auto;}
 
-/* ── payback ────────────────────────────────────────────────────────── */
-.pb__intro{max-width:70ch;margin-bottom:18px;}
-.pb__intro h2{font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.015em;margin:0 0 6px;color:var(--ink);}
-.pb__intro p{margin:0;font-size:14px;color:var(--sec);text-wrap:pretty;}
-.pb__panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,3vw,26px);box-shadow:var(--shadow);}
-.pb__top{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;padding-bottom:16px;border-bottom:1px solid var(--line);}
-.pb__total{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1;}
-.pb__gloss{color:var(--sec);font-size:13px;max-width:46ch;}
-.pb__gloss b{color:var(--ink);}
-.pb__bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;margin:16px 0 4px;}
-.pb__fill{height:100%;background:var(--blue);border-radius:5px;transition:width .8s cubic-bezier(.2,.7,.2,1);}
-.pb__step{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);}
-.pb__n{width:30px;height:30px;border-radius:9px;background:var(--sunk);color:var(--sec);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;}
-.pb__step--clears .pb__n{background:var(--status-good);color:#fff;}
-.pb__title{font-size:13.5px;font-weight:700;color:var(--ink);}
-.pb__cond{font-size:12px;color:var(--muted);margin-top:2px;}
-.pb__vals{text-align:right;}
-.pb__plus{font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
-.pb__cum{font-family:var(--mono);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;}
+/* ── Section heads ── */
+.sec{margin:26px var(--gut) 0;border-top:2px solid var(--ink);padding:10px 2px 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.sec h2{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.15;}
+.sec--plain{display:block;}
 
-/* ── footer + modal ─────────────────────────────────────────────────── */
-.ftr{background:#0B1220;color:rgba(255,255,255,0.85);padding:40px 0 28px;}
-.ftr__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px;}
-.ftr h4{color:#fff;font-size:15px;font-weight:800;margin:0 0 10px;}
-.ftr h4.sm{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;}
-.ftr p{color:rgba(255,255,255,0.65);font-size:13px;max-width:48ch;margin:0 0 12px;text-wrap:pretty;}
-.ftr ul{list-style:none;padding:0;margin:0;font-size:12.5px;line-height:2.1;}
-.ftr a{color:#fff;}
-.ftr__methodbtn{border:1px solid rgba(255,255,255,0.35);background:none;color:#fff;border-radius:6px;padding:7px 13px;font-size:11.5px;font-weight:700;}
-.ftr__bottom{max-width:var(--wrap);margin:24px auto 0;padding:16px var(--gut) 0;font-size:12px;color:rgba(255,255,255,0.5);border-top:1px solid rgba(255,255,255,0.14);}
-.modal{position:fixed;inset:0;z-index:900;background:rgba(4,8,18,0.6);display:flex;align-items:center;justify-content:center;padding:18px;}
-.modal__panel{background:var(--card);color:var(--ink);border-radius:12px;max-width:560px;width:100%;max-height:82vh;overflow-y:auto;padding:clamp(20px,4vw,28px);box-shadow:0 30px 80px -20px rgba(0,0,0,0.5);}
-.modal__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.modal__head h3{margin:0;font-size:17px;font-weight:800;}
-.modal__x{border:1px solid var(--linestrong);background:var(--sunk);color:var(--sec);border-radius:6px;padding:5px 11px;font-size:12px;font-weight:800;}
-.modal__formula{font-family:var(--mono);font-size:12px;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:13px 15px;margin-bottom:16px;overflow-x:auto;white-space:pre;}
-.modal__type{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
-.modal__sw{flex:0 0 auto;width:11px;height:11px;border-radius:4px;margin-top:5px;}
-.modal__type b{font-size:13px;}
-.modal__typedesc{display:block;font-size:12px;color:var(--sec);margin-top:1px;}
-.modal__bands{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;}
-.modal__band{border-radius:6px;padding:4px 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;}
-.modal__caveats{font-size:12px;color:var(--sec);padding-left:16px;margin:8px 0 0;display:flex;flex-direction:column;gap:5px;}
+/* ── Generic ruled list ── */
+.list{padding:0 var(--gut);}
+.li{display:flex;justify-content:space-between;gap:14px;padding:11px 2px;align-items:baseline;width:100%;}
+.li__l{min-width:0;flex:1;}
+.li__name{display:block;font-size:13.5px;font-weight:700;}
+.li__gist{display:block;font-family:var(--serif);font-size:12px;color:var(--muted);margin-top:1px;}
+.li__v{flex:0 0 auto;font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;}
+.li__v--phrase{font-family:var(--serif);font-style:italic;}
+.li__idx{flex:0 0 auto;font-family:var(--mono);font-size:11px;color:var(--muted);width:1.6em;}
+.li[aria-expanded="true"] .li__idx{color:var(--ink);font-weight:700;}
+.expander{padding:8px 2px 0;display:block;}
+
+/* ── Scenario rows ── */
+.scen{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 2px;width:100%;}
+.scen__label{font-family:var(--serif);font-size:16px;}
+.scen__n{font-family:var(--mono);font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.scen--wide .scen__label{font-weight:600;}
+.scen--wide .scen__n{color:var(--accent);}
+
+/* ── Ink panel ── */
+.ink{margin:26px 0 0;background:var(--panel);color:var(--panelink);padding:24px var(--gut) 22px;width:100%;display:block;}
+.ink .eyebrow{color:var(--champagne);}
+.ink__body{font-family:var(--serif);font-size:16.5px;line-height:1.45;margin:10px 0 0;}
+.meter{display:flex;gap:4px;margin-top:16px;}
+.meter span{height:4px;display:block;background:var(--champagne);}
+.ink__foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:9.5px;color:var(--champagne);}
+
+/* ── Expanded detail ── */
+.det{margin:8px 0 0 25px;padding:0 2px 14px;}
+.det__body{font-family:var(--serif);font-size:13px;line-height:1.55;color:var(--sec);}
+.det__terms{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;border-top:1px dotted var(--control);padding-top:10px;}
+.det__terms .count{color:var(--muted);}
+.det__log{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;}
+.det__log span:first-child{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--muted);}
+
+/* ── Stepper ── */
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--control);flex:0 0 auto;}
+.stepper button{padding:4px 10px;font-family:var(--mono);font-size:12px;font-weight:700;}
+.stepper button:last-child{color:var(--accent);}
+.stepper button[disabled]{opacity:.3;cursor:not-allowed;}
+.stepper__n{font-family:var(--mono);font-size:10px;font-weight:700;padding:4px 8px;border-left:1px solid var(--hairstrong);border-right:1px solid var(--hairstrong);font-variant-numeric:tabular-nums;}
+
+/* ── Results / Places headers ── */
+.head{padding:20px var(--gut) 0;}
+.head h2{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.1;margin:14px 0 4px;}
+.head__blurb{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--muted);}
+.tool{display:flex;justify-content:space-between;gap:12px;border-top:2px solid var(--ink);margin-top:14px;padding:8px 2px;align-items:baseline;}
+.tool .count{letter-spacing:.14em;}
+
+.search{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px solid var(--ink);padding:6px 2px;margin-top:18px;}
+.search input{flex:1;min-width:0;border:0;background:none;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink);padding:0;}
+.search input::placeholder{color:var(--faint);font-style:italic;}
+.search input:focus{outline:none;}
+.search__g{font-family:var(--mono);font-size:10px;color:var(--muted);}
+
+.occ{display:flex;gap:18px;margin-top:12px;padding:0 2px;align-items:baseline;flex-wrap:wrap;}
+.occ__o{font-size:12px;color:var(--muted);padding-bottom:1px;}
+.occ__o[aria-pressed="true"]{color:var(--ink);font-weight:700;border-bottom:2px solid var(--ink);}
+
+.maptoggle{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--hairstrong);border-bottom:1px solid var(--hairstrong);margin-top:14px;padding:9px 2px;width:100%;align-items:baseline;}
+.maptoggle__l{font-family:var(--serif);font-size:13px;}
+.mapbox{height:clamp(280px,42vh,380px);margin-top:14px;background:var(--hair);}
+.mapfoot{display:flex;justify-content:space-between;padding:6px 2px 0;}
+
+/* ── Your year ── */
+.tally{padding:32px var(--gut) 24px;text-align:center;}
+.tally__num{font-family:var(--display);font-weight:400;font-size:64px;line-height:1;margin:14px 0 8px;font-variant-numeric:tabular-nums;}
+.tally__gloss{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--muted);}
+.tally__gloss--done{color:var(--green);font-weight:500;}
+.bar{display:flex;height:3px;margin:22px 8px 6px;position:relative;}
+.bar span{display:block;height:3px;}
+.bar__fill{background:var(--ink);}
+.bar__rest{background:rgba(35,29,16,.22);}
+html[data-theme="dark"] .bar__rest{background:rgba(241,234,219,.22);}
+.bar__over{background:var(--champagne-deep);}
+.bar__tick{position:absolute;top:-4px;width:1px;height:11px;background:var(--ink);}
+.caps{display:flex;justify-content:space-between;margin:0 8px;}
+.caps .count{letter-spacing:.08em;color:var(--faint);}
+.caps__over{color:var(--champagne-deep);}
+.since{margin:0 var(--gut) 18px;border-top:1px solid var(--ink);border-bottom:1px solid var(--hairstrong);padding:11px 2px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.since__d{font-family:var(--serif);font-size:14px;border-bottom:1px dotted var(--dotted);padding-bottom:1px;}
+.since__d input{font:inherit;color:inherit;background:none;border:0;padding:0;}
+.since__line{margin:-8px var(--gut) 0;padding:0 2px 8px;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--muted);}
+.note{margin:20px var(--gut) 24px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:12px 2px;font-family:var(--serif);font-size:13.5px;line-height:1.5;color:var(--sec);}
+.empty{margin:0 var(--gut);border:1px dashed var(--control);padding:44px 22px;text-align:center;font-family:var(--serif);font-size:14px;color:var(--muted);}
+
+/* ── Footer + modal ── */
+.ftr{margin-top:40px;border-top:2px solid var(--ink);padding:20px var(--gut) 28px;}
+.ftr__lede{font-family:var(--serif);font-size:13px;color:var(--sec);max-width:52ch;}
+.ftr ul{margin-top:6px;}
+.ftr li{padding:3px 0;font-family:var(--mono);font-size:10px;color:var(--muted);}
+.ftr__act{margin-top:12px;display:block;}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(35,29,16,.55);display:flex;align-items:center;justify-content:center;padding:22px;}
+.modal__panel{background:var(--page);border:1px solid var(--ink);max-width:560px;width:100%;max-height:82vh;overflow-y:auto;padding:20px;}
+.modal__head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:8px;}
+.modal__head h3{font-family:var(--serif);font-size:20px;font-weight:600;}
+.modal__formula{font-family:var(--mono);font-size:11px;margin-top:12px;padding:10px;border:1px solid var(--hairstrong);color:var(--sec);}
+.modal__type,.modal__band{padding:7px 2px;font-size:12.5px;}
+.modal__caveats li{font-family:var(--serif);font-size:12.5px;color:var(--sec);padding:4px 0 4px 14px;position:relative;}
+.modal__caveats li::before{content:'·';position:absolute;left:4px;}
+
+/* ── Motion. Expressive, and entirely off when the reader asks. ── */
+@keyframes draw{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+.anim-bar>span{transform-origin:left;animation:draw .8s cubic-bezier(.2,.7,.2,1) both;}
+.anim-rule{transform-origin:left;animation:draw .5s cubic-bezier(.2,.7,.2,1) both;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+}
+
+/* ── Desktop: editorial asymmetry ─────────────────────────────────────────
+   A 4:8 split. The numeral column holds rank on the left while the content
+   flows right, and the rules run full bleed across both. */
+@media (min-width:900px){
+  :root{--gut:36px;}
+  body{padding-bottom:0;}
+  .mast{padding:20px var(--gut) 14px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);}
+  .mast__rule{border:0;padding:0;text-align:left;}
+  .mast__name{font-size:10px;}
+  .mast__sub{display:none;}
+  .nav{position:static;border:0;background:none;display:flex;gap:28px;flex:0 0 auto;}
+  .tab{flex:0 0 auto;padding:0;font-size:9.5px;letter-spacing:.16em;}
+  .tab + .tab{border-left:0;}
+  .tab[aria-current="page"]{border-bottom:2px solid var(--ink);padding-bottom:2px;}
+
+  .home{
+    display:grid;grid-template-columns:var(--col) 1fr;
+    grid-template-areas:"l scen" "l ledger" "ink ink";
+    align-items:start;
+  }
+  .home__l{grid-area:l;border-right:1px solid var(--ink);padding:44px 32px 36px;}
+  .home__scen{grid-area:scen;padding:44px var(--gut) 0;}
+  .home__ledger{grid-area:ledger;padding:24px var(--gut) 36px;}
+  .home__ink{grid-area:ink;}
+  .home__l .hero,.home__l .urg,.home__l .urg__head{padding-left:0;padding-right:0;margin-left:0;margin-right:0;text-align:left;}
+  .home__l .hero{padding-top:0;}
+  .home__l .hero__num{font-size:62px;margin:16px 0 10px;}
+  .home__l .hero__div{margin:26px 0;}
+  .home__l .hero__lede{max-width:none;line-height:1.6;margin:0;}
+  .home__l .urg__head{border-bottom:0;margin-top:30px;padding-left:0;}
+  .home__scen .sec,.home__ledger .sec{margin-left:0;margin-right:0;}
+  .home__scen .sec{border-top:0;margin-top:0;padding-top:0;}
+  .home__scen .sec h2,.home__ledger .sec h2{font-size:24px;}
+  .home__scen .list,.home__ledger .list{padding:0;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 32px;margin-top:12px;}
+  .grid3 .li__gist{display:none;}
+  .grid3 .li__name{font-size:12.5px;}
+  .grid3 .li__v{font-size:11.5px;}
+  .ledgerhead{border-bottom:1px solid var(--ink);padding-bottom:5px;}
+  .ink--strip{margin:0;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:18px var(--gut);}
+  .ink--strip .ink__body{font-size:15px;margin:0;}
+  .ink--strip .meter{margin:0;width:280px;flex:0 0 auto;}
+  .ink--strip .eyebrow,.ink--strip .ink__foot{display:none;}
+  .head,.list,.tally,.since,.note,.empty,.sec,.urg,.urg__head,.search,.occ,.maptoggle{max-width:var(--wrap);margin-left:auto;margin-right:auto;}
+  .hero__num{font-size:62px;}
+}
 </style>
 </head>
 <body>
 
-<header class="hdr">
-  <div class="wrap hdr__in">
-    <button type="button" class="hdr__brand" data-act="view" data-view="home">
-      <span class="hdr__name">Amex Platinum Guide</span>
-      <span class="hdr__sub">A cardholder's guide · Singapore</span>
-    </button>
-    <nav class="hdr__nav" aria-label="Views">
-      <button type="button" class="tab" data-act="view" data-view="home" aria-current="page">Home</button>
-      <button type="button" class="tab" data-act="view" data-view="places">Places to eat</button>
-      <button type="button" class="tab" data-act="view" data-view="payback">Break even</button>
-      <button type="button" class="tab" data-act="view" data-view="year">My year<span id="tab-year-n" class="tab__n" hidden></span></button>
-      <button type="button" class="themebtn" data-act="theme" id="themebtn" aria-label="Switch to dark mode" title="Switch to dark mode">
-        <svg id="theme-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"></svg>
-      </button>
-    </nav>
-  </div>
+<header class="mast">
+  <div class="mast__rule"><span class="mast__name">Amex Platinum · Singapore</span></div>
+  <p class="mast__sub" id="mast-sub"></p>
+  <nav class="nav" aria-label="Views">
+    <button type="button" class="tab" data-act="view" data-view="home" aria-current="page">Home</button>
+    <button type="button" class="tab" data-act="view" data-view="places">Places</button>
+    <button type="button" class="tab" data-act="view" data-view="year">Your year<span class="tab__n num" id="tab-year-n" hidden></span></button>
+  </nav>
 </header>
 
-<section class="hero">
-  <div class="wrap hero__in">
-    <div>
-      <div class="hero__eyebrow"><a href="https://www.americanexpress.com/sg/charge-cards/platinum-card/" target="_blank" rel="noopener">American Express Platinum Card ↗</a> · Singapore</div>
-      <h1>Make your Platinum Card pay for itself</h1>
-      <p class="hero__lede">Every Amex Platinum benefit in Singapore, sourced from Amex's own pages. Say what you want to do and it shortlists the ones worth using.</p>
-      <div class="fee">
-        <p class="fee__big" id="fee-big">Loading…</p>
-        <p class="fee__note" id="fee-note"></p>
-        <div class="fee__bar"><div class="fee__fill" id="fee-fill" style="width:0"></div></div>
-        <p class="fee__sub" id="fee-sub"></p>
+<main id="main">
+
+  <section class="view" id="view-home">
+    <div class="home">
+      <div class="home__l">
+        <div class="hero">
+          <span class="eyebrow">What comes back</span>
+          <div class="hero__num" id="hero-num">&nbsp;</div>
+          <div class="hero__sub" id="hero-sub"></div>
+          <div class="hero__div"></div>
+          <p class="hero__lede" id="hero-lede"></p>
+        </div>
+        <div class="urg__head" id="urg-head" hidden><span class="label">Before anything else</span></div>
+        <div class="urg" id="urgent"></div>
       </div>
-      <p class="prov" id="provenance">Loading…</p>
-      <div class="fresh"><span class="fresh__dot" aria-hidden="true"></span><span id="freshness">Loading…</span></div>
-    </div>
-    <div class="hero__art">
-      <figure class="cardshot">
-        <img src="./assets/amex-platinum-card.png" alt="The American Express Platinum Card"
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'cardshot__ph',textContent:'Photo of the Amex Platinum Card'}))">
-      </figure>
-    </div>
-  </div>
-</section>
-
-<main class="wrap" id="main">
-
-  <section class="view" id="view-home" hidden>
-    <div class="sechead">
-      <div>
-        <h2>What are you doing?</h2>
-        <p>Pick the closest one. Every option is a real filter over the same data, so nothing is hidden behind it.</p>
+      <!-- Four grid children, not two. The ink panel sits mid-page on the
+           phone (block flow follows this DOM order) and becomes a full-width
+           footer strip on the desktop, where named grid areas place it below
+           both columns. One DOM, both approved frames. -->
+      <div class="home__scen">
+        <div class="sec"><h2>What are you doing?</h2><span class="count" id="scen-n"></span></div>
+        <div class="list" id="scenarios"></div>
+        <button type="button" class="act expander gut" id="scen-more" data-act="more-scen" hidden></button>
+      </div>
+      <button type="button" class="ink home__ink" id="inkpanel" data-act="view" data-view="year"></button>
+      <div class="home__ledger">
+        <div class="sec"><h2>The ledger</h2><span class="count" id="ben-count"></span></div>
+        <div class="list" id="effgroups"></div>
+        <button type="button" class="act expander gut" id="led-more" data-act="more-ledger" hidden></button>
       </div>
     </div>
-    <div class="scenarios" id="scenarios"></div>
-
-    <div class="sechead" style="margin-top:46px">
-      <div>
-        <h2 id="ben-title">Or just see everything your card gives you</h2>
-        <p>Grouped by what you have to do about it, not by how Amex files it.</p>
-      </div>
-      <span class="sechead__n" id="ben-count"></span>
-    </div>
-    <div class="effgroups" id="effgroups"></div>
   </section>
 
   <section class="view" id="view-results" hidden>
-    <button type="button" class="backbtn" data-act="view" data-view="home">← All scenarios</button>
-    <div class="sechead">
-      <div>
-        <h2 id="res-title"></h2>
-        <p id="res-blurb"></p>
+    <div class="head">
+      <button type="button" class="act" data-act="view" data-view="home">← All scenarios</button>
+      <h2 id="res-title"></h2>
+      <p class="head__blurb" id="res-blurb"></p>
+      <div class="tool">
+        <span class="count" id="res-count"></span>
+        <button type="button" class="act" id="res-maptoggle" data-act="map" hidden>Map ↓</button>
       </div>
-      <span class="sechead__n" id="res-count"></span>
     </div>
     <div id="res-map-slot"></div>
-    <div class="groups" id="res-list"></div>
-    <div class="empty" id="res-empty" hidden>Nothing matches that right now.</div>
+    <div class="list" id="res-list"></div>
+    <p class="empty" id="res-empty" hidden>Nothing matches this one.</p>
   </section>
 
   <section class="view" id="view-places" hidden>
-    <div class="sechead">
-      <div>
-        <h2 id="places-title">Places to eat</h2>
-        <p>Every restaurant, bar and buffet where one of your dining benefits applies.</p>
+    <div class="head">
+      <h2 id="places-title">Places to eat</h2>
+      <p class="head__blurb" id="places-count"></p>
+      <div class="search">
+        <input type="search" id="search" placeholder="Search venue, cuisine or hotel" aria-label="Search places">
+        <span class="search__g" aria-hidden="true">⌕</span>
       </div>
-      <span class="sechead__n" id="places-count"></span>
-    </div>
-    <div class="toolbar">
-      <input type="search" class="search" id="search" placeholder="Search venue, cuisine or hotel…" aria-label="Search venues">
-      <span class="toolbar__lbl">Occasion</span>
-      <span id="occ-chips" style="display:flex;gap:6px;flex-wrap:wrap"></span>
-    </div>
-    <div class="mapcard">
-      <div class="mapcard__head">
-        <h3 id="map-title">All dining venues</h3>
-        <span class="mapcard__n" id="places-map-count">0 locations</span>
+      <div class="occ" id="occ-chips"><span class="label">Occasion</span></div>
+      <button type="button" class="maptoggle" data-act="map">
+        <span class="maptoggle__l" id="map-title"></span>
+        <span class="act" id="places-maplabel">Open ↓</span>
+      </button>
+      <div id="places-mapwrap" hidden>
+        <div class="mapbox" id="places-map" role="img" aria-label="Map of dining places"></div>
+        <div class="mapfoot"><span class="count" id="places-map-count"></span></div>
       </div>
-      <div id="places-map" class="mapbox" role="img" aria-label="Map of dining venues in Singapore"></div>
     </div>
-    <div class="groups" id="places-groups"></div>
-    <div class="empty" id="places-empty" hidden>No venues match that search.</div>
+    <div class="list" id="places-groups"></div>
+    <p class="empty" id="places-empty" hidden>Nothing matches that search.</p>
   </section>
-
-  <section class="view" id="view-payback" hidden></section>
 
   <section class="view" id="view-year" hidden>
-    <div class="sechead">
-      <div>
-        <h2>Your year so far</h2>
-        <p>Tick a benefit off anywhere in the guide and it lands here. Kept in this browser only, never sent anywhere.</p>
-      </div>
-      <button type="button" class="ghostbtn" data-act="log-reset" id="log-reset" hidden>Start over</button>
-    </div>
     <div id="year-body"></div>
   </section>
-</main>
 
-<footer class="ftr">
-  <div class="wrap ftr__grid">
-    <div>
-      <h4>Amex Platinum Guide · Singapore</h4>
-      <p>Written by an Amex Platinum cardholder, not by American Express, and not endorsed by them. Data refreshes every two weeks. Reconfirm terms with Amex or the venue before relying on a benefit.</p>
-      <button type="button" class="ftr__methodbtn" data-act="method-open">How scoring works</button>
-    </div>
-    <div>
-      <h4 class="sm">Primary sources</h4>
-      <ul>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/" target="_blank" rel="noopener">Platinum benefits hub</a></li>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/" target="_blank" rel="noopener">Travel</a></li>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/dining/" target="_blank" rel="noopener">Dining</a></li>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/access/" target="_blank" rel="noopener">Access</a></li>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/insurance-and-protection/" target="_blank" rel="noopener">Insurance &amp; Protection</a></li>
-        <li><a href="https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/" target="_blank" rel="noopener">Membership Rewards</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="sm">Update cadence</h4>
-      <ul class="mono" id="cadence" style="font-family:var(--mono)"></ul>
-    </div>
-  </div>
-  <div class="ftr__bottom">Not official American Express material. Map tiles © OpenStreetMap contributors, © CARTO. Figures are estimates.</div>
-</footer>
+  <footer class="ftr">
+    <p class="ftr__lede" id="provenance"></p>
+    <button type="button" class="act ftr__act" data-act="method-open">How scoring works ↗</button>
+    <h4 class="label" style="margin-top:20px">Update cadence</h4>
+    <ul id="cadence"></ul>
+    <p class="count" id="freshness" style="margin-top:14px;letter-spacing:.08em"></p>
+    <p class="count" style="margin-top:10px;letter-spacing:.06em;color:var(--faint)">
+      Not affiliated with or endorsed by American Express · Map data © OpenStreetMap contributors © CARTO
+    </p>
+    <button type="button" class="act ftr__act" id="themebtn" data-act="theme"></button>
+    <button type="button" class="act ftr__act" id="log-reset" data-act="log-reset" hidden>Start the year over ↺</button>
+  </footer>
+</main>
 
 <div id="modal-root"></div>
 
@@ -414,213 +398,246 @@ import * as core from './guide-core.js';
 const state = {
   data: null,
   view: 'home',
-  scenario: null,     // scenario key, or {parent:id} drill-down
+  scenario: null,
   parent: null,
   occasion: null,
   q: '',
   expanded: new Set(),
-  moreGroups: new Set(),
-  moreEfforts: new Set(),
+  expandedGroups: new Set(),
+  showLogAll: false,
+  moreScen: false,
+  moreLedger: false,
+  showMap: false,
   theme: 'light',
   showMethod: false,
   log: {},
+  cardSince: null,
 };
 
+// The log stays exactly {entryId: uses}. The page test writes this key raw and
+// loadLog() silently discards anything it cannot parse, so a shape change here
+// would fail as a wrong answer rather than an error. The card-since date gets
+// its own key instead of being folded into this one.
 const LOG_KEY = 'pbg-log-v1';
-function loadLog() {
-  try { return JSON.parse(localStorage.getItem(LOG_KEY)) || {}; } catch { return {}; }
-}
-function saveLog() {
-  try { localStorage.setItem(LOG_KEY, JSON.stringify(state.log)); } catch { /* private mode */ }
-}
+const SINCE_KEY = 'pbg-card-since-v1';
+const loadLog = () => { try { return JSON.parse(localStorage.getItem(LOG_KEY)) || {}; } catch { return {}; } };
+const saveLog = () => { try { localStorage.setItem(LOG_KEY, JSON.stringify(state.log)); } catch { /* private mode */ } };
+const loadSince = () => { try { return localStorage.getItem(SINCE_KEY) || null; } catch { return null; } };
+const saveSince = () => {
+  try {
+    if (state.cardSince) localStorage.setItem(SINCE_KEY, state.cardSince);
+    else localStorage.removeItem(SINCE_KEY);
+  } catch { /* private mode */ }
+};
 
 let map = null;
 let markers = [];
 let mapSig = null;
-let animFlip = false;
-let animSig = null;
+let mapToken = 0;
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
-// Small counts read better spelled out in a headline than as digits.
-const WORDS = ['no', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
-const numWord = (n) => WORDS[n] ?? String(n);
+const reduced = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-// ─────────────────────────────────────────────────────────────── theme
-// Sun when dark is active (click for light), moon when light is active.
-const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
-const MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
-
-function applyTheme(theme) {
-  state.theme = theme;
-  document.documentElement.setAttribute('data-theme', theme);
-  const next = theme === 'dark' ? 'light' : 'dark';
-  $('theme-icon').innerHTML = theme === 'dark' ? SUN : MOON;
-  const btn = $('themebtn');
-  btn.setAttribute('aria-label', `Switch to ${next} mode`);
-  btn.setAttribute('title', `Switch to ${next} mode`);
+// ── Motion ───────────────────────────────────────────────────────────────
+// The numerals count up on first paint. Under reduced motion they simply are
+// the number, with no intermediate frame — which also keeps the figure stable
+// for anything reading it, in a test or a screen reader.
+function countUp(el, target, fmt) {
+  if (!el) return;
+  if (reduced() || !target) { el.textContent = fmt(target); return; }
+  const started = performance.now();
+  const step = (now) => {
+    const t = Math.min(1, (now - started) / 900);
+    const eased = 1 - (1 - t) ** 3;
+    el.textContent = fmt(Math.round(target * eased));
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = fmt(target);
+  };
+  requestAnimationFrame(step);
 }
 
-// ────────────────────────────────────────────────────── shared fragments
-function headlineNumber(e) {
-  if (e.kind === 'benefit' && e.childCount) return { num: String(e.childCount), lbl: 'places' };
-  if (e.discount_pct != null) return { num: `${e.discount_pct}%`, lbl: 'off' };
-  if (e.annual_value_sgd != null) return { num: core.fmtMoney(e.annual_value_sgd), lbl: 'per year' };
-  return { num: '—', lbl: 'no cap' };
+// ── Value column ─────────────────────────────────────────────────────────
+// Every row gets a value, and a row with no number gets an italic phrase
+// rather than a blank or a dash. A quarter of the data is entitlements whose
+// worth is real but unpriced, and in a layout built around a figure an empty
+// cell reads as "worth nothing" instead of "not measured in dollars".
+function valueCell(e) {
+  if (e.annual_value_sgd != null) return { text: core.fmtMoney(e.annual_value_sgd), phrase: false };
+  if (e.discount_pct != null) return { text: `up to ${e.discount_pct}% off`, phrase: true };
+  if (e.childCount) return { text: `${e.childCount} places`, phrase: true };
+  if (e.effort === 'claim') return { text: 'yours on enrolment', phrase: true };
+  return { text: 'always on', phrase: true };
 }
 
-const effortChip = (e) => {
-  const label = state.data.tax.effortByKey[e.effort]?.label || e.effort;
-  return `<span class="eff eff--${esc(e.effort)}">${esc(label)}</span>`;
+const valueHtml = (e) => {
+  const v = valueCell(e);
+  return `<span class="li__v${v.phrase ? ' li__v--phrase' : ''}">${esc(v.text)}</span>`;
 };
 
-const badges = (e, { fit } = {}) => `
-  <div class="badges">
-    ${effortChip(e)}
-    <span class="badge badge--type" style="background:${core.vr(core.TYPE_VAR[e.value_type])}">${esc(state.data.tax.valueTypeByKey[e.value_type].label)}</span>
-    ${e.grade ? `<span class="badge" style="background:${core.vr(core.GRADE_VAR[e.grade] || '--muted')}">${esc(e.grade)}</span>` : ''}
-    ${fit != null ? `<span class="badge badge--fit">Fit ${esc(fit)}/100</span>` : ''}
-    ${e.expires ? `<span class="badge" style="background:var(--status-warning)">Ends ${esc(core.fmtDate(e.expires))}</span>` : ''}
+// ── A ruled row, optionally expandable in place ──────────────────────────
+function row(e, { idx = null, gist = null } = {}) {
+  const open = state.expanded.has(e.id);
+  const domId = `d-${state.view}-${e.id}`;
+  return `
+  <div class="row">
+    <button type="button" class="li" data-act="toggle" data-id="${esc(e.id)}"
+            aria-expanded="${open}" aria-controls="${esc(domId)}">
+      ${idx != null ? `<span class="li__idx num">${String(idx).padStart(2, '0')}</span>` : ''}
+      <span class="li__l">
+        <span class="li__name">${esc(e.name)}</span>
+        <span class="li__gist">${esc(gist ?? e.gist ?? e.summary ?? '')}</span>
+      </span>
+      ${valueHtml(e)}
+    </button>
+    ${open ? detail(e, domId) : ''}
   </div>`;
+}
 
-// Ticking a use is the whole tracker. It sits inside the expanded card so it
-// never competes with the benefit's own numbers when collapsed.
+function detail(e, domId) {
+  const terms = [
+    e.annual_cap ? `${e.annual_cap} uses a year` : 'Unlimited use',
+    e.advance || null,
+    e.min_spend_sgd ? `min spend ${core.fmtMoney(e.min_spend_sgd)}` : null,
+  ].filter(Boolean).join(' · ');
+  return `
+    <div class="det" id="${esc(domId)}">
+      <p class="det__body">${esc(e.details || e.summary || '')}</p>
+      <div class="det__terms">
+        <span class="count">${esc(terms)}</span>
+        <a class="act" href="${esc(e.source)}" target="_blank" rel="noopener">Amex source ↗</a>
+      </div>
+      ${core.canLog(e) ? `<div class="det__log">
+        <span>Been here on the card?</span>${stepper(e)}
+      </div>` : ''}
+      ${e.childCount ? `<button type="button" class="act" style="margin-top:10px" data-act="parent" data-id="${esc(e.id)}">All ${e.childCount} places →</button>` : ''}
+    </div>`;
+}
+
 function stepper(e) {
-  if (!core.canLog(e)) return '';
   const used = state.log[e.id] || 0;
   const left = core.usesLeft(e, state.log);
   const cap = e.annual_cap;
   return `
-    <div class="logrow">
-      <span class="logrow__lbl">${used
-    ? `Used <b>${used}${cap ? ` of ${cap}` : ''}</b> · ${esc(core.fmtMoney(used * e.gross_value_sgd))} logged`
-    : `Worth ${esc(core.fmtMoney(e.gross_value_sgd))} each time${cap ? `, up to ${cap}×` : ''}`}</span>
-      <span class="stepper">
-        <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="-1" ${used ? '' : 'disabled'} aria-label="Remove a use of ${esc(e.name)}">−</button>
-        <span class="stepper__n">${used}${cap ? ` / ${cap}` : ''}</span>
-        <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="1" ${left > 0 ? '' : 'disabled'} aria-label="Log a use of ${esc(e.name)}">+</button>
-      </span>
-    </div>`;
+    <span class="stepper">
+      <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="-1" ${used ? '' : 'disabled'} aria-label="Remove a use of ${esc(e.name)}">−</button>
+      <span class="stepper__n">${used}${cap ? ` / ${cap}` : '×'}</span>
+      <button type="button" data-act="log" data-id="${esc(e.id)}" data-delta="1" ${left > 0 ? '' : 'disabled'} aria-label="Log a use of ${esc(e.name)}">+</button>
+    </span>`;
 }
 
-const sourceFoot = (e, meta) => `
-  <div class="foot">
-    <span class="foot__meta">${esc(meta)}</span>
-    <a href="${esc(e.source)}" target="_blank" rel="noopener">Amex source ↗</a>
-  </div>`;
-
-// ───────────────────────────────────────────────────────── home: benefits
-function benefitCard(e) {
-  const open = state.expanded.has(e.id);
-  const { num, lbl } = headlineNumber(e);
-  const meta = e.composite_score != null
-    ? `Score ${e.composite_score}/100${e.min_spend_sgd ? ` · Min spend ${core.fmtMoney(e.min_spend_sgd)}` : ''}`
-    : (e.advance || 'No conditions listed');
-  return `
-  <article class="ben">
-    <button type="button" class="ben__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="b-${state.view}-${esc(e.id)}">
-      <span class="ben__l">
-        <span class="ben__name">${esc(e.name)}</span>
-        <span class="ben__gist">${esc(e.summary || e.subcategory || '')}</span>
-      </span>
-      <span class="ben__r">
-        <span class="ben__num"><span class="num">${esc(num)}</span><span class="numlbl">${esc(lbl)}</span></span>
-        <span class="chev" aria-hidden="true">▼</span>
-      </span>
-    </button>
-    ${open ? `<div class="ben__body" id="b-${state.view}-${esc(e.id)}">
-      ${badges(e)}
-      <p class="body">${esc(e.details || e.summary || '')}</p>
-      ${sourceFoot(e, meta)}
-      ${stepper(e)}
-      ${e.childCount ? `<button type="button" class="ben__open" data-act="parent" data-id="${esc(e.id)}">See all ${e.childCount} places →</button>` : ''}
-    </div>` : ''}
-  </article>`;
-}
+// ── Home ─────────────────────────────────────────────────────────────────
+const SCEN_ON_PHONE = 4;
 
 function renderHome() {
   const d = state.data;
-  $('ben-count').textContent = `${d.benefits.length} benefits · ${d.venues.length} places to use them`;
+  const pb = core.paybackView(d);
+  const t = core.logSummary(d, state.log);
 
-  $('scenarios').innerHTML = d.scenarios.map((s) => {
+  // The hero states the case until there is a log, then it reports where you
+  // actually are. Both figures come from the data, so re-cutting the path
+  // rewrites the copy instead of leaving it asserting something stale.
+  const showing = t.rows.length ? t.totalSgd : pb.totalSgd;
+  countUp($('hero-num'), showing, (n) => core.fmtMoney(n));
+  $('hero-sub').textContent = t.rows.length
+    ? `logged against a ${core.fmtMoney(t.fee)} fee`
+    : `against a ${core.fmtMoney(t.fee)} fee`;
+  $('hero-lede').textContent = t.rows.length
+    ? (t.cleared
+      ? `The fee is cleared. Everything from here is profit.`
+      : `${core.fmtMoney(t.shortfall)} to go. The plan covers it${pb.surplusText}.`)
+    : `Every benefit on the card, checked against Amex's own pages, with the arithmetic done for you.`;
+
+  // The urgent two
+  const u = core.urgentTwo(d, state.log);
+  const rows = [u.expiring, u.unclaimed].filter(Boolean);
+  $('urg-head').hidden = !rows.length;
+  $('urgent').innerHTML = rows.map((r) => `
+    <div class="row">
+      <button type="button" class="urg__row" data-act="scenario" data-key="${esc(r.scenario)}">
+        <span class="urg__txt">${esc(r.copy)}</span>
+        <span class="urg__hint">${esc(r.hint)} →</span>
+      </button>
+    </div>`).join('');
+
+  // Scenarios. Phone shows the first four in data order and expands to all
+  // eight; desktop shows all eight in two columns, filled column-first, which
+  // is why the markup interleaves rather than running straight down.
+  const all = d.scenarios;
+  const wide = window.matchMedia?.('(min-width:900px)').matches;
+  const shown = (wide || state.moreScen) ? all : all.slice(0, SCEN_ON_PHONE);
+  const ordered = wide ? interleave(shown) : shown;
+  $('scen-n').textContent = `${all.length} real filters`;
+  $('scenarios').className = `list${wide ? ' grid2' : ''}`;
+  $('scenarios').innerHTML = ordered.map((s) => {
     const n = s.view ? null : core.runScenario(d, s).length;
     return `
-    <button type="button" class="scen${s.view ? ' scen--wide' : ''}" data-act="scenario" data-key="${esc(s.key)}">
-      <span class="scen__label">${esc(s.label)}</span>
-      <span class="scen__blurb">${esc(s.blurb)}</span>
-      <span class="scen__n">${s.view ? 'Break-even calculator →' : `${plural(n, 'option')} →`}</span>
-    </button>`;
-  }).join('');
-
-  $('effgroups').innerHTML = d.tax.efforts.map((eff) => {
-    const rows = d.benefits.filter((e) => e.effort === eff.key)
-      .sort((a, b) => (b.childCount - a.childCount) || ((b.annual_value_sgd ?? 0) - (a.annual_value_sgd ?? 0)) || a.name.localeCompare(b.name));
-    if (!rows.length) return '';
-    const open = state.moreEfforts.has(eff.key);
-    const shown = open ? rows : rows.slice(0, 6);
-    return `
-    <div>
-      <div class="effhead">
-        <span class="effhead__l">
-          <h3>${esc(eff.label)}</h3>
-          <span class="effhead__desc">${esc(eff.desc)}</span>
-        </span>
-        <span class="effhead__n">${plural(rows.length, 'benefit')}</span>
-      </div>
-      <div class="bengrid">${shown.map(benefitCard).join('')}</div>
-      ${rows.length > 6 ? `<button type="button" class="ghostbtn morebtn" data-act="more-effort" data-key="${esc(eff.key)}">${open ? 'Show fewer' : `Show all ${rows.length}`}</button>` : ''}
+    <div class="row">
+      <button type="button" class="scen${s.view ? ' scen--wide' : ''}" data-act="scenario" data-key="${esc(s.key)}">
+        <span class="scen__label">${esc(s.label)}</span>
+        <span class="scen__n">${s.view ? 'the plan →' : String(n)}</span>
+      </button>
     </div>`;
   }).join('');
+  const moreScen = $('scen-more');
+  moreScen.hidden = wide || all.length <= SCEN_ON_PHONE;
+  moreScen.textContent = state.moreScen ? 'Fewer ↑' : `All ${core.numWord(all.length, { lower: true })} ↓`;
+
+  // Ink panel
+  const freeCount = pb.benefitCount - pb.paidCount;
+  $('inkpanel').innerHTML = `
+    <span class="eyebrow">Is the fee worth it?</span>
+    <p class="ink__body">${esc(planSentence(pb))}${pb.outlaySgd
+      ? ` Only ${esc(core.fmtMoney(pb.outlaySgd))} of it needs any spending at all.`
+      : ' None of it needs any extra spending.'}</p>
+    <div class="meter anim-bar">${pb.steps.map((s, i) => {
+      const last = i === pb.steps.length - 1;
+      return `<span style="flex:${s.valueSgd};${last ? `background:var(--highlight);` : `opacity:${(1 - i * 0.18).toFixed(2)};`}animation-delay:${i * 70}ms"></span>`;
+    }).join('')}</div>
+    <div class="ink__foot"><span>${esc(plural(pb.benefitCount, 'move'))} · ${esc(plural(pb.useCount, 'use'))}</span><span>the plan →</span></div>`;
+
+  // The ledger
+  $('ben-count').textContent = `${d.benefits.length} benefits · ${d.venues.length} places`;
+  const groups = d.tax.efforts.map((eff) => {
+    const list = d.benefits.filter((e) => e.effort === eff.key)
+      .sort((a, b) => (b.annual_value_sgd ?? 0) - (a.annual_value_sgd ?? 0) || (b.childCount - a.childCount) || a.name.localeCompare(b.name));
+    return { eff, list };
+  }).filter((g) => g.list.length);
+
+  const perGroup = wide ? 3 : (state.moreLedger ? Infinity : 3);
+  $('effgroups').className = `list${wide ? ' grid3' : ''}`;
+  $('effgroups').innerHTML = groups.map(({ eff, list }) => `
+    <div>
+      <div class="${wide ? 'ledgerhead' : ''}" style="padding:10px 2px 2px">
+        <span class="label">${esc(eff.label)} · ${esc(wide ? '' : eff.desc)}${wide ? '' : ' · '}${list.length}</span>
+      </div>
+      ${list.slice(0, perGroup).map((e) => row(e)).join('')}
+    </div>`).join('');
+  const moreLed = $('led-more');
+  moreLed.hidden = wide;
+  moreLed.textContent = state.moreLedger ? 'Fewer ↑' : `Full ledger, all ${d.benefits.length} ↓`;
 }
 
-// ─────────────────────────────────────────────────────── venue/result cards
-function pickCard(e, rank, fit) {
-  const open = state.expanded.has(e.id);
-  const { num, lbl } = headlineNumber(e);
-  const meta = e.composite_score != null
-    ? `Score ${e.composite_score}/100${e.min_spend_sgd ? ` · Min spend ${core.fmtMoney(e.min_spend_sgd)}` : ''}`
-    : (e.advance || 'Always on');
-  return `
-  <article class="pick" style="--typecolor:${core.vr(core.TYPE_VAR[e.value_type])}">
-    <button type="button" class="pick__btn" data-act="toggle" data-id="${esc(e.id)}" aria-expanded="${open}" aria-controls="d-${state.view}-${esc(e.id)}">
-      <span class="pick__l">
-        ${rank != null ? `<span class="pick__rank">${rank}</span>` : ''}
-        <span style="min-width:0">
-          <span class="pick__name">${esc(e.name)}</span>
-          <span class="pick__venue">${esc(e.venue_group || e.cuisine || e.subcategory || '')}</span>
-        </span>
-      </span>
-      <span class="pick__r">
-        <span class="pick__num"><span class="num">${esc(num)}</span><span class="numlbl">${esc(lbl)}</span></span>
-        <span class="chev" aria-hidden="true">▼</span>
-      </span>
-    </button>
-    ${open ? `<div class="pick__body" id="d-${state.view}-${esc(e.id)}">
-      ${badges(e, { fit })}
-      <p class="body">${esc(e.details || e.summary || '')}</p>
-      ${sourceFoot(e, meta)}
-      ${stepper(e)}
-    </div>` : ''}
-  </article>`;
+// Two columns filled top-to-bottom, not left-to-right. CSS grid flows
+// row-major, so the markup has to interleave for each column to read in order.
+function interleave(list) {
+  const half = Math.ceil(list.length / 2);
+  const out = [];
+  for (let i = 0; i < half; i += 1) {
+    out.push(list[i]);
+    if (list[half + i]) out.push(list[half + i]);
+  }
+  return out;
 }
 
-function resultCard(e, rank, fit) {
-  // benefitCard renders neither a rank nor a fit badge, so it may only be used
-  // where there is neither to show. Otherwise a ranked list would skip numbers.
-  const plain = rank == null && fit == null;
-  return plain && e.kind === 'benefit' && e.value_type === 'access' && !e.discount_pct
-    ? benefitCard(e)
-    : pickCard(e, rank, fit);
-}
+const planSentence = (pb) =>
+  `${core.numWord(pb.benefitCount)} benefits, ${core.numWord(pb.useCount, { lower: true })} uses, ${pb.total} back against the ${pb.fee} fee.`;
 
-// ──────────────────────────────────────────────────────────── results view
+// ── Results ──────────────────────────────────────────────────────────────
 function renderResults() {
   const d = state.data;
-  let rows;
-  let title;
-  let blurb;
-  let fitKey = null;
+  let rows; let title; let blurb; let fitKey = null;
 
   if (state.parent) {
     const p = d.byId.get(state.parent);
@@ -637,34 +654,33 @@ function renderResults() {
 
   $('res-title').textContent = title;
   $('res-blurb').textContent = blurb;
-  $('res-count').textContent = plural(rows.length, 'result');
+  $('res-count').textContent = `${plural(rows.length, 'option')}${fitKey ? ' · ranked for fit' : ''}`;
   $('res-empty').hidden = rows.length > 0;
 
-  const ranked = !!fitKey;
-  setHtml($('res-list'), rows.length
-    ? `<div class="cardgrid">${rows.map((e, i) => resultCard(e, ranked ? i + 1 : null, fitKey ? e.occasion_fit[fitKey] : null)).join('')}</div>`
-    : '');
-
-  // Only mount a map when there is something to put on it.
   const mappable = rows.filter((e) => e.locations.length);
+  $('res-maptoggle').hidden = mappable.length < 2;
+  $('res-maptoggle').textContent = state.showMap ? 'Map ↑' : 'Map ↓';
+
+  $('res-list').innerHTML = rows.map((e, i) => row(e, {
+    idx: fitKey ? i + 1 : null,
+    gist: fitKey ? `${e.gist}${e.occasion_fit[fitKey] != null ? ` · fit ${e.occasion_fit[fitKey]}` : ''}` : null,
+  })).join('');
+
   const slot = $('res-map-slot');
-  if (mappable.length >= 2) {
+  if (state.showMap && mappable.length >= 2) {
     if (!slot.querySelector('#results-map')) {
       destroyMap();
-      slot.innerHTML = `
-        <div class="mapcard">
-          <div class="mapcard__head"><h3>Where these are</h3><span class="mapcard__n" id="results-map-count">0 locations</span></div>
-          <div id="results-map" class="mapbox" role="img" aria-label="Map of results"></div>
-        </div>`;
+      slot.innerHTML = `<div class="gut"><div class="mapbox" id="results-map" role="img" aria-label="Map of results"></div>
+        <div class="mapfoot"><span class="count" id="results-map-count"></span></div></div>`;
     }
     ensureMap(mappable, `${state.parent || state.scenario}`, 'results-map');
   } else {
-    slot.innerHTML = '';
     destroyMap();
+    slot.innerHTML = '';
   }
 }
 
-// ───────────────────────────────────────────────────────────── places view
+// ── Places ───────────────────────────────────────────────────────────────
 function renderPlaces() {
   const d = state.data;
   const q = state.q.trim().toLowerCase();
@@ -678,127 +694,155 @@ function renderPlaces() {
   }
 
   const occ = state.occasion ? d.tax.occasions.find((o) => o.key === state.occasion) : null;
-  $('map-title').textContent = occ ? `Dining venues · ${occ.label}` : 'All dining venues';
-  $('places-count').textContent = `${plural(rows.length, 'venue')}${state.occasion ? ' · ranked by fit' : ''}`;
+  $('places-count').textContent = `${plural(rows.length, 'table')} where a dining benefit applies.`;
+  $('map-title').textContent = occ ? `The map, ${occ.label.toLowerCase()}` : `The map, all ${rows.length} pins`;
+  $('places-maplabel').textContent = state.showMap ? 'Close ↑' : 'Open ↓';
+  $('places-mapwrap').hidden = !state.showMap;
   $('places-empty').hidden = rows.length > 0;
 
-  $('occ-chips').innerHTML = [{ key: null, label: 'Any' }, ...d.tax.occasions]
-    .map((o) => `<button type="button" class="chip" data-act="occ" data-val="${esc(o.key ?? '')}" aria-pressed="${state.occasion === (o.key ?? null)}">${esc(o.label)}</button>`).join('');
+  $('occ-chips').innerHTML = `<span class="label">Occasion</span>` + [{ key: null, label: 'Any' }, ...d.tax.occasions]
+    .map((o) => `<button type="button" class="occ__o" data-act="occ" data-val="${esc(o.key ?? '')}" aria-pressed="${state.occasion === (o.key ?? null)}">${esc(o.label)}</button>`).join('');
 
-  setHtml($('places-groups'), d.tax.tier_groups.map((g) => {
+  $('places-groups').innerHTML = d.tax.tier_groups.map((g) => {
     const inGroup = rows.filter((e) => e.tier_group === g.key);
     if (!inGroup.length) return '';
-    const open = state.moreGroups.has(g.key);
-    const shown = open ? inGroup : inGroup.slice(0, 3);
+    const shown = state.expandedGroups.has(g.key) ? inGroup : inGroup.slice(0, 3);
     return `
     <div>
-      <div class="grouphead">
-        <span class="grouphead__l"><h3>${esc(g.label)}</h3><span class="grouphead__desc">${esc(g.desc)}</span></span>
-        <span class="grouphead__n">${plural(inGroup.length, 'venue')}</span>
+      <div class="sec sec--plain" style="margin-left:0;margin-right:0">
+        <h2 style="font-size:18px">${esc(g.label)}</h2>
+        <span class="count" style="letter-spacing:.12em">${esc(g.desc)} · ${inGroup.length}</span>
       </div>
-      <div class="cardgrid">${shown.map((e, i) => pickCard(e, state.occasion ? i + 1 : null, state.occasion ? e.occasion_fit[state.occasion] : null)).join('')}</div>
-      ${inGroup.length > 3 ? `<button type="button" class="ghostbtn morebtn" data-act="more" data-group="${esc(g.key)}">${open ? 'Show top 3 only' : `Show all ${inGroup.length}`}</button>` : ''}
+      ${shown.map((e, i) => row(e, {
+    idx: state.occasion ? i + 1 : null,
+    gist: state.occasion ? `${e.gist} · fit ${e.occasion_fit[state.occasion]}` : null,
+  })).join('')}
+      ${inGroup.length > 3 ? `<button type="button" class="act expander" data-act="more" data-group="${esc(g.key)}">${state.expandedGroups.has(g.key) ? 'Fewer ↑' : `All ${inGroup.length} ↓`}</button>` : ''}
     </div>`;
-  }).join(''));
+  }).join('');
 
-  ensureMap(rows.filter((e) => e.locations.length), `places|${state.occasion}|${q}`, 'places-map');
+  if (state.showMap) ensureMap(rows.filter((e) => e.locations.length), `places|${state.occasion}|${q}`, 'places-map');
+  else destroyMap();
 }
 
-// ──────────────────────────────────────────────────────────── payback view
-function renderPayback() {
-  const d = state.data;
-  const pb = core.paybackView(d);
-  const fee = core.fmtMoney(d.card.annual_fee_sgd);
-  $('view-payback').innerHTML = `
-    <button type="button" class="backbtn" data-act="view" data-view="home">← Home</button>
-    <div class="pb__intro">
-      <h2>Minimum path to break even</h2>
-      <p>The fewest benefits you would need to use to clear the ${esc(fee)} annual fee.</p>
-    </div>
-    <div class="pb__panel">
-      <div class="pb__top">
-        <div class="pb__total">${esc(pb.total)}</div>
-        <div class="pb__gloss">from <b>${esc(pb.benefitCount)} benefits</b> across ${esc(pb.useCount)} uses, clearing the <b>${esc(fee)}</b> annual fee${esc(pb.surplusText)}.${pb.outlaySgd ? ` Collecting it means spending <b>${esc(core.fmtMoney(pb.outlaySgd))}</b> on ${pb.paidCount === 1 ? 'the one credit that needs a qualifying transaction' : `the ${esc(pb.paidCount)} credits that need a qualifying transaction`}.` : ''}</div>
-      </div>
-      <div class="pb__bar"><div class="pb__fill" style="width:${pb.pct}%"></div></div>
-      <div>
-        ${pb.steps.map((s) => `
-          <div class="pb__step${s.clearsHere ? ' pb__step--clears' : ''}">
-            <span class="pb__n">${esc(s.num)}</span>
-            <div>
-              <div class="pb__title">${esc(s.name)}${s.clearsHere ? ', fee cleared here' : ''}</div>
-              <div class="pb__cond">${esc(s.condition)}</div>
-            </div>
-            <div class="pb__vals">
-              <div class="pb__plus">${esc(s.plus)}</div>
-              <div class="pb__cum">${esc(s.cum)}</div>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-}
-
-// ──────────────────────────────────────────────────────────── the year view
+// ── Your year ────────────────────────────────────────────────────────────
+// The old Break even and My year views, merged. One tab, three states: the
+// plan you have not started, the plan part-done, and the plan overtaken.
 function renderYear() {
   const d = state.data;
   const t = core.logSummary(d, state.log);
-  $('log-reset').hidden = t.rows.length === 0;
+  const pb = core.paybackView(d);
+  const plan = core.planProgress(d, state.log);
+  const cy = core.cardYear(state.cardSince);
+  $('log-reset').hidden = !t.rows.length;
 
-  if (!t.rows.length) {
-    $('year-body').innerHTML = `
-      <div class="empty">
-        Nothing logged yet. Open any benefit and press <b>+</b> when you use it.<br>
-        Five benefits are enough to clear the ${esc(core.fmtMoney(t.fee))} fee.
-      </div>`;
-    return;
-  }
+  const done = plan.filter((p) => p.state === 'done').length;
+  const going = plan.filter((p) => p.state === 'partial').length;
+  const open = plan.filter((p) => p.state === 'open').length;
 
-  const headline = t.cleared
-    ? `You are ${esc(core.fmtMoney(t.surplus))} ahead of the fee.`
-    : `${esc(core.fmtMoney(t.shortfall))} to go.`;
+  const gloss = t.cleared
+    ? `${core.fmtMoney(t.surplus)} past the fee. From here, everything is profit.`
+    : t.rows.length
+      ? `${core.fmtMoney(t.shortfall)} to go. The plan covers it${pb.surplusText}.`
+      : `${planSentence(pb)}`;
 
   $('year-body').innerHTML = `
     <div class="tally">
-      <div class="tally__big${t.cleared ? ' tally__big--done' : ''}">${esc(core.fmtMoney(t.totalSgd))}</div>
-      <p class="tally__gloss">
-        from <b>${t.benefitCount} benefit${t.benefitCount === 1 ? '' : 's'}</b> across ${t.uses} use${t.uses === 1 ? '' : 's'},
-        against the ${esc(core.fmtMoney(t.fee))} annual fee. <b>${headline}</b>
-      </p>
-      <div class="tally__bar"><div class="tally__fill${t.cleared ? ' tally__fill--done' : ''}" style="width:${t.pct}%"></div></div>
-      <p class="tally__gloss" style="font-size:12px;margin-top:12px">
-        You have logged ${t.benefitCount} of the ${esc(t.loggableCount)} things worth tracking here.
-      </p>
+      <span class="eyebrow">Your year so far</span>
+      <div class="tally__num" id="tally-num">&nbsp;</div>
+      <p class="tally__gloss${t.cleared ? ' tally__gloss--done' : ''}">${esc(gloss)}</p>
+      ${bar(t)}
+      ${t.cleared
+    ? `<div class="caps"><span class="count">Fee ${esc(core.fmtMoney(t.fee))}</span><span class="count caps__over">Surplus ${esc(core.fmtMoney(t.surplus))}</span></div>`
+    : `<div class="caps"><span class="count">Saved on this device, here when you come back</span></div>`}
     </div>
-    <div class="logged">
-      ${t.rows.map((r) => `
-        <div class="logged__row">
-          <span class="logged__l">
-            <span class="logged__name">${esc(r.entry.name)}</span>
-            <span class="logged__meta">${r.uses}× ${esc(core.fmtMoney(r.entry.gross_value_sgd))}${r.entry.annual_cap ? ` · cap ${r.entry.annual_cap}` : ''}</span>
-          </span>
-          <span style="display:flex;align-items:center;gap:12px">
-            <span class="logged__v">${esc(core.fmtMoney(r.value))}</span>
-            <span class="stepper">
-              <button type="button" data-act="log" data-id="${esc(r.entry.id)}" data-delta="-1" aria-label="Remove a use of ${esc(r.entry.name)}">−</button>
-              <span class="stepper__n">${r.uses}</span>
-              <button type="button" data-act="log" data-id="${esc(r.entry.id)}" data-delta="1" ${core.usesLeft(r.entry, state.log) > 0 ? '' : 'disabled'} aria-label="Log a use of ${esc(r.entry.name)}">+</button>
+
+    <div class="since">
+      <span class="label">Card since</span>
+      <span class="since__d">${state.cardSince
+    ? esc(core.fmtDate(state.cardSince))
+    : '<span style="color:var(--faint)">not set</span>'}</span>
+      <button type="button" class="act" data-act="since-edit">Edit</button>
+    </div>
+    ${cy ? `<p class="since__line">Day ${cy.day} of your card year. ${plural(cy.daysLeft, 'day')} left to collect the rest.</p>` : ''}
+
+    <div class="sec"><h2>The plan</h2><span class="count">${done} done · ${going} going · ${open} left</span></div>
+    <div class="list">
+      ${plan.map((p) => `
+        <div class="row">
+          <div class="li">
+            <span class="li__idx num" ${p.state === 'done' ? 'style="color:var(--ink);font-weight:700"' : ''}>${p.state === 'done' ? '✓' : String(p.i + 1).padStart(2, '0')}</span>
+            <span class="li__l">
+              <span class="li__name">${esc(p.name)}</span>
+              <span class="li__gist">${esc(planGist(p))}</span>
             </span>
-          </span>
+            <span class="li__v">+${esc(String(p.valueSgd))}</span>
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <p class="note">Everything you log counts, on the plan or off it. Love Dining alone can outrun the whole path.
+      <button type="button" class="act" data-act="log-anything">Log anything →</button></p>
+
+    ${state.showLogAll ? logAnything(d) : ''}`;
+
+  countUp($('tally-num'), t.totalSgd, (n) => core.fmtMoney(n));
+}
+
+// Derived rather than lifted from `terms.condition`. Those strings are a mix
+// of terse Title Case labels ("Booking Required") and long Amex prose that
+// carries its own dashes, and neither reads as a line of this page's copy.
+const planGist = (p) => {
+  const each = core.fmtMoney(p.valueSgd / p.required);
+  if (p.state === 'done') return `Done · ${core.fmtMoney(p.loggedSgd)} logged`;
+  if (p.state === 'partial') {
+    return `${core.numWord(p.used)} down, ${core.numWord(p.required - p.used, { lower: true })} to go`
+      + ` · ${core.fmtMoney(p.loggedSgd)} logged`;
+  }
+  return p.required === 1 ? `Once, ${each}` : `${plural(p.required, 'use')} at ${each} each`;
+};
+
+// Two-tone before the fee is cleared, champagne overflow after it. The
+// denominator changes with the state: against the fee while there is still a
+// gap, against the total once the total is the bigger number.
+function bar(t) {
+  if (t.cleared) {
+    const pctFee = (t.fee / t.totalSgd) * 100;
+    return `<div class="bar anim-bar">
+      <span class="bar__fill" style="flex:${t.fee}"></span>
+      <span class="bar__over" style="flex:${t.surplus}"></span>
+      <span class="bar__tick" style="left:${pctFee}%"></span>
+    </div>`;
+  }
+  return `<div class="bar anim-bar">
+    <span class="bar__fill" style="flex:${Math.max(t.totalSgd, 0.0001)}"></span>
+    <span class="bar__rest" style="flex:${Math.max(t.fee - t.totalSgd, 0.0001)}"></span>
+  </div>`;
+}
+
+function logAnything(d) {
+  const rows = d.entries.filter(core.canLog)
+    .sort((a, b) => (b.gross_value_sgd - a.gross_value_sgd) || a.name.localeCompare(b.name));
+  return `
+    <div class="sec"><h2>Anything you can log</h2><span class="count">${rows.length} things</span></div>
+    <div class="list" id="log-all">
+      ${rows.map((e) => `
+        <div class="row">
+          <div class="li">
+            <span class="li__l">
+              <span class="li__name">${esc(e.name)}</span>
+              <span class="li__gist">${esc(core.fmtMoney(e.gross_value_sgd))} each time${e.annual_cap ? `, up to ${e.annual_cap}×` : ', unlimited'}</span>
+            </span>
+            ${stepper(e)}
+          </div>
         </div>`).join('')}
     </div>`;
 }
 
-// ───────────────────────────────────────────────────────────────── chrome
-function setHtml(el, html) {
-  el.innerHTML = html;
-  const sig = [state.view, state.scenario, state.parent, state.occasion, state.q].join('|');
-  if (sig !== animSig) { animSig = sig; animFlip = !animFlip; }
-  el.className = `${el.className.replace(/ ?rise[AB]/g, '')} ${animFlip ? 'riseA' : 'riseB'}`;
-}
-
+// ── Static chrome ────────────────────────────────────────────────────────
 function renderStatic() {
   const d = state.data;
-  renderFee();
+  $('mast-sub').textContent = `An unofficial cardholder's guide · verified ${core.fmtDate(d.generated_at)}`;
   $('provenance').textContent =
     "Every benefit here is read off Amex's own Singapore pages, not a forum thread. "
     + `Amex changes these without notice, so the whole guide is rechecked every ${d.refresh_days ?? 14} days.`;
@@ -810,39 +854,20 @@ function renderStatic() {
   ].map((t) => `<li>${esc(t)}</li>`).join('');
 }
 
-// The hero number tracks the log once there is one: before you have used
-// anything it makes the case, after that it reports where you actually are.
-function renderFee() {
-  const d = state.data;
-  const pb = core.paybackView(d);
-  const t = core.logSummary(d, state.log);
-  const fee = core.fmtMoney(d.card.annual_fee_sgd);
-
-  if (t.rows.length) {
-    $('fee-big').textContent = t.cleared
-      ? `You have cleared the ${fee} fee.`
-      : `${core.fmtMoney(t.totalSgd)} of the ${fee} fee, so far.`;
-    $('fee-note').textContent = t.cleared
-      ? `${core.fmtMoney(t.surplus)} ahead, from ${t.benefitCount} benefits.`
-      : `${core.fmtMoney(t.shortfall)} to go. Keep ticking benefits off as you use them.`;
-    $('fee-fill').style.width = `${t.pct}%`;
-    $('fee-sub').textContent = 'Counted in this browser only';
-  } else {
-    // Every number here comes from the path, so re-cutting it updates the copy
-    // instead of leaving the hero asserting something the data no longer says.
-    const freeCount = pb.benefitCount - pb.paidCount;
-    $('fee-big').textContent = `${numWord(pb.benefitCount)} benefits clear the ${fee} fee.`;
-    $('fee-note').textContent = freeCount === pb.benefitCount
-      ? 'None of them need any extra spending.'
-      : `${numWord(freeCount)} of them cost you nothing extra.`;
-    // The bar shows the part that costs nothing, which is the claim being made.
-    $('fee-fill').style.width = `${Math.min(100, (pb.freeValueSgd / d.card.annual_fee_sgd) * 100)}%`;
-    $('fee-sub').textContent = `Worked out from ${pb.benefitCount} benefits totalling ${pb.total}`;
-  }
-
+function renderBadge() {
+  const t = core.logSummary(state.data, state.log);
   const badge = $('tab-year-n');
   badge.hidden = !t.rows.length;
   badge.textContent = core.fmtMoney(t.totalSgd).replace('S$', '');
+}
+
+function applyTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  const next = theme === 'dark' ? 'light' : 'dark';
+  const btn = $('themebtn');
+  btn.textContent = `${next} ◆`;
+  btn.setAttribute('aria-label', `Switch to ${next} mode`);
 }
 
 function renderModal() {
@@ -853,42 +878,28 @@ function renderModal() {
     <div class="modal" data-act="method-close">
       <div class="modal__panel" role="dialog" aria-modal="true" aria-label="How the Value Score works" data-stop>
         <div class="modal__head">
-          <h3>How the Value Score works</h3>
-          <button type="button" class="modal__x" data-act="method-close" aria-label="Close">✕</button>
+          <h3>How scoring works</h3>
+          <button type="button" class="act modal__x" data-act="method-close" aria-label="Close">✕</button>
         </div>
-        <div class="modal__formula">score = ${d.scoring.weights.value} × value_score
-      + ${d.scoring.weights.accessibility} × accessibility_score</div>
-        ${d.tax.value_types.map((t) => `
-          <div class="modal__type">
-            <span class="modal__sw" style="background:${core.vr(core.TYPE_VAR[t.key])}"></span>
-            <span><b>${esc(t.label)}</b><span class="modal__typedesc">${esc(t.definition)}</span></span>
-          </div>`).join('')}
-        <div class="modal__bands">
-          ${d.tax.grade_bands.map((b, i, all) => {
-    const range = i === all.length - 1 ? `<${all[i - 1].min}` : `${b.min}-${i === 0 ? 100 : all[i - 1].min - 1}`;
-    return `<span class="modal__band" style="background:${core.vr(core.GRADE_VAR[b.grade] || '--muted')}">${esc(b.grade)} · ${esc(range)}</span>`;
-  }).join('')}
+        <div class="modal__formula">${esc(d.scoring.formula)}</div>
+        ${d.tax.value_types.map((v) => `<div class="modal__type row"><b>${esc(v.label)}</b> · ${esc(v.definition)}</div>`).join('')}
+        <div style="margin-top:12px">
+          ${d.tax.grade_bands.map((b) => `<span class="modal__band count" style="margin-right:12px">${esc(b.grade)} ≥ ${b.min}</span>`).join('')}
         </div>
-        <b style="font-size:12.5px">Caveats</b>
-        <ul class="modal__caveats">${(d.caveats || []).map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
+        <ul class="modal__caveats" style="margin-top:14px">
+          ${d.caveats.map((c) => `<li>${esc(c)}</li>`).join('')}
+        </ul>
       </div>
     </div>`;
   root.querySelector('.modal__x')?.focus();
 }
 
-// ─────────────────────────────────────────────────────────────────── map
+// ── Map ──────────────────────────────────────────────────────────────────
 function destroyMap() {
   if (!map) return;
-  // Leaflet throws reading _leaflet_pos if its container has already left the
-  // DOM, so tearing down is best-effort — the references are dropped either way.
   try { map.remove(); } catch { /* container already gone */ }
-  map = null;
-  markers = [];
-  mapSig = null;
+  map = null; markers = []; mapSig = null;
 }
-
-// Deferred so the container has been laid out, guarded because the view may
-// have changed again before the timer fired.
 function resizeMapSoon() {
   setTimeout(() => {
     if (map && map.getContainer()?.isConnected) {
@@ -896,13 +907,6 @@ function resizeMapSoon() {
     }
   }, 0);
 }
-
-// Mounting waits for Leaflet to load and for the container to have a height,
-// so it retries. Every render bumps the token: a retry queued before a view
-// change would otherwise wake up and build a map inside a container that has
-// since been hidden or detached, which is what threw `_leaflet_pos`.
-let mapToken = 0;
-
 function ensureMap(rows, sig, elId) {
   const token = mapToken;
   const el = $(elId);
@@ -923,21 +927,23 @@ function ensureMap(rows, sig, elId) {
   const res = core.updateMarkers(map, rows, markers);
   markers = res.markers;
   const counter = $(`${elId}-count`);
-  if (counter) counter.textContent = plural(res.count, 'location');
+  if (counter) counter.textContent = plural(res.count, 'pin');
 }
 
-// ──────────────────────────────────────────────────────────────── render
+// ── Render ───────────────────────────────────────────────────────────────
+// Four views now, not five: `payback` and `year` collapsed into one. The
+// dispatch is explicit rather than falling through to a default, so an
+// unknown view is a visible error instead of silently rendering the last one.
+const VIEWS = { home: 'view-home', results: 'view-results', places: 'view-places', year: 'view-year' };
+
 function render() {
-  mapToken += 1; // invalidates any mount retry queued by the previous render
-  const views = { home: 'view-home', results: 'view-results', places: 'view-places', payback: 'view-payback', year: 'view-year' };
-  for (const [name, id] of Object.entries(views)) $(id).hidden = state.view !== name;
+  mapToken += 1;
+  for (const [name, id] of Object.entries(VIEWS)) $(id).hidden = state.view !== name;
   for (const tab of document.querySelectorAll('.tab')) {
-    if (state.view === tab.dataset.view) tab.setAttribute('aria-current', 'page');
+    const on = tab.dataset.view === state.view || (state.view === 'results' && tab.dataset.view === 'home');
+    if (on) tab.setAttribute('aria-current', 'page');
     else tab.removeAttribute('aria-current');
   }
-  // The results view mounts its own map container. Destroy the Leaflet
-  // instance BEFORE removing that container — the other order leaves the map
-  // pointing at a detached node, which throws on the next resize.
   const slot = $('res-map-slot');
   if (state.view !== 'results' && slot.innerHTML !== '') { destroyMap(); slot.innerHTML = ''; }
   if (state.view !== 'results' && state.view !== 'places') destroyMap();
@@ -946,7 +952,7 @@ function render() {
   else if (state.view === 'results') renderResults();
   else if (state.view === 'places') renderPlaces();
   else if (state.view === 'year') renderYear();
-  else renderPayback();
+  renderBadge();
   renderModal();
 }
 
@@ -956,11 +962,12 @@ function goto(view, { scenario = null, parent = null } = {}) {
   state.parent = parent;
   state.expanded.clear();
   state.showMethod = false;
+  state.showMap = false;
   window.scrollTo({ top: 0 });
   render();
 }
 
-// ──────────────────────────────────────────────────────────────── events
+// ── Events ───────────────────────────────────────────────────────────────
 document.addEventListener('click', (ev) => {
   const stop = ev.target.closest('[data-stop]');
   const el = ev.target.closest('[data-act]');
@@ -970,7 +977,7 @@ document.addEventListener('click', (ev) => {
 
   if (act === 'theme') {
     const next = state.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('pbg-theme', next);
+    try { localStorage.setItem('pbg-theme', next); } catch { /* private mode */ }
     applyTheme(next);
     if (map) { core.setMapTiles(map, next === 'dark'); resizeMapSoon(); }
     return;
@@ -981,15 +988,17 @@ document.addEventListener('click', (ev) => {
     case 'view': goto(el.dataset.view); return;
     case 'scenario': {
       const s = state.data.scenarios.find((x) => x.key === el.dataset.key);
-      if (s.view === 'payback') goto('payback');
+      if (!s) return;
+      if (s.view) goto(s.view);
       else goto('results', { scenario: s.key });
       return;
     }
     case 'parent': goto('results', { parent: el.dataset.id }); return;
+    case 'map': state.showMap = !state.showMap; break;
     case 'occ':
       state.occasion = el.dataset.val || null;
       state.expanded.clear();
-      state.moreGroups.clear();
+      state.expandedGroups.clear();
       break;
     case 'toggle': {
       const id = el.dataset.id;
@@ -998,25 +1007,30 @@ document.addEventListener('click', (ev) => {
     }
     case 'more': {
       const g = el.dataset.group;
-      if (state.moreGroups.has(g)) state.moreGroups.delete(g); else state.moreGroups.add(g);
+      if (state.expandedGroups.has(g)) state.expandedGroups.delete(g); else state.expandedGroups.add(g);
       break;
     }
-    case 'more-effort': {
-      const k = el.dataset.key;
-      if (state.moreEfforts.has(k)) state.moreEfforts.delete(k); else state.moreEfforts.add(k);
+    case 'more-scen': state.moreScen = !state.moreScen; break;
+    case 'more-ledger': state.moreLedger = !state.moreLedger; break;
+    case 'log-anything': state.showLogAll = !state.showLogAll; break;
+    case 'since-edit': {
+      const cur = state.cardSince || new Date().toISOString().slice(0, 10);
+      const next = window.prompt('When did you get the card? (YYYY-MM-DD)', cur);
+      if (next === null) return;
+      const clean = next.trim();
+      state.cardSince = /^\d{4}-\d{2}-\d{2}$/.test(clean) ? clean : null;
+      saveSince();
       break;
     }
     case 'log': {
       const entry = state.data.byId.get(el.dataset.id);
       state.log = core.logUse(state.log, entry, Number(el.dataset.delta));
       saveLog();
-      renderFee();
       break;
     }
     case 'log-reset':
       state.log = {};
       saveLog();
-      renderFee();
       break;
     case 'method-open': state.showMethod = true; break;
     case 'method-close': state.showMethod = false; break;
@@ -1030,20 +1044,23 @@ document.addEventListener('keydown', (ev) => {
 });
 
 $('search').addEventListener('input', (ev) => { state.q = ev.target.value; renderPlaces(); });
+window.addEventListener('resize', () => { if (state.view === 'home') renderHome(); });
 
-// ──────────────────────────────────────────────────────────────────── boot
-const saved = localStorage.getItem('pbg-theme');
-applyTheme(saved || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+// ── Boot ─────────────────────────────────────────────────────────────────
+let savedTheme = null;
+try { savedTheme = localStorage.getItem('pbg-theme'); } catch { /* private mode */ }
+applyTheme(savedTheme || (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
 try {
   state.log = loadLog();
+  state.cardSince = loadSince();
   state.data = await core.loadData();
   state.data.tax.effortByKey = Object.fromEntries(state.data.tax.efforts.map((e) => [e.key, e]));
   renderStatic();
   render();
 } catch (err) {
   console.error(err);
-  $('main').innerHTML = `<div class="empty" style="margin:32px 0">Could not load the benefits data. ${esc(err.message)}</div>`;
+  $('main').innerHTML = `<p class="empty" style="margin:32px 22px">Could not load the benefits data. ${esc(err.message)}</p>`;
 }
 </script>
 </body>

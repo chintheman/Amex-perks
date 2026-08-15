@@ -278,6 +278,150 @@ export function logSummary(data, log) {
   };
 }
 
+// ──────────────────────────────────────────────────────────── the card year
+// The log is a lifetime counter keyed by entry id. Caps are annual, so they
+// need a window to reset against, and the only honest window is the card's own
+// anniversary rather than the calendar year: the fee is charged on the
+// anniversary, so that is when the year that has to pay for it starts.
+
+/** Days between two dates, ignoring clock time and DST. */
+const dayDiff = (a, b) =>
+  Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
+    - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000);
+
+// Local calendar date, not `toISOString()`. These dates are constructed at
+// local midnight, and Singapore is UTC+8, so toISOString() rolls them back to
+// the previous day — the card-since date would render one day early.
+const isoLocal = (d) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+/**
+ * Where today sits in the card year that began on the last anniversary of
+ * `sinceISO`. Returns null for a missing or unparseable date, so the caller
+ * can simply not render the line rather than printing "Day NaN".
+ */
+export function cardYear(sinceISO, today = new Date()) {
+  if (!sinceISO) return null;
+  const since = new Date(`${String(sinceISO).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(since.getTime())) return null;
+  if (dayDiff(since, today) < 0) return null; // a start date in the future
+
+  let start = new Date(since);
+  start.setFullYear(today.getFullYear());
+  if (dayDiff(start, today) < 0) start.setFullYear(today.getFullYear() - 1);
+  const end = new Date(start);
+  end.setFullYear(start.getFullYear() + 1);
+
+  // The year runs day 1 (the anniversary) to day `length`. Counting days left
+  // as the gap to the next anniversary double-counts that boundary, so it is
+  // the remainder of the year's own length instead: 277 + 88 = 365, not 366.
+  const length = dayDiff(start, end);
+  const day = dayDiff(start, today) + 1;
+  return {
+    start,
+    end,
+    startISO: isoLocal(start),
+    endISO: isoLocal(end),
+    length,
+    day,
+    daysLeft: length - day,
+  };
+}
+
+// ───────────────────────────────────────────────────────────── the urgent two
+// Two things on Home that are time-sensitive rather than merely available: what
+// is about to expire, and what is sitting unclaimed. Both are derived, never
+// written down, so the copy cannot go stale against the data.
+
+export const EXPIRY_WINDOW_DAYS = 90;
+
+/** Entries whose `expires` falls inside the window, soonest first. */
+export function expiringSoon(data, today = new Date(), days = EXPIRY_WINDOW_DAYS) {
+  return data.entries
+    .filter((e) => e.expires)
+    .map((e) => ({ entry: e, days: dayDiff(today, new Date(`${e.expires}T00:00:00`)) }))
+    .filter((r) => r.days >= 0 && r.days <= days)
+    .sort((a, b) => a.days - b.days);
+}
+
+/** Claim-effort benefits with nothing logged against them yet. */
+export function unclaimed(data, log = {}) {
+  return data.benefits.filter((e) => e.effort === 'claim' && !log[e.id]);
+}
+
+// Small counts read better spelled out than as digits, and the sentence has to
+// survive any count, so the words run out gracefully into numerals.
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+  'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen',
+  'Nineteen', 'Twenty'];
+export function numWord(n, { lower = false } = {}) {
+  const w = WORDS[n] ?? String(n);
+  return lower ? w.toLowerCase() : w;
+}
+
+/**
+ * The two urgent rows, copy included. Returns null for a row with nothing in
+ * it so Home can drop it rather than print "No benefits end soon", which is
+ * true but not worth a row.
+ */
+export function urgentTwo(data, log = {}, today = new Date()) {
+  const soon = expiringSoon(data, today);
+  const month = String(today.getFullYear()) + '-' + String(today.getMonth() + 1).padStart(2, '0');
+  const thisMonth = soon.filter((r) => r.entry.expires.startsWith(month)).length;
+  const open = unclaimed(data, log);
+
+  return {
+    expiring: soon.length ? {
+      count: soon.length,
+      thisMonth,
+      nearest: soon[0].entry.expires,
+      rows: soon,
+      copy: `${numWord(soon.length)} benefit${soon.length === 1 ? '' : 's'} end soon`
+        + (thisMonth ? `, ${numWord(thisMonth, { lower: true })} this month` : ''),
+      hint: fmtDate(soon[0].entry.expires).replace(/ \d{4}$/, ''),
+      scenario: 'ending-soon',
+    } : null,
+    unclaimed: open.length ? {
+      count: open.length,
+      copy: `${numWord(open.length)} enrolment${open.length === 1 ? '' : 's'} `
+        + `${open.length === 1 ? 'is' : 'are'} not yet switched on`,
+      hint: '10 min',
+      scenario: 'enrol',
+    } : null,
+  };
+}
+
+// ──────────────────────────────────────────────────── the plan, against the log
+// The merged Your year view needs the break-even path and the log read
+// together: which steps are done, which are part-way, and what is still owed.
+// Steps are walked in order and draw down the entry's logged uses, so two steps
+// referencing the same benefit cannot both claim the same use.
+
+export function planProgress(data, log = {}) {
+  const remaining = { ...log };
+  return data.payback_path.steps.map((step, i) => {
+    const entry = data.byId.get(step.ref);
+    if (!entry) return null;
+    const required = step.uses || 1;
+    const available = remaining[step.ref] || 0;
+    const used = Math.min(available, required);
+    remaining[step.ref] = available - used;
+    const unit = entry.gross_value_sgd ?? 0;
+    return {
+      i,
+      id: step.ref,
+      entry,
+      name: entry.name,
+      required,
+      used,
+      state: used >= required ? 'done' : used > 0 ? 'partial' : 'open',
+      valueSgd: unit * required,
+      loggedSgd: unit * used,
+      condition: step.condition || entry.condition || entry.summary || '',
+    };
+  }).filter(Boolean);
+}
+
 // One-line gist for a collapsed row. v2 stores a real `summary`, so this no
 // longer truncates prose mid-sentence.
 export function gist(e) {
@@ -324,6 +468,11 @@ export function paybackView(data) {
       plus: `+${fmtMoney(s.value)}`,
       cum: `cum. ${fmtMoney(cum)}`,
       clearsHere,
+      // Numeric twins of `plus` and `cum`. The strings above are asserted
+      // verbatim by scripts/test-parity.mjs, so they cannot become numbers —
+      // but a count-up animation needs the raw figure, so it gets its own key.
+      valueSgd: s.value,
+      cumSgd: cum,
     };
   });
   const surplus = cum - fee;

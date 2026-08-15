@@ -326,7 +326,7 @@ scenarios.forEach((s, i) => {
   check(hasWords(s.blurb), at, 'blurb explains why these results, and is required');
   check(!DASH.test(s.label) && !DASH.test(s.blurb), at, 'scenario copy contains a dash');
   check(!!s.filter || !!s.view, at, 'needs either a filter or a view to route to');
-  if (s.view) { check(['payback'].includes(s.view), at, `unknown view "${s.view}"`); return; }
+  if (s.view) { check(['year'].includes(s.view), at, `unknown view "${s.view}"`); return; }
   if (!hydrated) return;
 
   const f = s.filter;

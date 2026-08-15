@@ -184,7 +184,7 @@ const schema = {
         label: TEXT,
         blurb: TEXT,
         sort: { type: 'string' },
-        view: { enum: ['payback'] },
+        view: { enum: ['year'] },
         filter: {
           type: 'object',
           minProperties: 1,

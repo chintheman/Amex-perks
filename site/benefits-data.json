@@ -12,7 +12,7 @@
       "value": 0.6,
       "accessibility": 0.4
     },
-    "formula": "composite = 60% x value_score + 40% x accessibility_score (each 0-100). No annual-fee-payback lens in individual scores. That math lives in the separate 'Minimum Path to Break Even' calculator below.",
+    "formula": "composite = 60% x value_score + 40% x accessibility_score (each 0-100). No annual-fee-payback lens in individual scores. That math lives in Your year, which tracks the plan against what you have actually used.",
     "occasion_note": "Occasion Fit (Date Night, Business, Free Treat) is a separate ranking scoped to bookable Dining venues only. It blends value_score (50%) with venue-tier fit for the occasion (50%)."
   },
   "taxonomy": {
@@ -4748,7 +4748,7 @@
       "key": "worth-it",
       "label": "Is the fee worth it?",
       "blurb": "The shortest path to clearing S$1,744.",
-      "view": "payback"
+      "view": "year"
     }
   ]
 }
