@@ -359,8 +359,18 @@ export function unclaimed(data, log = {}) {
 const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
   'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen',
   'Nineteen', 'Twenty'];
+const TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 export function numWord(n, { lower = false } = {}) {
-  const w = WORDS[n] ?? String(n);
+  let w = WORDS[n];
+  // The list stopped at twenty, so a use count above it dropped to a numeral
+  // mid-sentence: "Five benefits, 22 uses". Carry on to ninety nine, which is
+  // past anything this data can produce, then fall back.
+  if (w === undefined && Number.isInteger(n) && n > 20 && n < 100) {
+    const tens = TENS[Math.floor(n / 10)];
+    const unit = n % 10;
+    w = unit ? `${tens} ${WORDS[unit].toLowerCase()}` : tens;
+  }
+  if (w === undefined) w = String(n);
   return lower ? w.toLowerCase() : w;
 }
 
@@ -509,7 +519,12 @@ export function paybackView(data) {
       return e && !e.min_spend_sgd ? sum + (e.gross_value_sgd || 0) * (s.uses || 1) : sum;
     }, 0),
     fee: fmtMoney(fee),
+    feeSgd: fee,
     clearedFee: cum >= fee,
+    // What the path leaves over once the fee is paid. The page leads on this
+    // rather than the total: reaching the fee is the floor, beating it is the
+    // argument.
+    surplusSgd: Math.max(0, surplus),
     surplusText: surplus > 0 ? ` with S$${surplus.toFixed(0)} to spare` : '',
     pct: Math.min(100, (cum / fee) * 100),
   };

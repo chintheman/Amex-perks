@@ -640,9 +640,13 @@ function renderHome() {
   // rewrites the copy instead of leaving it asserting something stale.
   const showing = t.rows.length ? t.totalSgd : pb.totalSgd;
   countUp($('hero-num'), showing, (n) => core.fmtMoney(n));
+  // Before anything is logged the numeral is what the free benefits return, so
+  // the line under it should say what that beats rather than restate the fee.
   $('hero-sub').textContent = t.rows.length
     ? `logged against a ${core.fmtMoney(t.fee)} fee`
-    : `against a ${core.fmtMoney(t.fee)} fee`;
+    : (pb.surplusSgd > 0
+      ? `${core.fmtMoney(pb.surplusSgd)} clear of the ${core.fmtMoney(t.fee)} fee`
+      : `against a ${core.fmtMoney(t.fee)} fee`);
   $('hero-lede').textContent = t.rows.length
     ? (t.cleared
       ? `The fee is cleared. Everything from here is profit.`
@@ -690,7 +694,7 @@ function renderHome() {
     <span class="eyebrow">Is the fee worth it?</span>
     <p class="ink__body">${esc(planSentence(pb))}${pb.outlaySgd
       ? ` Only ${esc(core.fmtMoney(pb.outlaySgd))} of it needs any spending at all.`
-      : ' None of it needs any extra spending.'}</p>
+      : ''}</p>
     <div class="meter anim-bar">${pb.steps.map((s, i) => {
       const last = i === pb.steps.length - 1;
       return `<span style="flex:${s.valueSgd};${last ? `background:var(--highlight);` : `opacity:${(1 - i * 0.18).toFixed(2)};`}animation-delay:${i * 70}ms"></span>`;
@@ -734,8 +738,15 @@ function interleave(list) {
   return out;
 }
 
-const planSentence = (pb) =>
-  `${core.numWord(pb.benefitCount)} benefits, ${core.numWord(pb.useCount, { lower: true })} uses, ${pb.total} back against the ${pb.fee} fee.`;
+// The argument is not that the fee can be reached, it is that the benefits
+// asking nothing extra of you clear it on their own and leave change. Lead
+// with the surplus; the total is the supporting number, not the point.
+const planSentence = (pb) => {
+  const spine = `${core.numWord(pb.benefitCount)} benefits, ${core.numWord(pb.useCount, { lower: true })} uses`;
+  return pb.surplusSgd > 0
+    ? `${spine}, and not a cent of extra spending. ${pb.total} back, ${core.fmtMoney(pb.surplusSgd)} clear of the ${pb.fee} fee.`
+    : `${spine}, ${pb.total} back against the ${pb.fee} fee.`;
+};
 
 // ── Results ──────────────────────────────────────────────────────────────
 function renderResults() {

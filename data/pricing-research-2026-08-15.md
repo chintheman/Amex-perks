@@ -110,3 +110,57 @@ Fine dining is slightly low: Lawry's prices a four course dinner at S$139++
 against S$120 a head assumed. These figures drive ranking and grades rather
 than anything displayed, so they were left as they are and the finding recorded
 here instead.
+
+---
+
+## Second pass: the caps and conditions, 16 August
+
+Chin asked where else research improves accuracy. The figures were now
+researched; the **assumptions around them** were not. Three caps on
+money-bearing rows were this guide's guesses rather than Amex's terms, and two
+of them sat inside the headline.
+
+### Chillax was not free
+
+Amex's terms: **one complimentary drink per card per day**, and the card member
+"must make at least one payable purchase from the Merchant's signature
+cocktails or non-alcoholic beverage menu."
+
+So it is one for one, not a giveaway, and our own details already said
+"complimentary with purchase" while `min_spend_sgd` was 0 and `condition` read
+"Free & Instant". The same shape of error as the afternoon tea, in a row worth
+S$288 of the free total. It now records a S$24 purchase, which drops it out of
+"Actually free" and out of the zero spend path.
+
+Amex sets no annual limit at all, so the cap of 12 is conservative rather than
+generous. Left alone.
+
+### Regional golf: the booking rules were wrong
+
+Amex: complimentary green fees on weekdays at **5 clubs in Singapore and 52
+regional clubs**, and at selected clubs on weekends and public holidays. You
+must bring **one paying guest on a weekday and two at the weekend**. Bookings
+are **4 days ahead on a weekday, 7 at the weekend**, where the file said only
+"Bookings go through The Platinum Concierge".
+
+No annual limit is published, so six rounds remains this guide's assumption and
+is now labelled as such in the row itself.
+
+### What it did to the headline
+
+| | Before this pass | After |
+| --- | --- | --- |
+| Costs nothing extra | S$2,408 | **S$2,120** |
+| Clear of the fee | S$664 | **S$376** |
+| Benefits | 5 | 4 |
+
+The number went down because one of the five was not free. That is the point of
+checking.
+
+### Still assumptions, and flagged as such
+
+- **FHR at two stays a year.** Not a cap, a usage guess, and it carries S$450 of
+  the S$2,120. A reader who travels once gets half of it.
+- **Table for Two at six.** This one is Amex's own limit, one per two month
+  cycle, so it is solid.
+- **Love Dining venues at ten visits a year.** Feeds ranking only, nothing shown.

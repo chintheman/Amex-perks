@@ -258,6 +258,10 @@
       {
         "ref": "complimentary-hotel-stay-credit-fhr-hotel-collection",
         "uses": 2
+      },
+      {
+        "ref": "global-dining-credit",
+        "uses": 1
       }
     ]
   },
@@ -1091,7 +1095,7 @@
       "subcategory": "Special Program",
       "value_type": "free",
       "effort": "book",
-      "details": "1-for-1 or complimentary welcome drink at Bar Intermezzo, The Dead Poets Society @ Chūan, The Bar at 15 Stamford (1-for-1); Botanico, The Riverhouse, Wildseed Bar, Monti, NOMI Dining Bar (complimentary with purchase).",
+      "details": "One complimentary drink per card per day, and it is one for one or complimentary with purchase, so it always costs you a drink to get a drink. One for one at Bar Intermezzo, The Dead Poets Society at Chuan and The Bar at 15 Stamford; complimentary with a purchase at Botanico, The Riverhouse, Wildseed Bar, Monti and NOMI Dining Bar. The purchase must come from the signature cocktail or non alcoholic list.",
       "venue": {
         "cuisine": "Bars",
         "tier": "bar",
@@ -1099,7 +1103,7 @@
         "pax": 1
       },
       "economics": {
-        "min_spend_sgd": 0,
+        "min_spend_sgd": 24,
         "gross_value_sgd": 24
       },
       "scores": {
@@ -1114,7 +1118,7 @@
       "terms": {
         "annual_cap": 12,
         "advance": "Not specified",
-        "condition": "Free & Instant",
+        "condition": "Min Spend Required",
         "third_party_barred": false
       },
       "source": "https://www.americanexpress.com/sg/benefits/promotions/chillax/"
@@ -3139,7 +3143,7 @@
       "value_type": "discount",
       "effort": "book",
       "summary": "Complimentary green fees at over 50 local and regional golf clubs when you bring a paying companion.",
-      "details": "Complimentary green fees (treated as ~50% value versus a paying pair) at over 50 local and regional golf clubs, including Sentosa Golf Club, Orchid Country Club, Sembawang Country Club and Warren Golf & Country Club in Singapore, where you must be accompanied by at least one paying companion. Weekday standard, weekend at select clubs. Bookings go through The Platinum Concierge on 1800 392 1177. Valid through 31 December 2026. The map shows the Singapore clubs only; the programme is regional.",
+      "details": "Complimentary green fees on weekdays at 5 clubs in Singapore and 52 regional clubs, and at selected clubs on weekends and public holidays. You must bring one paying guest on a weekday and two at the weekend, so the value here is your own fee rather than the pair. Book 4 days ahead for a weekday and 7 for a weekend, through The Platinum Concierge on 1800 392 1177. Amex sets no annual limit; six rounds is this guide assuming a realistic year. Valid through 31 December 2026. The map shows the Singapore clubs only.",
       "venue": {
         "cuisine": "Golf",
         "tier": "upscale",
@@ -3157,7 +3161,7 @@
       },
       "terms": {
         "annual_cap": 6,
-        "advance": "Book via The Platinum Concierge"
+        "advance": "4 days weekday, 7 days weekend"
       },
       "locations": [
         {
@@ -4900,7 +4904,7 @@
     {
       "key": "worth-it",
       "label": "Is the fee worth it?",
-      "blurb": "The shortest path to clearing S$1,744.",
+      "blurb": "Everything that costs nothing extra, and what it leaves you after the fee.",
       "view": "year"
     }
   ]
