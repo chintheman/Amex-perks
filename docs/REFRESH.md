@@ -41,6 +41,13 @@ in this repo, or add to any editor:
 
 ## 2. Roll the dates
 
+`generated_at` is the day you did the work. `next_refresh` is when the file is
+next due, and the validator now treats the cycle as a **ceiling rather than an
+equation**: after `generated_at`, and no more than `refresh_days` later. An
+off-cycle pass, refreshing early because the page is being worked on, therefore
+keeps the scheduled date instead of pushing it back by however many days it ran
+early. The 15 Aug 2026 pass is the example: generated 15 Aug, still due 25 Aug.
+
 * `generated_at` → today.
 * `next_refresh` → `generated_at` + 14 days. The validator enforces the arithmetic.
 
@@ -130,6 +137,19 @@ git diff data/sources/  # exactly what Amex changed since the last refresh
 `data/sources/` is committed for this reason — the reconciliation becomes a diff
 rather than a re-read. A page that fails is usually Akamai bot-blocking; re-run
 just that one (`npm run sources -- travel`) before assuming the page is gone.
+
+**Known gap, from 15 Aug 2026.** Amex moved every Love Dining hotel outlet behind
+its own "Details" and "Terms and Conditions" accordion, and `reveal()` does not
+open them all: it stops at 80 elements and the new toggles carry no
+`aria-expanded`. What still renders in full is the partner index at the top of
+the page, the block that reads `Hotel Name (n)` followed by its outlet names, so
+**drift detection is unaffected** — that index is how Frasers House was caught.
+What is missing is the per-outlet terms, which have to be read on the page by
+hand when an outlet is new. Driving the toggles from Playwright was tried and
+reverted: each element that is not actually clickable burns its full
+actionability timeout, and one page went from seconds to a quarter of an hour.
+Expanding inside the document with `page.evaluate` is the direction to take if
+this becomes worth fixing.
 
 The 11 August 2026 pass found 15 benefits missing from the file, three bundled
 entries that needed splitting, and one factual error (Regional Golf listed 5

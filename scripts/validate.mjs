@@ -102,9 +102,19 @@ try {
 assertNoNulls(data, 'root');
 check(data.schema_version === 2, 'root', `schema_version must be 2, got ${data.schema_version}`);
 check(isDate(data.generated_at), 'root', 'generated_at must be YYYY-MM-DD');
+// The cycle is a ceiling, not an equation. Pinning next_refresh to exactly
+// generated_at + refresh_days meant an off-cycle pass, refreshing early because
+// the page is being worked on, silently pushed the next scheduled one back by
+// however many days it ran early. The invariant that matters is that the file
+// is never left claiming a date it cannot meet: after today, and no further out
+// than a full cycle.
 if (isDate(data.generated_at) && data.next_refresh) {
-  const expected = addDays(data.generated_at, data.refresh_days ?? 14);
-  check(data.next_refresh === expected, 'root', `next_refresh should be ${expected}, got ${data.next_refresh}`);
+  const latest = addDays(data.generated_at, data.refresh_days ?? 14);
+  check(isDate(data.next_refresh), 'root', 'next_refresh must be YYYY-MM-DD');
+  check(data.next_refresh > data.generated_at, 'root',
+    `next_refresh ${data.next_refresh} is not after generated_at ${data.generated_at}`);
+  check(data.next_refresh <= latest, 'root',
+    `next_refresh ${data.next_refresh} is more than ${data.refresh_days ?? 14} days out, the cycle would lapse (latest ${latest})`);
 }
 check(typeof data.card?.annual_fee_sgd === 'number' && data.card.annual_fee_sgd > 0, 'card', 'annual_fee_sgd must be a positive number');
 check(hasWords(data.card?.name), 'card', 'name is required');

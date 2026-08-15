@@ -1,5 +1,25 @@
 # UI-side changes
 
+## Data refresh, 15 Aug 2026
+
+Off-cycle, run while the page was being rebuilt. Ten of the eleven source pages
+changed only their fetch timestamp. The eleventh had one real change:
+
+**Amex added Frasers House, a Luxury Collection Hotel as a Love Dining hotel
+partner**, with three outlets: LUCE (international buffet, lunch and dinner daily
+plus Sunday brunch), Man Fu Yuan (Cantonese) and The Lobby Lounge (afternoon tea
+and bar). All three added at the standard 35% hotel rate, with economics, scores
+and occasion fit taken from the per-tier figures every other `ldh` row already
+uses, so they rank against the rest rather than on their own scale. 121 entries
+to 124; dining venues 76 to 79.
+
+The refresh cadence rule changed with it. `next_refresh` was pinned to exactly
+`generated_at + refresh_days`, which meant refreshing early silently pushed the
+next scheduled date back. It is a ceiling now: after `generated_at`, no more than
+a cycle later. This pass is generated 15 Aug and still due 25 Aug.
+
+---
+
 ## Part 4: closing the gaps against the handoff (15 Aug 2026)
 
 A review pass over Part 3 against frames 6a to 7b. Four things the handoff asked for

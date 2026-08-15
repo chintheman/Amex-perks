@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-11",
+  "generated_at": "2026-08-15",
   "next_refresh": "2026-08-25",
   "refresh_days": 14,
   "card": {
@@ -2163,6 +2163,50 @@
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-restaurants.html"
     },
     {
+      "id": "luce",
+      "name": "LUCE",
+      "kind": "venue",
+      "parent": "love-dining-hotels",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "effort": "book",
+      "details": "Buffet only, lunch and dinner daily, plus Sunday brunch as the non-alcoholic experience. Book at least 1 day ahead and quote \"Amex Love Dining\" in the promotional code field. Excl. beverages, promotional and set menus.",
+      "venue": {
+        "group": "Frasers House",
+        "cuisine": "International Buffet",
+        "tier": "buffet",
+        "tier_group": "buffet"
+      },
+      "economics": {
+        "min_spend_sgd": 176,
+        "gross_value_sgd": 61.6,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 70.7
+      },
+      "occasion_fit": {
+        "date_night": 42.5,
+        "business": 37.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Frasers House",
+          "lat": 1.2984,
+          "lng": 103.8536,
+          "address": "80 Middle Rd, S188966"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
       "id": "madison-s",
       "name": "Madison's",
       "kind": "venue",
@@ -2202,6 +2246,50 @@
           "lat": 1.2925,
           "lng": 103.8493,
           "address": "1 Hill Street, S179949"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "man-fu-yuan",
+      "name": "Man Fu Yuan",
+      "kind": "venue",
+      "parent": "love-dining-hotels",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "effort": "book",
+      "details": "Cantonese dining at Frasers House. Excl. beverages, promotional and set menus.",
+      "venue": {
+        "group": "Frasers House",
+        "cuisine": "Cantonese Fine Dining",
+        "tier": "fine",
+        "tier_group": "fine"
+      },
+      "economics": {
+        "min_spend_sgd": 240,
+        "gross_value_sgd": 84,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 60
+      },
+      "occasion_fit": {
+        "date_night": 85,
+        "business": 85
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Frasers House",
+          "lat": 1.2984,
+          "lng": 103.8536,
+          "address": "80 Middle Rd, S188966"
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
@@ -3445,7 +3533,7 @@
       "value_type": "access",
       "effort": "have",
       "summary": "5 Membership Rewards points per S$1.60 booked directly with SIA or Scoot.",
-      "details": "Applies to purchases made directly with Singapore Airlines and Scoot. Excludes KrisShop, onboard purchases and KrisShop.com. Stacks with the Airline Credit, which covers the same booking channel.",
+      "details": "Flights departing Singapore, bought in the app or online with Singapore Airlines or Scoot and paid in Singapore dollars. Excludes KrisShop, the Kris+ app, trip add-ons, bookings by phone, email or payment link, travel agents, online travel agents and aggregators, instalments, and airport ticket offices. Stacks with the Airline Credit, which covers the same booking channel.",
       "value_phrase": "5 points per S$1.60",
       "source": "https://www.americanexpress.com/en-sg/benefits/the-platinum-card/rewards-and-offers/"
     },
@@ -4022,6 +4110,50 @@
           "lat": 1.2444,
           "lng": 103.8296,
           "address": "21 Ocean Way, S098374"
+        }
+      ],
+      "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"
+    },
+    {
+      "id": "the-lobby-lounge",
+      "name": "The Lobby Lounge",
+      "kind": "venue",
+      "parent": "love-dining-hotels",
+      "category": "dining",
+      "section": "ldh",
+      "value_type": "discount",
+      "effort": "book",
+      "details": "Afternoon tea, cocktails and all day dining. Excl. beverages, promotional and set menus.",
+      "venue": {
+        "group": "Frasers House",
+        "cuisine": "Afternoon Tea / Bar",
+        "tier": "high_tea",
+        "tier_group": "hightea"
+      },
+      "economics": {
+        "min_spend_sgd": 120,
+        "gross_value_sgd": 42,
+        "discount_pct": 35
+      },
+      "scores": {
+        "value": 70,
+        "accessibility": 80
+      },
+      "occasion_fit": {
+        "date_night": 67.5,
+        "business": 57.5
+      },
+      "terms": {
+        "annual_cap": 10,
+        "advance": "Varies 1–2 days / 48h by outlet",
+        "third_party_barred": true
+      },
+      "locations": [
+        {
+          "name": "Frasers House",
+          "lat": 1.2984,
+          "lng": 103.8536,
+          "address": "80 Middle Rd, S188966"
         }
       ],
       "source": "https://www.americanexpress.com/sg/benefits/love-dining/love-dining-hotels.html"

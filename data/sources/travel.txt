@@ -1,5 +1,5 @@
 SOURCE: https://www.americanexpress.com/en-sg/benefits/the-platinum-card/travel/
-FETCHED: 2026-08-10
+FETCHED: 2026-08-15
 
 Skip to content
 My Account
@@ -85,6 +85,16 @@ Airline Credit
 From 1 January 2026 to 31 December 2026, receive up to S$200 statement credits per calendar year, S$100 every 6-month Redemption Period with minimum spend of S$300 in a single transaction.
 
 More details
+
+Eligible transactions:
+
+Payments for flights departing Singapore purchased in-app or online at Singapore Airlines and Scoot made in Singapore Dollars.
+
+Excluded transactions:
+
+Payments made at KrisShop, the Kris+app, trip add-ons, via phone, email or payment links.
+Third-party payment providers, travel agencies, online travel agents, online aggregators, payments processors or via ticket offices, instalments, or in-person at airport locations. 
+
 Hotels​
 
 Fine Hotels + Resorts
