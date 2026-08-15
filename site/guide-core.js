@@ -74,14 +74,15 @@ export const fmtMoney = (n) =>
   n == null ? '—' : `S$${Number(n).toLocaleString('en-SG', { maximumFractionDigits: 0 })}`;
 export const fmtDate = (iso) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString('en-SG', { day: 'numeric', month: 'short', year: 'numeric' });
+// Rates are whole numbers except where a venue really is on a half point
+// (SKAI Bar is 12.5%), and "12.5%" is the true figure where "13%" is not.
+export const fmtPct = (n) => (n == null ? '' : String(Number(n.toFixed(1))));
 
-// CSS custom properties per taxonomy key. Presentation only — the keys
-// themselves come from the data file.
-export const vr = (n) => `var(${n})`;
-export const CAT_VAR = { dining: '--cat-dining', lifestyle: '--cat-lifestyle' };
-export const TYPE_VAR = {
-  discount: '--type-discount', free: '--type-free', credit: '--type-credit', access: '--type-access',
-};
+// The per-category and per-value-type colour maps that used to live here were
+// removed with the editorial redesign: they pointed at `--cat-dining` and
+// friends, tokens the new palette does not define. Nothing errored, the
+// lookups just returned empty and every map marker quietly fell back to a
+// hardcoded blue from the old theme. Read colour off tokens that exist.
 export const GRADE_VAR = {
   'A+': '--status-good', A: '--status-good', 'B+': '--status-warning',
   B: '--status-warning', C: '--status-serious', D: '--status-critical',
@@ -108,6 +109,10 @@ function flatten(e, tax, weights) {
     value_type: e.value_type,
     summary: summaryOf(e.details, e.summary),
     details: e.details || null,
+    // What the value column says when there is no figure to say. Authored per
+    // row rather than derived, because the useful phrase is the one the row's
+    // own summary already makes ("S$800 a stay"), and no rule finds that.
+    value_phrase: e.value_phrase || null,
 
     venue_group: v.group || null,
     cuisine: v.cuisine || null,
@@ -544,9 +549,12 @@ export function updateMarkers(map, rows, markers) {
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   rows.forEach((e) => {
     e.locations.forEach((loc) => {
-      const color = css.getPropertyValue(CAT_VAR[e.category]).trim() || '#2a78d6';
+      // One accent pin on paper, ringed in the page colour so overlapping pins
+      // still read as separate. Both tokens flip with the theme.
+      const fill = css.getPropertyValue('--accent').trim() || '#8C3B2A';
+      const ring = css.getPropertyValue('--page').trim() || '#F4EFE3';
       const m = L.circleMarker([loc.lat, loc.lng], {
-        radius: 7, fillColor: color, color: '#fff', weight: 1.5, fillOpacity: 0.9,
+        radius: 6, fillColor: fill, color: ring, weight: 1.5, fillOpacity: 0.95,
       }).addTo(map);
       m.bindPopup(
         `<b>${esc(e.name)}</b><br>${loc.name !== e.name ? `${esc(loc.name)}<br>` : ''}` +

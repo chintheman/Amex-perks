@@ -1,5 +1,68 @@
 # UI-side changes
 
+## Part 4: closing the gaps against the handoff (15 Aug 2026)
+
+A review pass over Part 3 against frames 6a to 7b. Four things the handoff asked for
+were missing, and reading the page for them turned up two more.
+
+### The value column now says what the row is worth
+
+`value_phrase`, authored on all 29 `access` rows, replaces a derivation that had been
+answering the wrong question. Fine Hotels + Resorts rendered `always on`; it is
+`S$800 a stay`. Love Dining rendered `26 places`, because the child-count branch was
+tested before the discount branch, so the headline that you get half the bill lost to
+a count of where. See `docs/SCHEMA-v2.md` for the field and its three rules.
+
+**Venues now show their rate, not a year of visiting them.** The value column read
+`S$2,256` against The Cliff, which is ten dinners at the minimum spend, not anything
+one visit gives you. Frames 7a and 7b both show a percentage, and a rate is the only
+figure comparable down a column of restaurants.
+
+### The desktop asymmetry reaches every view
+
+Results, Places and Your year were centring at 1080px while Home had the 340px ruled
+column. They now share it: `.split` with `.split__l` and `.split__r`, each column
+owning its own inset so a rule starts and stops on the same line as the text it
+belongs to. `#year-body` is `display:contents` so the JS-rendered view can sit in the
+same grid without a wrapper the phone would have to undo.
+
+### Section rules draw themselves in
+
+`.anim-rule` and the `draw` keyframe existed but were applied to nothing, and there
+was no observer. The opening rule is now painted as a background stripe behind a
+`2px solid transparent` border: a border cannot be animated from the left, and keeping
+it in the box model means the reveal costs no layout shift. One `IntersectionObserver`
+for the page, unobserving each rule after it fires, and none of it constructed at all
+under `prefers-reduced-motion`.
+
+### The map joins the palette
+
+A filter on `.leaflet-tile` only, so markers, popups and attribution keep their own
+colours. Dark mode does **not** invert: `setMapTiles()` already requests CARTO's dark
+tiles, so inverting them produced a light map inside a dark page.
+
+### Two things the review turned up
+
+* **Every map pin was the old theme's blue.** `updateMarkers()` read
+  `--cat-dining` and `--cat-lifestyle`, tokens the editorial palette does not define.
+  `getPropertyValue` returns an empty string for a missing custom property rather than
+  throwing, so the lookup fell through to a hardcoded `#2a78d6` and nothing anywhere
+  reported a problem. The dead `CAT_VAR`, `TYPE_VAR` and `vr` exports are gone and the
+  pins read `--accent` and `--page`, both of which flip with the theme.
+* **Desktop could not reach 33 of the 42 benefits.** The ledger capped at three a group
+  and hid the expander when `wide`, so the full ledger had no route on a large screen.
+  Three a group is still what it opens with, per 6d; the expander stays reachable.
+
+### Now covered by the page test
+
+The authored phrase on three named rows, the expanded ledger listing all 42, venue rows
+carrying a rate rather than a total, a real two-column grid with a ruled edge on all
+three extended views, and pins matching the accent token. The phone context also stopped
+failing the run on a third-party CDN blip: it now filters the same hosts the desktop
+context already did, while still failing on a same-origin miss.
+
+---
+
 ## Part 3: the editorial redesign (15 Aug 2026)
 
 Handoff **AMEXSG-EDIT-20260815** from Claude Design, canvas `Home Directions.dc.html`,
@@ -75,8 +138,8 @@ Screenshots `shot-benefits`, `shot-browse`, `shot-eat`, `shot-hero-logged` and
 place rather than deleted. `shot-home`, `shot-scenario`, `shot-places` and `shot-year`
 are current.
 
-The desktop layouts for Results, Places and Your year were never mocked. They extend
-the 6d pattern rather than following a frame.
+The desktop layouts for Results, Places and Your year were never mocked, and at this
+point they were still centred rather than split. Part 4 extends the 6d pattern to them.
 
 ---
 

@@ -127,7 +127,15 @@ body{padding-bottom:64px;}
 .urg__hint{font-family:var(--mono);font-size:10px;color:var(--accent);flex:0 0 auto;}
 
 /* ── Section heads ── */
-.sec{margin:26px var(--gut) 0;border-top:2px solid var(--ink);padding:10px 2px 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+/* The opening rule is painted as a background stripe behind a transparent
+   border, not as the border itself: a border cannot be animated from the left,
+   and keeping the border in the box model means the reveal costs no layout
+   shift. `border-top:0` overrides elsewhere still remove the space, so those
+   also clear the stripe. */
+.sec{margin:26px var(--gut) 0;border-top:2px solid transparent;padding:10px 2px 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  background-image:linear-gradient(var(--ink),var(--ink));background-repeat:no-repeat;background-position:left top;background-size:100% 2px;}
+@keyframes ruleIn{from{background-size:0 2px;}to{background-size:100% 2px;}}
+.sec.rule-in{animation:ruleIn .5s cubic-bezier(.2,.7,.2,1) both;}
 .sec h2{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.15;}
 .sec--plain{display:block;}
 
@@ -193,6 +201,13 @@ body{padding-bottom:64px;}
 .maptoggle{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--hairstrong);border-bottom:1px solid var(--hairstrong);margin-top:14px;padding:9px 2px;width:100%;align-items:baseline;}
 .maptoggle__l{font-family:var(--serif);font-size:13px;}
 .mapbox{height:clamp(280px,42vh,380px);margin-top:14px;background:var(--hair);}
+/* CARTO tiles arrive grey and blue, which is the one place a third party gets
+   to contradict the palette. Filtering the tile layer only, so markers, popups
+   and the attribution keep their own colours. */
+.mapbox .leaflet-tile{filter:grayscale(1) sepia(.38) brightness(1.04) contrast(.9);}
+/* No invert here: the dark theme already requests CARTO's dark tiles, so
+   inverting them produced a light map inside a dark page. Warm them instead. */
+html[data-theme="dark"] .mapbox .leaflet-tile{filter:grayscale(1) sepia(.32) brightness(.82) contrast(1.08);}
 .mapfoot{display:flex;justify-content:space-between;padding:6px 2px 0;}
 
 /* ── Your year ── */
@@ -272,7 +287,7 @@ html[data-theme="dark"] .bar__rest{background:rgba(241,234,219,.22);}
   .home__l .hero__lede{max-width:none;line-height:1.6;margin:0;}
   .home__l .urg__head{border-bottom:0;margin-top:30px;padding-left:0;}
   .home__scen .sec,.home__ledger .sec{margin-left:0;margin-right:0;}
-  .home__scen .sec{border-top:0;margin-top:0;padding-top:0;}
+  .home__scen .sec{border-top:0;background-image:none;margin-top:0;padding-top:0;}
   .home__scen .sec h2,.home__ledger .sec h2{font-size:24px;}
   .home__scen .list,.home__ledger .list{padding:0;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
@@ -285,7 +300,27 @@ html[data-theme="dark"] .bar__rest{background:rgba(241,234,219,.22);}
   .ink--strip .ink__body{font-size:15px;margin:0;}
   .ink--strip .meter{margin:0;width:280px;flex:0 0 auto;}
   .ink--strip .eyebrow,.ink--strip .ink__foot{display:none;}
-  .head,.list,.tally,.since,.note,.empty,.sec,.urg,.urg__head,.search,.occ,.maptoggle{max-width:var(--wrap);margin-left:auto;margin-right:auto;}
+  /* Results, Places and Your year take the same asymmetry as Home: what the
+     screen is about holds the ruled left column, the rows it produced flow
+     down the right. The wrappers are inert below this breakpoint. */
+  /* No `align-items:start`: the left column has to stretch so its rule runs
+     the full height of the view, the way it does on Home. */
+  .split{display:grid;grid-template-columns:var(--col) 1fr;max-width:var(--wrap);margin:0 auto;}
+  #view-year > #year-body{display:contents;}
+  /* Each column owns its inset and every child sits flush inside it, so rules
+     start and stop on the same line as the text they belong to. */
+  .split__l{border-right:1px solid var(--ink);padding:44px 32px 36px;}
+  .split__r{padding:44px var(--gut) 36px;min-width:0;}
+  .split__l > *,.split__r > *{margin-left:0;margin-right:0;}
+  .split__l > *{padding-left:0;padding-right:0;}
+  .split__r > .list{padding-left:0;padding-right:0;}
+  .split__l > .since{margin-top:22px;}
+  .split__l .tally{text-align:left;padding-top:0;}
+  .split__l .tally__num{font-size:56px;}
+  .split__l .bar{margin-left:0;margin-right:0;}
+  .split__l .caps{padding-left:0;padding-right:0;}
+  .split__l .head h2{margin-top:0;}
+  .split__r > .sec:first-child{border-top:0;background-image:none;margin-top:0;padding-top:0;}
   .hero__num{font-size:62px;}
 }
 </style>
@@ -335,44 +370,55 @@ html[data-theme="dark"] .bar__rest{background:rgba(241,234,219,.22);}
     </div>
   </section>
 
-  <section class="view" id="view-results" hidden>
-    <div class="head">
-      <button type="button" class="act" data-act="view" data-view="home">← All scenarios</button>
-      <h2 id="res-title"></h2>
-      <p class="head__blurb" id="res-blurb"></p>
-      <div class="tool">
-        <span class="count" id="res-count"></span>
-        <button type="button" class="act" id="res-maptoggle" data-act="map" hidden>Map ↓</button>
+  <!-- The two column wrappers are inert on the phone and become the 6d
+       asymmetry at 900px: what the screen is about holds the ruled left
+       column, the rows it produced flow down the right. -->
+  <section class="view split" id="view-results" hidden>
+    <div class="split__l">
+      <div class="head">
+        <button type="button" class="act" data-act="view" data-view="home">← All scenarios</button>
+        <h2 id="res-title"></h2>
+        <p class="head__blurb" id="res-blurb"></p>
+        <div class="tool">
+          <span class="count" id="res-count"></span>
+          <button type="button" class="act" id="res-maptoggle" data-act="map" hidden>Map ↓</button>
+        </div>
       </div>
     </div>
-    <div id="res-map-slot"></div>
-    <div class="list" id="res-list"></div>
-    <p class="empty" id="res-empty" hidden>Nothing matches this one.</p>
+    <div class="split__r">
+      <div id="res-map-slot"></div>
+      <div class="list" id="res-list"></div>
+      <p class="empty" id="res-empty" hidden>Nothing matches this one.</p>
+    </div>
   </section>
 
-  <section class="view" id="view-places" hidden>
-    <div class="head">
-      <h2 id="places-title">Places to eat</h2>
-      <p class="head__blurb" id="places-count"></p>
-      <div class="search">
-        <input type="search" id="search" placeholder="Search venue, cuisine or hotel" aria-label="Search places">
-        <span class="search__g" aria-hidden="true">⌕</span>
-      </div>
-      <div class="occ" id="occ-chips"><span class="label">Occasion</span></div>
-      <button type="button" class="maptoggle" data-act="map">
-        <span class="maptoggle__l" id="map-title"></span>
-        <span class="act" id="places-maplabel">Open ↓</span>
-      </button>
-      <div id="places-mapwrap" hidden>
-        <div class="mapbox" id="places-map" role="img" aria-label="Map of dining places"></div>
-        <div class="mapfoot"><span class="count" id="places-map-count"></span></div>
+  <section class="view split" id="view-places" hidden>
+    <div class="split__l">
+      <div class="head">
+        <h2 id="places-title">Places to eat</h2>
+        <p class="head__blurb" id="places-count"></p>
+        <div class="search">
+          <input type="search" id="search" placeholder="Search venue, cuisine or hotel" aria-label="Search places">
+          <span class="search__g" aria-hidden="true">⌕</span>
+        </div>
+        <div class="occ" id="occ-chips"><span class="label">Occasion</span></div>
+        <button type="button" class="maptoggle" data-act="map">
+          <span class="maptoggle__l" id="map-title"></span>
+          <span class="act" id="places-maplabel">Open ↓</span>
+        </button>
+        <div id="places-mapwrap" hidden>
+          <div class="mapbox" id="places-map" role="img" aria-label="Map of dining places"></div>
+          <div class="mapfoot"><span class="count" id="places-map-count"></span></div>
+        </div>
       </div>
     </div>
-    <div class="list" id="places-groups"></div>
-    <p class="empty" id="places-empty" hidden>Nothing matches that search.</p>
+    <div class="split__r">
+      <div class="list" id="places-groups"></div>
+      <p class="empty" id="places-empty" hidden>Nothing matches that search.</p>
+    </div>
   </section>
 
-  <section class="view" id="view-year" hidden>
+  <section class="view split" id="view-year" hidden>
     <div id="year-body"></div>
   </section>
 
@@ -458,13 +504,48 @@ function countUp(el, target, fmt) {
   requestAnimationFrame(step);
 }
 
+// Section rules draw themselves in the first time they come into view, once
+// each. One observer for the page, and a rule that has fired is unobserved
+// rather than re-checked, so scrolling back up does not replay it.
+const ruleObserver = ('IntersectionObserver' in window) && !reduced()
+  ? new IntersectionObserver((entries, obs) => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      en.target.classList.add('rule-in');
+      obs.unobserve(en.target);
+    }
+  }, { rootMargin: '0px 0px -12% 0px' })
+  : null;
+
+function revealRules() {
+  if (!ruleObserver) return;
+  for (const el of document.querySelectorAll('.sec:not(.rule-in):not(.rule-seen)')) {
+    el.classList.add('rule-seen');
+    ruleObserver.observe(el);
+  }
+}
+
 // ── Value column ─────────────────────────────────────────────────────────
 // Every row gets a value, and a row with no number gets an italic phrase
 // rather than a blank or a dash. A quarter of the data is entitlements whose
 // worth is real but unpriced, and in a layout built around a figure an empty
 // cell reads as "worth nothing" instead of "not measured in dollars".
 function valueCell(e) {
+  // A venue shows its rate, not a year's worth of visiting it. Annualising a
+  // restaurant reads as "this table gives you S$2,256", when the figure is
+  // really ten dinners at the minimum spend; the rate is what one visit does,
+  // and it is the only number comparable down a column of venues. Frames 7a
+  // and 7b both show the percentage for exactly this reason.
+  if (e.kind === 'venue' && e.discount_pct != null) {
+    return { text: `${core.fmtPct(e.discount_pct)}%`, phrase: false };
+  }
   if (e.annual_value_sgd != null) return { text: core.fmtMoney(e.annual_value_sgd), phrase: false };
+  // Authored beats derived. No rule reads "S$800 a stay" out of Fine Hotels +
+  // Resorts, and the fallbacks below gave it "always on", which is true of the
+  // entitlement and says nothing about what it is worth.
+  if (e.value_phrase) return { text: e.value_phrase, phrase: true };
+  // A discount outranks a place count: what Love Dining gives you is half the
+  // bill, and how many restaurants honour it is the next question, not the first.
   if (e.discount_pct != null) return { text: `up to ${e.discount_pct}% off`, phrase: true };
   if (e.childCount) return { text: `${e.childCount} places`, phrase: true };
   if (e.effort === 'claim') return { text: 'yours on enrolment', phrase: true };
@@ -605,7 +686,10 @@ function renderHome() {
     return { eff, list };
   }).filter((g) => g.list.length);
 
-  const perGroup = wide ? 3 : (state.moreLedger ? Infinity : 3);
+  // Three a group to open with, on both widths, the way 6d shows it. The
+  // expander stays reachable on desktop too: capping there with no way past it
+  // left 33 of the 42 benefits with no route to them on a large screen.
+  const perGroup = state.moreLedger ? Infinity : 3;
   $('effgroups').className = `list${wide ? ' grid3' : ''}`;
   $('effgroups').innerHTML = groups.map(({ eff, list }) => `
     <div>
@@ -615,7 +699,7 @@ function renderHome() {
       ${list.slice(0, perGroup).map((e) => row(e)).join('')}
     </div>`).join('');
   const moreLed = $('led-more');
-  moreLed.hidden = wide;
+  moreLed.hidden = false;
   moreLed.textContent = state.moreLedger ? 'Fewer ↑' : `Full ledger, all ${d.benefits.length} ↓`;
 }
 
@@ -747,6 +831,7 @@ function renderYear() {
       : `${planSentence(pb)}`;
 
   $('year-body').innerHTML = `
+    <div class="split__l">
     <div class="tally">
       <span class="eyebrow">Your year so far</span>
       <div class="tally__num" id="tally-num">&nbsp;</div>
@@ -765,7 +850,9 @@ function renderYear() {
       <button type="button" class="act" data-act="since-edit">Edit</button>
     </div>
     ${cy ? `<p class="since__line">Day ${cy.day} of your card year. ${plural(cy.daysLeft, 'day')} left to collect the rest.</p>` : ''}
+    </div>
 
+    <div class="split__r">
     <div class="sec"><h2>The plan</h2><span class="count">${done} done · ${going} going · ${open} left</span></div>
     <div class="list">
       ${plan.map((p) => `
@@ -784,7 +871,8 @@ function renderYear() {
     <p class="note">Everything you log counts, on the plan or off it. Love Dining alone can outrun the whole path.
       <button type="button" class="act" data-act="log-anything">Log anything →</button></p>
 
-    ${state.showLogAll ? logAnything(d) : ''}`;
+    ${state.showLogAll ? logAnything(d) : ''}
+    </div>`;
 
   countUp($('tally-num'), t.totalSgd, (n) => core.fmtMoney(n));
 }
@@ -954,6 +1042,7 @@ function render() {
   else if (state.view === 'year') renderYear();
   renderBadge();
   renderModal();
+  revealRules();
 }
 
 function goto(view, { scenario = null, parent = null } = {}) {

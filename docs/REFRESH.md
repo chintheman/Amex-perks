@@ -23,6 +23,11 @@ in this repo, or add to any editor:
 4. Insert it in `id` order.
 5. Do not write `composite_score`, `grade`, `annual_value_sgd`, `net_price_sgd`,
    or a `summary` that is just the first sentence of `details`. They are derived.
+6. If it is an `access` entitlement, write a `value_phrase`: the words the value
+   column shows in place of a figure, 28 characters at most, no dash. Say what
+   the benefit is worth rather than that you have it, and take the wording from
+   the summary you just wrote (`S$800 a stay`, `1,550+ lounges`), so the column
+   and the row agree. The validator rejects an access row without one.
 
 **Changing the taxonomy** (a new tier, section, occasion or grade band)
 

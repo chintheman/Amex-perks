@@ -148,6 +148,29 @@ const blanks = await page.evaluate(() => [...document.querySelectorAll('#effgrou
 ok(blanks === 0, 'a ledger row rendered an empty value column');
 const phrases = await page.locator('#effgroups .li__v--phrase').count();
 ok(phrases > 0, 'no italic phrase values rendered for the unpriced rows');
+
+// The phrase has to be the authored one, not a fallback. Deriving it gave the
+// flagship hotel benefit "always on", which is true of the entitlement and
+// says nothing about what it is worth. Assert against the data so a dropped
+// `value_phrase` fails here rather than quietly reading generic on the page.
+const authored = hydrated.entries.filter((e) => e.value_phrase);
+ok(authored.length >= 29, `expected the access rows to carry a value_phrase, found ${authored.length}`);
+// The ledger opens at three a group on both widths, so the rows under test
+// only exist once it is expanded. The expander must be reachable here too.
+ok(!(await page.locator('#led-more').isHidden()), 'the full ledger expander should be reachable on desktop');
+await page.locator('#led-more').click();
+await page.waitForTimeout(150);
+ok(await page.locator('#effgroups .li').count() === benefits.length,
+  `the expanded ledger should list all ${benefits.length} benefits`);
+for (const id of ['fine-hotels-resorts', 'global-lounge-collection', 'love-dining-restaurants']) {
+  const e = hydrated.byId.get(id);
+  const cell = await page.evaluate((n) => {
+    const row = [...document.querySelectorAll('#effgroups .li')]
+      .find((r) => r.querySelector('.li__name')?.textContent.trim() === n);
+    return row?.querySelector('.li__v')?.textContent.trim() ?? null;
+  }, e.name);
+  ok(cell === e.value_phrase, `${id} should show its authored phrase "${e.value_phrase}", got "${cell}"`);
+}
 ok(await dupeIds().then((d) => d.length === 0), 'duplicate ids on home');
 await shot('home');
 
@@ -195,6 +218,18 @@ await page.waitForSelector('#view-places:not([hidden])');
 ok((await text('#places-count')).startsWith(String(diningVenues)), `places should count ${diningVenues} tables`);
 ok(await page.locator('#places-groups .li').count() > 0, 'places rendered no rows');
 ok(await page.locator('.search input').count() === 1, 'search should be a ruled line with one input');
+
+// A venue shows its rate, not a year of visiting it. Annualising turned The
+// Cliff into "S$2,256", which is ten dinners at the minimum spend, not
+// anything one visit gives you. Frames 7a and 7b both show the percentage.
+const venueValues = await page.evaluate(() => [...document.querySelectorAll('#places-groups .li')]
+  .map((r) => r.querySelector('.li__v')?.textContent.trim() ?? ''));
+const moneyOnVenues = venueValues.filter((v) => v.startsWith('S$'));
+ok(moneyOnVenues.length === 0,
+  `venue rows should show a rate, not an annual total: ${moneyOnVenues.slice(0, 3).join(', ')}`);
+const discounted = hydrated.venues.filter((v) => v.category === 'dining' && v.discount_pct != null);
+ok(venueValues.filter((v) => v.endsWith('%')).length >= Math.min(10, discounted.length),
+  'discounted venues should render their percentage');
 
 // The occasion filter is text, not chips, and re-ranks the list.
 await page.locator('.occ__o[data-val="date_night"]').click();
@@ -318,7 +353,13 @@ const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, 
 const p2 = await phone.newPage();
 const phoneErrors = [];
 p2.on('pageerror', (e) => phoneErrors.push(String(e)));
-p2.on('console', (m) => { if (m.type() === 'error') phoneErrors.push(m.text()); });
+// Same filter as the desktop context. A console "Failed to load resource" is
+// how a third-party CDN blip reaches here, and a font or tile server having a
+// bad second is not this page failing; same-origin misses still surface below.
+p2.on('console', (m) => {
+  if (m.type() === 'error' && !m.text().startsWith('Failed to load resource')) phoneErrors.push(m.text());
+});
+p2.on('response', (r) => { if (r.status() >= 400 && !OPTIONAL.test(r.url())) phoneErrors.push(`HTTP ${r.status()} ${r.url()}`); });
 await p2.goto(base, { waitUntil: 'networkidle' });
 await p2.waitForSelector('.scen');
 ok(await p2.locator('.scen').count() === 4, 'phone should collapse to the first four scenarios');
@@ -332,6 +373,47 @@ ok(await p2.evaluate(() => getComputedStyle(document.querySelector('.nav')).posi
   'the phone tab bar should be pinned to the bottom');
 ok(phoneErrors.length === 0, `phone errors: ${phoneErrors.join(' | ')}`);
 await phone.close();
+
+// ────────────────────────────────────────────────────── desktop asymmetry
+// The 6d pattern is a ruled left column on every view, not just Home. At
+// 1280 the three other views must each show a real two-column grid.
+for (const [view, sel] of [['results', '#view-results'], ['places', '#view-places'], ['year', '#view-year']]) {
+  if (view === 'results') {
+    await page.locator('.tab[data-view="home"]').click();
+    await page.waitForSelector('#view-home:not([hidden])');
+    await page.locator('.scen').first().click();
+  } else {
+    await page.locator(`.tab[data-view="${view}"]`).click();
+  }
+  await page.waitForSelector(`${sel}:not([hidden])`);
+  const grid = await page.evaluate((s) => {
+    const el = document.querySelector(s);
+    const cs = getComputedStyle(el);
+    const l = el.querySelector('.split__l');
+    return {
+      cols: cs.gridTemplateColumns.split(' ').length,
+      rule: l ? getComputedStyle(l).borderRightWidth : null,
+      leftW: l ? Math.round(l.getBoundingClientRect().width) : 0,
+    };
+  }, sel);
+  ok(grid.cols === 2, `${view} should be a two column grid at 1280, got ${grid.cols}`);
+  ok(grid.rule === '1px', `${view} left column should carry the ruled edge, got ${grid.rule}`);
+  ok(grid.leftW > 250 && grid.leftW < 420, `${view} left column should be about 340px, got ${grid.leftW}`);
+}
+
+// ────────────────────────────────────────────────────────────── map colour
+// The markers used to read a `--cat-dining` token the editorial palette does
+// not define, so every pin silently fell back to the old theme's blue.
+await page.locator('.tab[data-view="places"]').click();
+await page.waitForSelector('#view-places:not([hidden])');
+await page.locator('.maptoggle').click();
+await page.waitForSelector('.leaflet-container', { timeout: 5000 }).catch(() => {});
+const pinFill = await page.evaluate(() => document.querySelector('path.leaflet-interactive')?.getAttribute('fill') ?? null);
+if (pinFill) {
+  const accent = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
+  ok(pinFill.toLowerCase() === accent.toLowerCase(),
+    `map pins should use the accent token ${accent}, got ${pinFill}`);
+}
 
 // ───────────────────────────────────────────────────────────────────── motion
 // The count-up must exist when motion is allowed, and must not when it is not.

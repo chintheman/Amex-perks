@@ -31,9 +31,13 @@ const check = (cond, where, msg) => { if (!cond) fail(where, msg); };
 
 const ENTRY_KEY_ORDER = [
   'id', 'name', 'kind', 'parent', 'category', 'section', 'subcategory', 'value_type',
-  'effort', 'summary', 'details', 'venue', 'economics', 'scores', 'occasion_fit', 'terms',
-  'locations', 'source',
+  'effort', 'summary', 'details', 'value_phrase', 'venue', 'economics', 'scores',
+  'occasion_fit', 'terms', 'locations', 'source',
 ];
+// The value column shows one thing per row. A phrase is what an unpriced row
+// shows instead of a figure, so a row carrying both would be authoring a
+// conflict the page then has to arbitrate silently.
+const PHRASE_MAX = 28;
 // Nothing outside these lists may appear — a stray key is almost always a
 // typo that the page would silently ignore.
 const BLOCK_KEYS = {
@@ -44,13 +48,29 @@ const BLOCK_KEYS = {
   occasion_fit: OCCASION_KEYS,
 };
 const LOCATION_KEYS = ['name', 'lat', 'lng', 'address'];
-// House style: no em or en dashes in anything written for this guide. `details`
-// is exempt because it quotes Amex's own wording, and editing a source quote to
-// satisfy a style rule would be wrong.
+// House style: no em or en dashes in anything written for this guide.
 // An en dash between digits is a numeric range ("1–2 days"), which is correct
 // typography and not the joining-dash that reads as machine-written. Everything
 // else is rejected.
 const DASH = /(?<![0-9])[\u2013\u2014]|[\u2013\u2014](?![0-9])/;
+// `details` used to be exempt, on the grounds that it quotes Amex. Most of it
+// does not: it is our prose about Amex's terms, and the editorial redesign
+// promotes it to the row subtitle, so fifteen em dashes were sitting in the
+// most-read copy on the page. It is checked now, with day ranges ("Mon\u2013Sat")
+// allowed alongside numeric ones, both being typography rather than the tell
+// this rule is aimed at.
+const DAY_END = /(Mon|Tue|Wed|Thu|Fri|Sat|Sun)$/;
+const proseDash = (s) => {
+  if (typeof s !== 'string') return false;
+  for (const m of s.matchAll(/[\u2013\u2014]/g)) {
+    const before = s.slice(Math.max(0, m.index - 3), m.index);
+    const after = s.slice(m.index + 1, m.index + 4);
+    if (/[0-9]\s?$/.test(before) && /^\s?[0-9]/.test(after)) continue;
+    if (DAY_END.test(before)) continue;
+    return true;
+  }
+  return false;
+};
 const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s));
 const hasWords = (s) => typeof s === 'string' && /[a-z0-9]/i.test(s);
 const inRange = (n, lo, hi) => typeof n === 'number' && Number.isFinite(n) && n >= lo && n <= hi;
@@ -201,6 +221,10 @@ entries.forEach((e, i) => {
   check(hasWords(e.name), at, 'name is required');
   check(!DASH.test(e.name), at, `name contains a dash: ${e.name}`);
   if (e.summary != null) check(!DASH.test(e.summary), at, 'summary contains a dash');
+  if (e.details != null) {
+    check(!proseDash(e.details), at,
+      'details contains a dash in prose — a number or day range may keep one, joined clauses may not');
+  }
   if (e.summary != null) {
     check(e.summary.length <= 240, at, `summary is ${e.summary.length} chars — that is a paragraph, move it to details`);
     if (e.summary.length > SUMMARY_MAX + 50) warn(at, `summary is ${e.summary.length} chars — collapsed rows will truncate it`);
@@ -208,6 +232,18 @@ entries.forEach((e, i) => {
   }
   if (e.value_type === 'access') {
     check(hasWords(e.summary) && hasWords(e.details), at, 'access entries need both summary and details');
+    check(hasWords(e.value_phrase), at,
+      'access entries need a value_phrase — the value column must never render blank for them');
+  }
+  if (e.value_phrase != null) {
+    check(!DASH.test(e.value_phrase), at, 'value_phrase contains a dash');
+    check(e.value_phrase.length <= PHRASE_MAX, at,
+      `value_phrase is ${e.value_phrase.length} chars — over ${PHRASE_MAX} it wraps the value column`);
+    // A row with both an authored phrase and a derivable figure would render
+    // one and silently drop the other. Whichever the page picked, the file
+    // would be asserting something it does not show.
+    const money = (e.economics?.gross_value_sgd ?? null) != null && (e.terms?.annual_cap ?? null) != null;
+    check(!money, at, 'value_phrase on a row that already has a money figure — drop one of them');
   }
 
   // venue
