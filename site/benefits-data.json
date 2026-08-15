@@ -3805,11 +3805,11 @@
       "subcategory": "Special Program",
       "value_type": "free",
       "effort": "book",
-      "details": "Complimentary set menu for 2, up to 6x/year (one per 2-month cycle, no rollover). ~10 rotating venues incl. 15 Stamford, HighHouse, VUE, Colony @ Ritz-Carlton, Osteria Mozza, TANOKE. Book via Amex Experiences App only; QR voucher scan at venue.",
+      "details": "One complimentary dining experience for two every second month, up to six a year, with no rollover. Amex rotates three categories: chic restaurants with multi course set menus, buffets at hotels, and cafes served as two sides, two mains, two desserts and two drinks. Venues change each cycle and have included 15 Stamford, HighHouse, VUE, Colony at the Ritz-Carlton, Osteria Mozza and TANOKE. Book in the Amex Experiences App, which scans a QR voucher at the venue. Amex publishes no dollar value, so the figure here is the cafe tier, the least the experience is worth rather than the most.",
       "venue": {
-        "cuisine": "Rotating tasting/set menus",
-        "tier": "fine",
-        "tier_group": "fine",
+        "cuisine": "Set menus, buffets and cafes",
+        "tier": "upscale",
+        "tier_group": "upscale",
         "pax": 2
       },
       "economics": {
