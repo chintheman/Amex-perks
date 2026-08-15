@@ -59,6 +59,7 @@ Keys always appear in this order, and every optional one is omitted when empty:
   "value_type": "discount",             // taxonomy.value_types
   "summary": "…",                       // only when it is NOT the first sentence of details
   "details": "Weekday only, ≤48h advance booking. Excl. beverages, bakery, desserts, set menus.",
+  "value_phrase": "S$800 a stay",       // what the value column says when there is no figure
 
   "venue": {                            // bookable-venue facts; absent on pure entitlements
     "group": "The Capitol Kempinski",   // parent hotel / restaurant group
@@ -100,10 +101,32 @@ Keys always appear in this order, and every optional one is omitted when empty:
 There is one entry type with two conditional shapes, enforced by the schema's
 `if`/`then`:
 
-* **`value_type: "access"`** (8 rows — lounges, insurance, concierge, status)
+* **`value_type: "access"`** (29 rows — lounges, insurance, concierge, status)
   carry no `economics` and no `scores`, because scoring an insurance policy is
-  false precision. They must carry both a `summary` and `details`.
+  false precision. They must carry a `summary`, `details` **and a
+  `value_phrase`**.
 * **Everything else** must carry `economics` and `scores`.
+
+### `value_phrase`
+
+The words the value column shows on a row that has no figure. A quarter of the
+data is entitlements whose worth is real but unpriced, and in a layout built
+around a number an empty cell reads as "worth nothing" rather than "not
+measured in dollars".
+
+It is authored, not derived, because the useful phrase is the one the row's own
+summary already makes and no rule finds it: Fine Hotels + Resorts is
+`S$800 a stay`, the lounge collection is `1,550+ lounges`. Deriving these gave
+`always on` and `yours on enrolment`, which are true of the entitlement and say
+nothing about what it is worth.
+
+Three rules, all enforced:
+
+* no dash, like every other authored string
+* 28 characters at most, because it sits in a column beside money set in mono
+  and anything longer wraps and breaks the alignment the column exists for
+* never on a row that already has a money figure, so the file cannot assert two
+  values and leave the page to pick one
 
 `venue` is present on anything with a physical or tiered venue, which is not the
 same as `category: "dining"` — the golf programme and the spa offers are

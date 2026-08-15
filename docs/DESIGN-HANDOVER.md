@@ -240,6 +240,14 @@ same module, so the page and the data gate cannot disagree.
 > and cannot be faked. Adding a real field means changing the taxonomy, the schema
 > and the refresh process, which is a separate piece of work.
 
+**Amended 15 Aug 2026.** One field was added under exactly that bar:
+`value_phrase`, on the 29 `access` rows. It is not new external data, it is
+editorial copy over what those rows already say, written so the value column
+reads `S$800 a stay` rather than a derived `always on`. It cost the schema, the
+validator and a step in the refresh checklist, which is the price this rule
+exists to make visible. The rule still holds for anything the repo cannot
+already source.
+
 ### The value type split
 
 | Type | Rows | Shape |

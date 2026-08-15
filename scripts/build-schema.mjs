@@ -143,6 +143,10 @@ const schema = {
         value_type: { enum: VALUE_TYPE_KEYS },
         summary: { ...TEXT, maxLength: 240 },
         details: TEXT,
+        // The words that stand in for a figure on a row that has none. Capped
+        // hard because it sits in the value column beside money set in mono:
+        // anything longer wraps and breaks the alignment the column exists for.
+        value_phrase: { ...TEXT, maxLength: 28 },
         venue: { $ref: '#/$defs/venue' },
         economics: { $ref: '#/$defs/economics' },
         scores: { $ref: '#/$defs/scores' },
@@ -184,7 +188,7 @@ const schema = {
         label: TEXT,
         blurb: TEXT,
         sort: { type: 'string' },
-        view: { enum: ['payback'] },
+        view: { enum: ['year'] },
         filter: {
           type: 'object',
           minProperties: 1,
