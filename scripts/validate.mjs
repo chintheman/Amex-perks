@@ -240,6 +240,14 @@ entries.forEach((e, i) => {
     if (e.summary.length > SUMMARY_MAX + 50) warn(at, `summary is ${e.summary.length} chars — collapsed rows will truncate it`);
     check(e.summary !== summaryOf(e.details, null), at, 'summary repeats the first sentence of details — omit it');
   }
+  // A row that says it needs spending, while recording none, is how the
+  // afternoon tea ended up in the "Actually free" scenario: that filter is
+  // `max_min_spend: 0`, and the tea wanted S$180++. The two statements have to
+  // agree or the page contradicts the row it is drawn from.
+  if (/min spend/i.test(e.terms?.condition || '')) {
+    check((e.economics?.min_spend_sgd ?? 0) > 0, at,
+      'terms.condition says a minimum spend is required, but economics.min_spend_sgd is 0 or absent');
+  }
   if (e.value_type === 'access') {
     check(hasWords(e.summary) && hasWords(e.details), at, 'access entries need both summary and details');
     check(hasWords(e.value_phrase), at,

@@ -258,14 +258,6 @@
       {
         "ref": "complimentary-hotel-stay-credit-fhr-hotel-collection",
         "uses": 2
-      },
-      {
-        "ref": "global-dining-credit",
-        "uses": 1
-      },
-      {
-        "ref": "platinum-wine-credit",
-        "uses": 1
       }
     ]
   },
@@ -393,8 +385,8 @@
         "pax": 2
       },
       "economics": {
-        "min_spend_sgd": 0,
-        "gross_value_sgd": 48
+        "min_spend_sgd": 180,
+        "gross_value_sgd": 96
       },
       "scores": {
         "value": 16,
@@ -858,8 +850,8 @@
         "pax": 2
       },
       "economics": {
-        "min_spend_sgd": 180,
-        "gross_value_sgd": 63,
+        "min_spend_sgd": 120,
+        "gross_value_sgd": 42,
         "discount_pct": 35
       },
       "scores": {
@@ -1205,7 +1197,7 @@
       },
       "economics": {
         "min_spend_sgd": 0,
-        "gross_value_sgd": 400
+        "gross_value_sgd": 450
       },
       "scores": {
         "value": 100,
@@ -1237,7 +1229,7 @@
       },
       "economics": {
         "min_spend_sgd": 0,
-        "gross_value_sgd": 145
+        "gross_value_sgd": 225
       },
       "scores": {
         "value": 48.3,
@@ -3155,8 +3147,8 @@
         "pax": 2
       },
       "economics": {
-        "min_spend_sgd": 180,
-        "gross_value_sgd": 90,
+        "min_spend_sgd": 300,
+        "gross_value_sgd": 150,
         "discount_pct": 50
       },
       "scores": {
@@ -3413,8 +3405,8 @@
       "effort": "book",
       "details": "True Love Weddings: 5% off new wedding packages at Sheraton Towers Singapore. The minimum spend below is an estimate for a typical banquet of around 20 tables. Amex and the hotel do not publish package prices.",
       "economics": {
-        "min_spend_sgd": 30000,
-        "gross_value_sgd": 1500,
+        "min_spend_sgd": 40800,
+        "gross_value_sgd": 2040,
         "discount_pct": 5
       },
       "scores": {
@@ -3814,7 +3806,7 @@
       },
       "economics": {
         "min_spend_sgd": 0,
-        "gross_value_sgd": 120
+        "gross_value_sgd": 170
       },
       "scores": {
         "value": 40,
@@ -4572,8 +4564,8 @@
         "pax": 2
       },
       "economics": {
-        "min_spend_sgd": 120,
-        "gross_value_sgd": 24,
+        "min_spend_sgd": 156,
+        "gross_value_sgd": 31.2,
         "discount_pct": 20
       },
       "scores": {
