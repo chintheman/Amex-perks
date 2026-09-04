@@ -210,3 +210,54 @@ new one.
 
 Ship the minified form if the extra 33 KB matters; nothing in the page depends
 on the whitespace.
+
+## Known gaps in this model
+
+Two things the schema cannot currently express. Both were found by using the
+page rather than reading it, and both make it state something untrue, so they
+are recorded here rather than in a session that ends.
+
+### The rate is not flat, it varies with party size
+
+`economics.discount_pct` is one number per venue, and the page prints it as
+though it always applies. Amex tiers Love Dining by how many people eat:
+
+| Diners | Rate |
+| --- | --- |
+| 2 to 4 | up to 50% |
+| **5 to 20** | **20%** |
+| 3, at Fairmont, Swissotel and Paradox Merchant Court | 33% |
+
+The source line is in `data/sources/love_restaurants.txt`: "For Love Dining @
+Restaurants, 20% savings apply to 5 to 20 persons dining, subject to restaurant
+seating capacities." The hotels page carries its own: "Enjoy 20% off your total
+bill for a maximum of 10 person party, per visit, per bill."
+
+So a table of six is told 50% when it gets 20%, and every derived figure for
+that row is two and a half times what the reader will actually save. Found 29
+Aug 2026 from a question about Harry's with six people.
+
+Fixing it properly means `discount_pct` becoming a small band table rather than
+a scalar, and the page either asking how many are eating or stating the party
+size its figure assumes. Until then the rate shown is the best case, which is
+what `caveats[3]` already says, but the caveat is doing more work than it
+should.
+
+Two more rules worth carrying into any fix, both from the Harry's terms: **one
+card per table per visit**, with split bills and a party seated at two tables
+explicitly disallowed; and payment by **physical card at the counter**.
+
+### A venue is one address, and some are many
+
+`locations[]` is per entry, and the file gives most venues a single address
+even when the benefit covers a chain. Harry's is valid at **every outlet except
+Changi Airport** and the file holds only Boat Quay, so a reader near Holland
+Village is told there is nothing nearby when there is a participating Harry's
+in front of them.
+
+Same shape: Les Bouchons (Ann Siang, Robertson Quay, Rochester), Grand Hyatt
+Singapore and The Singapore EDITION, each described in `details` as covering
+several outlets while carrying one pin.
+
+This matters more since the redesign, because the map and any proximity
+question read `locations[]` directly.
