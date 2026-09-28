@@ -263,6 +263,34 @@ html[data-theme="dark"] .bar__rest{background:rgba(241,234,219,.22);}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
 }
 
+/* ── Phone: tap targets + legibility ────────────────────────────────────────
+   Sizing only, under 640px. Colour, font-family, letter-spacing, weight and
+   layout are untouched; these rules only grow boxes that were under 44px
+   tall or text that was under 12px. Nothing here runs at 900px+. */
+@media (max-width:640px){
+  /* Captions and labels: 12px floor, family/letter-spacing/colour kept. */
+  .eyebrow,.label,.count,.act,.mast__name,.tab,.tab__n,.urg__hint,
+  .li__idx,.scen__n,.ink__foot,.search__g,.stepper__n,.ftr li,.modal__formula{
+    font-size:calc(12px * var(--ts));
+  }
+  .mast__sub{font-size:calc(12px * var(--ts));}
+  .modal__formula{overflow-wrap:anywhere;}
+
+  /* Tap targets: 44px floor. Box grows via padding; text style is unchanged. */
+  .act{display:inline-flex;align-items:center;min-height:44px;padding:4px 2px;}
+  .tab{padding:13px 0;min-height:44px;}
+  .expander{display:block;width:100%;text-align:left;padding:13px 2px;min-height:44px;}
+  .ftr__act{display:block;padding:13px 0;min-height:44px;}
+  .occ__o{padding:13px 2px;min-height:44px;}
+  .stepper button{padding:13px 14px;min-height:44px;}
+  .search input{padding:12px 0;}
+
+  /* A 44px .act now sits taller than the short label next to it in these
+     rows; centre instead of baseline-aligning so the row doesn't look
+     lopsided. No colour, font or width change. */
+  .tool,.maptoggle,.since,.modal__head,.occ{align-items:center;}
+}
+
 /* ── Desktop: editorial asymmetry ─────────────────────────────────────────
    A 4:8 split. The numeral column holds rank on the left while the content
    flows right, and the rules run full bleed across both. */
